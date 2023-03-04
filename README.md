@@ -90,3 +90,15 @@ For open source projects, say how it is licensed.
 
 ## Project status
 If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+
+# About project
+- **Name**: Music Band Manager
+- **Technologies**: Java 17, Maven, Spring Boot
+- **Developers**:
+    - Oskar Adam Válent @xvalent
+    - Jakub Šušlík @xsuslik
+    - Patrik Čangel @xcangel
+    - Tomáš Koscielniak @xkosciel
+- **Assigment**:
+    - The web application allows one music band to manage their activities. Managers can create a new band and start hiring team members from a catalogue. They can set for the band the musical style (e.g. rock, pop, etc…), a name, and a logo. Band managers can add new albums and songs to a band. Each Song has a name and a duration. Managers can also schedule tours for the bands, in terms of dates and cities visited.
+Team members can login to the system and see the offers made by the band managers. They can accept or reject to be part of a band. After they are part of a band, they can see all the activities that are planned and the profiles of the other band members.
