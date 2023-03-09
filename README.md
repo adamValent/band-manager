@@ -95,7 +95,7 @@ If you have run out of energy or time for your project, put a note at the top of
 - **Name**: Music Band Manager
 - **Technologies**: Java 17, Maven, Spring Boot
 - **Developers**:
-    - Oskar Adam Válent @xvalent
+    - Oskar Adam Válent @xvalent _Project Leader_
     - Jakub Šušlík @xsuslik
     - Patrik Čangel @xcangel
     - Tomáš Koscielniak @xkosciel
