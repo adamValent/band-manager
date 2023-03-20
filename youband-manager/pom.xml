@@ -22,6 +22,7 @@
 		<module>module-members</module>
 		<module>module-albums</module>
 		<module>module-tours</module>
+		<module>module-data-access</module>
 	</modules>
 	<dependencies>
 		<dependency>
