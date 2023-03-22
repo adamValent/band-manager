@@ -18,10 +18,9 @@
 	</properties>
 	<packaging>pom</packaging>
 	<modules>
-		<module>module-albums</module>
 		<module>module-band</module>
-		<module>module-data-access</module>
 		<module>module-members</module>
+		<module>module-albums</module>
 		<module>module-tours</module>
 		<module>module-data-access</module>
 	</modules>
@@ -44,14 +43,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!--Externalize configuration-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-surefire-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<argLine>-Dspring.config.location=file:${home}/conf/application-external.yml-->
-<!--				</configuration>-->
-<!--			</plugin>-->
 		</plugins>
 	</build>
 

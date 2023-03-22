@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class YoubandManagerApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(YoubandManagerApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(YoubandManagerApplication.class, args);
+    }
 
 }
