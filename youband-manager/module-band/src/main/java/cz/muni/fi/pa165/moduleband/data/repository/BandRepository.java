@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.moduleband.data.model.Band;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import cz.muni.fi.pa165.moduleband.exceptions.*;
@@ -23,9 +22,6 @@ public class BandRepository {
                 "Band1",
                 Style.COUNTRY,
                 new Byte[0],
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
                 1L
         );
 
@@ -34,9 +30,6 @@ public class BandRepository {
                 "Band2",
                 Style.COUNTRY,
                 new Byte[0],
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
                 1L
         );
 
@@ -45,9 +38,6 @@ public class BandRepository {
                 "Band3",
                 Style.COUNTRY,
                 new Byte[0],
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
                 1L
         );
 
@@ -56,9 +46,6 @@ public class BandRepository {
                 "Band4",
                 Style.COUNTRY,
                 new Byte[0],
-                new ArrayList<>(),
-                new ArrayList<>(),
-                new ArrayList<>(),
                 1L
         );
 
@@ -89,12 +76,9 @@ public class BandRepository {
 
         Band bandOld = findById(id);
 
-        bandOld.setMembersIds(bandUpdated.getMembersIds());
         bandOld.setName(bandUpdated.getName());
         bandOld.setStyle(bandUpdated.getStyle());
         bandOld.setImage(bandUpdated.getImage());
-        bandOld.setAlbumsIds(bandUpdated.getAlbumsIds());
-        bandOld.setActivitiesIds(bandUpdated.getActivitiesIds());
         bandOld.setManagerId(bandUpdated.getManagerId());
 
         return bandOld;
