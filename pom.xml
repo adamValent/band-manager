@@ -23,6 +23,7 @@
 		<module>module-data-access</module>
 		<module>module-members</module>
 		<module>module-tours</module>
+		<module>module-data-access</module>
 	</modules>
 	<dependencies>
 		<dependency>
