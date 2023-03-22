@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.moduleband.api;
 
 import cz.muni.fi.pa165.moduleband.data.enums.Style;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Arrays;
@@ -10,12 +11,16 @@ public class BandDto {
 
     private Long id;
     @NotNull
+    @Schema(name = "name", example = "Misty", description = "full name", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
     @NotNull
+    @Schema(name = "style", example = "ROCK", description = "band style", requiredMode = Schema.RequiredMode.REQUIRED)
     private Style style;
     @NotNull
+    @Schema(name = "image", example = "[\"67\",\"7\",\"89\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private Byte[] image;
     @NotNull
+    @Schema(name = "managerId", example = "8", description = "manager ID", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long managerId;
 
     public BandDto() {

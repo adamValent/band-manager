@@ -138,79 +138,12 @@ paths:
             '*/*':
               schema:
                 $ref: '#/components/schemas/BandDto'
-  /api/bands/{idBand}/activities:
-    get:
-      tags:
-      - band-activities-rest-controller
-      operationId: findAll_1
-      parameters:
-      - name: idBand
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: array
-                items:
-                  type: integer
-                  format: int64
-  /api/bands/{idBand}/activities/{idActivity}:
-    get:
-      tags:
-      - band-activities-rest-controller
-      operationId: findById_1
-      parameters:
-      - name: idBand
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      - name: idActivity
-        in: path
-        required: true
-        schema:
-          type: integer
-          format: int64
-      responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
-        "200":
-          description: OK
-          content:
-            '*/*':
-              schema:
-                type: integer
-                format: int64
 components:
   schemas:
     BandDto:
       required:
-      - activitiesIds
-      - albumsIds
       - image
       - managerId
-      - membersIds
       - name
       - style
       type: object
@@ -220,8 +153,12 @@ components:
           format: int64
         name:
           type: string
+          description: full name
+          example: Misty
         style:
           type: string
+          description: band style
+          example: ROCK
           enum:
           - ROCK
           - POP
@@ -242,21 +179,8 @@ components:
           items:
             type: string
             format: byte
-        membersIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-        albumsIds:
-          type: array
-          items:
-            type: integer
-            format: int64
-        activitiesIds:
-          type: array
-          items:
-            type: integer
-            format: int64
         managerId:
           type: integer
+          description: manager ID
           format: int64
+          example: 8
