@@ -1,0 +1,251 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/songs/{id}:
+    get:
+      tags:
+      - song-rest-controller
+      operationId: findById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SongDto'
+    put:
+      tags:
+      - song-rest-controller
+      operationId: updateSong
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SongDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SongDto'
+    delete:
+      tags:
+      - song-rest-controller
+      operationId: deleteSong
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SongDto'
+  /api/albums/{id}:
+    get:
+      tags:
+      - album-rest-controller
+      operationId: findById_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AlbumDto'
+    put:
+      tags:
+      - album-rest-controller
+      operationId: updateAlbum
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlbumDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AlbumDto'
+  /api/songs:
+    get:
+      tags:
+      - song-rest-controller
+      operationId: getAll
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SongDto'
+    post:
+      tags:
+      - song-rest-controller
+      operationId: createSong
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SongDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SongDto'
+  /api/albums:
+    get:
+      tags:
+      - album-rest-controller
+      operationId: getAll_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlbumDto'
+components:
+  schemas:
+    SongDto:
+      required:
+      - duration
+      - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Song's identification number
+          example: 7
+        title:
+          type: string
+          description: Song's title
+          example: Molly's lips
+        duration:
+          type: object
+          description: Song's duration
+          properties:
+            seconds:
+              type: integer
+              format: int64
+            nano:
+              type: integer
+              format: int32
+            negative:
+              type: boolean
+            zero:
+              type: boolean
+            units:
+              type: array
+              items:
+                type: object
+                properties:
+                  dateBased:
+                    type: boolean
+                  timeBased:
+                    type: boolean
+                  duration:
+                    type: object
+                    properties:
+                      seconds:
+                        type: integer
+                        format: int64
+                      nano:
+                        type: integer
+                        format: int32
+                      negative:
+                        type: boolean
+                      zero:
+                        type: boolean
+                  durationEstimated:
+                    type: boolean
+    AlbumDto:
+      required:
+      - genre
+      - name
+      - releaseDate
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: album's identification number
+          example: 7
+        name:
+          type: string
+          description: album's name
+          example: In utero
+        releaseDate:
+          type: string
+          format: date-time
+          description: album's release date
+        genre:
+          type: string
+          description: album's genre type
+          example: ROCK
+          enum:
+          - ROCK
+          - POP
+          - PUNK
+          - COUNTRY
+          - RAP
+          - K_POP
+          - FUNK
+          - REGGAE
+          - FOLK
+          - JAZZ
+          - DISCO
+          - CLASSIC
+          - BLUES
+          - VOCAL
