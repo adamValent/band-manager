@@ -23,10 +23,11 @@ public class BandDto {
     @Schema(name = "managerId", example = "8", description = "manager ID", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long managerId;
 
-    public BandDto() {
-    }
-
-    public BandDto(Long id, String name, Style style, Byte[] image, Long managerId) {
+    public BandDto(Long id,
+                   @NotNull String name,
+                   @NotNull Style style,
+                   @NotNull Byte[] image,
+                   @NotNull Long managerId) {
         this.id = id;
         this.name = name;
         this.style = style;
@@ -42,36 +43,36 @@ public class BandDto {
         this.id = id;
     }
 
-    public Long getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getName() {
+    public  @NotNull String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName( @NotNull String name) {
         this.name = name;
     }
 
-    public Style getStyle() {
+    public  @NotNull Style getStyle() {
         return style;
     }
 
-    public void setStyle(Style style) {
+    public void setStyle( @NotNull Style style) {
         this.style = style;
     }
 
-    public Byte[] getImage() {
+    public @NotNull Byte[] getImage() {
         return image;
     }
 
-    public void setImage(Byte[] image) {
+    public void setImage(@NotNull Byte[] image) {
         this.image = image;
+    }
+
+    public  @NotNull Long getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(@NotNull Long managerId) {
+        this.managerId = managerId;
     }
 
     @Override
