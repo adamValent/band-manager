@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.moduletours.data.model.TourDate;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class TourDto {
     private Long id;
@@ -56,6 +57,19 @@ public class TourDto {
 
     public void setTourDates(@NotNull ArrayList<TourDate> tourDates) {
         this.tourDates = tourDates;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TourDto tourDto = (TourDto) o;
+        return Objects.equals(id, tourDto.id) && name.equals(tourDto.name) && bandList.equals(tourDto.bandList) && tourDates.equals(tourDto.tourDates);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, bandList, tourDates);
     }
 
     @Override
