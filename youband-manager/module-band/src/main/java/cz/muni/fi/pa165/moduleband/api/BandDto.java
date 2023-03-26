@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class BandDto {
@@ -73,6 +74,22 @@ public class BandDto {
 
     public void setManagerId(@NotNull Long managerId) {
         this.managerId = managerId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
+        BandDto bandDto = (BandDto) o;
+        return Objects.equals(id, bandDto.id) && name.equals(bandDto.name) && style == bandDto.style
+               && Arrays.equals(image, bandDto.image) && managerId.equals(bandDto.managerId);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, name, style, managerId);
+        result = 31 * result + Arrays.hashCode(image);
+        return result;
     }
 
     @Override
