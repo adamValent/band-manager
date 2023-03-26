@@ -109,7 +109,7 @@ class ModuleToursApplicationTests {
 
         TourDto expectedResponse =
                 new TourDto(null, "PopTour2",
-                        List.of("PopBand1", "RockBand2"),
+                        List.of(5L, 6L),
                         List.of(
                                 new TourDateDto("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
                                 new TourDateDto("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
