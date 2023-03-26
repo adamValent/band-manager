@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.moduletours.api;
 
 import cz.muni.fi.pa165.moduletours.data.model.TourDate;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.Objects;
