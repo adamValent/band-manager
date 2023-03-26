@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.moduletours;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cz.muni.fi.pa165.moduletours.api.TourDateDto;
 import cz.muni.fi.pa165.moduletours.api.TourDto;
 import cz.muni.fi.pa165.moduletours.data.model.TourDate;
 import cz.muni.fi.pa165.moduletours.data.repository.TourRepository;
@@ -108,11 +109,11 @@ class ModuleToursApplicationTests {
 
         TourDto expectedResponse =
                 new TourDto(null, "PopTour2",
-                        new ArrayList<String>(List.of("PopBand1", "RockBand2")),
-                        new ArrayList<TourDate>(List.of(
-                                new TourDate("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
-                                new TourDate("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
-                        )));
+                        List.of("PopBand1", "RockBand2"),
+                        List.of(
+                                new TourDateDto("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
+                                new TourDateDto("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
+                        ));
 
         String response = mockMvc.perform(post("/api/tours")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -149,7 +150,7 @@ class ModuleToursApplicationTests {
         JSONObject json = new JSONObject();
         json.put("name", "INVALID");
 
-        mockMvc.perform(put(String.format("/api/tours/%s", 100L))
+        mockMvc.perform(put(String.format("/api/tours/%s", tourRepository.getAll().get(0).getId()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
                 .andExpect(status().isBadRequest());

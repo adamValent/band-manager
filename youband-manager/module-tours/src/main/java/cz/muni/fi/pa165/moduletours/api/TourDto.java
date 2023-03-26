@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.moduletours.api;
 
-import cz.muni.fi.pa165.moduletours.data.model.TourDate;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class TourDto {
@@ -11,14 +11,15 @@ public class TourDto {
     @NotNull
     private String name;
     @NotNull
-    private ArrayList<String> bandList;
+    private List<String> bandList;
+    @Valid
     @NotNull
-    private ArrayList<TourDate> tourDates;
+    private List<TourDateDto> tourDates;
 
     public TourDto(Long id,
                    @NotNull String name,
-                   @NotNull ArrayList<String> bandList,
-                   @NotNull ArrayList<TourDate> tourDates) {
+                   @NotNull List<String> bandList,
+                   @NotNull List<TourDateDto> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -41,19 +42,19 @@ public class TourDto {
         this.name = name;
     }
 
-    public @NotNull ArrayList<String> getBandList() {
+    public @NotNull List<String> getBandList() {
         return bandList;
     }
 
-    public void setBandList(@NotNull ArrayList<String> bandList) {
+    public void setBandList(@NotNull List<String> bandList) {
         this.bandList = bandList;
     }
 
-    public @NotNull ArrayList<TourDate> getTourDates() {
+    public @NotNull List<TourDateDto> getTourDates() {
         return tourDates;
     }
 
-    public void setTourDates(@NotNull ArrayList<TourDate> tourDates) {
+    public void setTourDates(@NotNull List<TourDateDto> tourDates) {
         this.tourDates = tourDates;
     }
 
