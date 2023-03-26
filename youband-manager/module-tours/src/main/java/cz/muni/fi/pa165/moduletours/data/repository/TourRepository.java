@@ -18,19 +18,19 @@ public class TourRepository {
     @PostConstruct
     private void init() {
         Tour tour1 = new Tour(100L, "PopTour",
-                new ArrayList<String>(List.of("PopBand1","PopBand2")),
+                new ArrayList<Long>(List.of(0L, 1L)),
                 new ArrayList<TourDate>(List.of(
                         new TourDate("New York", LocalDate.of(2023,5,5), "Venue1"),
                         new TourDate("Sydney", LocalDate.of(2023,6,3), "Venue2")
                 )));
         Tour tour2 = new Tour(41L, "RockTour",
-                new ArrayList<String>(List.of("RockBand1","PopBand2")),
+                new ArrayList<Long>(List.of(0L, 2L)),
                 new ArrayList<TourDate>(List.of(
                         new TourDate("London", LocalDate.of(2023,3,3), "Venue1"),
                         new TourDate("Amsterdam", LocalDate.of(2023,3,12), "Venue2")
                 )));
         Tour tour3 = new Tour(32L, "PopTour2",
-                new ArrayList<String>(List.of("PopBand1","RockBand2")),
+                new ArrayList<Long>(List.of(2L, 1L)),
                 new ArrayList<TourDate>(List.of(
                         new TourDate("Dublin", LocalDate.of(2023,4,5), "Venue1"),
                         new TourDate("Belfast", LocalDate.of(2023,4,6), "Venue2")

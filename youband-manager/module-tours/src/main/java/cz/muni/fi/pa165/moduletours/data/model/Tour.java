@@ -1,18 +1,17 @@
 package cz.muni.fi.pa165.moduletours.data.model;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Tour {
     private Long id;
     private String name;
-    private ArrayList<String> bandList;
+    private ArrayList<Long> bandList;
     private ArrayList<TourDate> tourDates;
 
     public Tour() {}
 
-    public Tour(Long id, String name, ArrayList<String> bandList, ArrayList<TourDate> tourDates) {
+    public Tour(Long id, String name, ArrayList<Long> bandList, ArrayList<TourDate> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -35,11 +34,11 @@ public class Tour {
         this.name = name;
     }
 
-    public ArrayList<String> getBandList() {
+    public ArrayList<Long> getBandList() {
         return bandList;
     }
 
-    public void setBandList(ArrayList<String> bandList) {
+    public void setBandList(ArrayList<Long> bandList) {
         this.bandList = bandList;
     }
 
