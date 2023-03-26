@@ -49,8 +49,9 @@ public class AlbumRepository {
     public Album updateAlbum(Long id, Album updated) {
         Album album = findById(id);
         album.setName(updated.getName());
-        album.setGenre(updated.getGenre());
         album.setReleaseDate(updated.getReleaseDate());
+        album.setGenre(updated.getGenre());
+        album.setSongs(updated.getSongs());
 
         return album;
     }
