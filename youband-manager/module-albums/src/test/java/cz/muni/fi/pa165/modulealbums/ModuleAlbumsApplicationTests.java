@@ -108,17 +108,9 @@ class ModuleAlbumsApplicationTests {
     void testAlbumCreateInvalidSongFormat() throws Exception {
         log.debug("testAlbumCreateInvalidSongFormat running");
 
-        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.getAll().get(0));
-        JSONObject json = new JSONObject(objectMapper.writeValueAsString(expectedResponse));
-
-        JSONObject jsonSong = new JSONObject();
-        jsonSong.put("title", "INVALID");
-        json.remove("songs");
-        json.put("songs", List.of(jsonSong));
-
         mockMvc.perform(post("/api/albums")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content("{\"releaseDate\":\"1993-09-21\",\"bandId\":0,\"songs\":[{\"title\":\"INVALID\"}],\"name\":\"In Utero\",\"genre\":\"ROCK\",\"id\":100}"))
                 .andExpect(status().isBadRequest());
     }
 
