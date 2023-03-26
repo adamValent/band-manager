@@ -21,11 +21,11 @@ public class AlbumRepository {
     private void init() {
         Album album1 = new Album(100L, "In Utero", LocalDate.of(1993, 9, 21), Genre.ROCK, new ArrayList<>(
                 List.of(new Song(1L, "Dumb", Duration.ofSeconds(120)),
-                        new Song(2L, "Rape me", Duration.ofSeconds(123)))));
+                        new Song(2L, "Rape me", Duration.ofSeconds(123)))), 0L);
         Album album2 = new Album(200L, "Violator", LocalDate.of(1990, 3, 19), Genre.ROCK, new ArrayList<>(
                 List.of(new Song(1L, "Personal Jesus", Duration.ofSeconds(295)),
                         new Song(2L, "Sweetest perfection", Duration.ofSeconds(282)),
-                        new Song(3L, "Waiting for the night", Duration.ofSeconds(367)))));
+                        new Song(3L, "Waiting for the night", Duration.ofSeconds(367)))), 0L);
         albums.add(album1);
         albums.add(album2);
     }
@@ -49,8 +49,9 @@ public class AlbumRepository {
     public Album updateAlbum(Long id, Album updated) {
         Album album = findById(id);
         album.setName(updated.getName());
-        album.setGenre(updated.getGenre());
         album.setReleaseDate(updated.getReleaseDate());
+        album.setGenre(updated.getGenre());
+        album.setSongs(updated.getSongs());
 
         return album;
     }

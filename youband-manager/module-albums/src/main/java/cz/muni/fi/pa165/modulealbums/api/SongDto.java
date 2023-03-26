@@ -1,21 +1,21 @@
-package cz.muni.fi.pa165.modulealbums.data.model;
+package cz.muni.fi.pa165.modulealbums.api;
 
 import jakarta.validation.constraints.NotNull;
 
-import java.io.Serializable;
 import java.time.Duration;
 import java.util.Objects;
 
-public class Song implements Serializable {
+public class SongDto {
     private Long id;
     @NotNull
     private String title;
     @NotNull
     private Duration duration;
 
-    public Song() {}
+    public SongDto() {
+    }
 
-    public Song(Long id, @NotNull String title, @NotNull Duration duration) {
+    public SongDto(Long id, @NotNull String title, @NotNull Duration duration) {
         this.id = id;
         this.title = title;
         this.duration = duration;
@@ -46,22 +46,22 @@ public class Song implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "SongDto{" + "id=" + id + ", title='" + title + '\'' + ", duration=" + duration + '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Song song = (Song) o;
-        return Objects.equals(id, song.id) && Objects.equals(title, song.title) && Objects.equals(duration, song.duration);
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        SongDto songDto = (SongDto) o;
+        return Objects.equals(id, songDto.id) && title.equals(songDto.title) && duration.equals(songDto.duration);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, title, duration);
-    }
-
-    @Override
-    public String toString() {
-        return "Song{" + "id=" + id +
-                ", title='" + title + '\'' +
-                ", duration=" + duration + '}';
     }
 }
