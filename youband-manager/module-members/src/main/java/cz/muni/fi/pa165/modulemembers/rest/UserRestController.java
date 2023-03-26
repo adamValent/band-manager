@@ -23,40 +23,53 @@ public class UserRestController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<UserDto> findById(@PathVariable("id") Long id) {
-        try{
+        try {
             return ResponseEntity.ok(userFacade.findById(id));
-        }catch (ResourceNotFoundException ex){
+        } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAll(){
+    public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(userFacade.getAll());
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userFacade.createUser(userDto));
     }
 
-    @PutMapping(path="/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto){
-        try{
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
+                                              @Valid @RequestBody UserDto userDto) {
+        try {
             return ResponseEntity.ok(userFacade.updateUser(id, userDto));
-        } catch (ResourceNotFoundException ex){
+        } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-    @DeleteMapping(path="/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id){
-        try{
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+        try {
             userFacade.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex){
+        } catch (ResourceNotFoundException ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public ResponseEntity<Void> registerUser() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> loginUser() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> logoutUser() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
