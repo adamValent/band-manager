@@ -19,14 +19,6 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
         "200":
           description: OK
           content:
@@ -51,14 +43,6 @@ paths:
               $ref: '#/components/schemas/BandDto'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
         "200":
           description: OK
           content:
@@ -77,14 +61,6 @@ paths:
           type: integer
           format: int64
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
         "200":
           description: OK
           content:
@@ -97,14 +73,6 @@ paths:
       - band-rest-controller
       operationId: findAll
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
         "200":
           description: OK
           content:
@@ -124,14 +92,6 @@ paths:
               $ref: '#/components/schemas/BandDto'
         required: true
       responses:
-        "400":
-          description: Bad Request
-          content:
-            '*/*':
-              schema:
-                type: object
-                additionalProperties:
-                  type: string
         "200":
           description: OK
           content:
@@ -176,9 +136,14 @@ components:
           - VOCAL
         image:
           type: array
+          example:
+          - "67"
+          - "7"
+          - "89"
           items:
             type: string
             format: byte
+            example: WyI2NyIsIjciLCI4OSJd
         managerId:
           type: integer
           description: manager ID
