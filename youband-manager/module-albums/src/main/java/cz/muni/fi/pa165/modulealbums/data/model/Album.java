@@ -14,14 +14,17 @@ public class Album implements Serializable {
     private Genre genre;
     private List<Song> songs;
 
+    private long bandId;
+
     public Album() {}
 
-    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs) {
+    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs, long bandId) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.songs = songs;
+        this.bandId = bandId;
     }
 
     public Long getId() {
@@ -64,6 +67,14 @@ public class Album implements Serializable {
         this.songs = songs;
     }
 
+    public long getBandId() {
+        return bandId;
+    }
+
+    public void setBandId(long bandId) {
+        this.bandId = bandId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -85,6 +96,7 @@ public class Album implements Serializable {
                 ", name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", genre=" + genre +
-                ", songs=" + songs + '}';
+                ", songs=" + songs +
+                ", bandId=" + bandId + '}';
     }
 }

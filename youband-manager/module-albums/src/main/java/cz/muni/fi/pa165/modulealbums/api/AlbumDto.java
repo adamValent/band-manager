@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulealbums.api;
 
 import cz.muni.fi.pa165.modulealbums.data.enums.Genre;
-import cz.muni.fi.pa165.modulealbums.data.model.Song;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,55 +19,67 @@ public class AlbumDto {
     @Valid
     private List<SongDto> songs;
 
+    private long bandId;
+
     public AlbumDto(Long id, @NotNull String name,
                     @NotNull LocalDate releaseDate,
                     @NotNull Genre genre,
-                    List<SongDto> songs) {
+                    List<SongDto> songs,
+                    long bandId) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.songs = songs;
+        this.bandId = bandId;
     }
 
     public Long getId() {
         return id;
     }
 
-    public @NotNull String getName() {
-        return name;
-    }
-
-    public @NotNull LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public @NotNull Genre getGenre() {
-        return genre;
-    }
-
-    public List<SongDto> getSongs() {
-        return songs;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public @NotNull String getName() {
+        return name;
     }
 
     public void setName(@NotNull String name) {
         this.name = name;
     }
 
+    public @NotNull LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
     public void setReleaseDate(@NotNull LocalDate releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public @NotNull Genre getGenre() {
+        return genre;
     }
 
     public void setGenre(@NotNull Genre genre) {
         this.genre = genre;
     }
 
+    public List<SongDto> getSongs() {
+        return songs;
+    }
+
     public void setSongs(List<SongDto> songs) {
         this.songs = songs;
+    }
+
+    public long getBandId() {
+        return bandId;
+    }
+
+    public void setBandId(long bandId) {
+        this.bandId = bandId;
     }
 
     @Override
@@ -90,6 +101,7 @@ public class AlbumDto {
                 ", name='" + name + '\'' +
                 ", releaseLocalDate=" + releaseDate +
                 ", genre=" + genre +
-                ", songs=" + songs + '}';
+                ", songs=" + songs +
+                ", bandId=" + bandId + '}';
     }
 }

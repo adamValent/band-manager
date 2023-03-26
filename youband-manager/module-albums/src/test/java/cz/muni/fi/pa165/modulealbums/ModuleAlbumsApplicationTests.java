@@ -145,7 +145,7 @@ class ModuleAlbumsApplicationTests {
                         Genre.ROCK,
                         List.of(new SongDto(1L, "Personal Jesus", Duration.ofSeconds(295)),
                                 new SongDto(2L, "Sweetest perfection", Duration.ofSeconds(282)),
-                                new SongDto(3L, "Waiting for the night", Duration.ofSeconds(367))));
+                                new SongDto(3L, "Waiting for the night", Duration.ofSeconds(367))), 0L);
 
 
         String response = mockMvc.perform(post("/api/albums")
