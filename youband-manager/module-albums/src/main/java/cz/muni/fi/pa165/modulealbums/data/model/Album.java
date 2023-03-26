@@ -3,22 +3,25 @@ package cz.muni.fi.pa165.modulealbums.data.model;
 import cz.muni.fi.pa165.modulealbums.data.enums.Genre;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 public class Album implements Serializable {
     private Long id;
     private String name;
-    private Date releaseDate;
+    private LocalDate releaseDate;
     private Genre genre;
+    private List<Song> songs;
 
     public Album() {}
 
-    public Album(Long id, String name, Date releaseDate, Genre genre) {
+    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
+        this.songs = songs;
     }
 
     public Long getId() {
@@ -29,12 +32,16 @@ public class Album implements Serializable {
         return name;
     }
 
-    public Date getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
     public Genre getGenre() {
         return genre;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
     }
 
     public void setId(Long id) {
@@ -45,12 +52,16 @@ public class Album implements Serializable {
         this.name = name;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     @Override
@@ -70,6 +81,10 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "Album{" + "id=" + id + ", name='" + name + '\'' + ", releaseDate=" + releaseDate + ", genre=" + genre + '}';
+        return "Album{" + "id=" + id +
+                ", name='" + name + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", genre=" + genre +
+                ", songs=" + songs + '}';
     }
 }
