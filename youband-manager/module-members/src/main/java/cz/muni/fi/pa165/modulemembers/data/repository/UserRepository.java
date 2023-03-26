@@ -37,15 +37,15 @@ public class UserRepository {
         return users;
     }
 
-    public User CreateUser(User newUser) {
+    public User createUser(User newUser) {
         newUser.setId(users.get(users.size() - 1).getId() + 1);
         users.add(newUser);
+
         return newUser;
     }
 
     public User updateUser(Long id, User updated) {
         User user = findById(id);
-
         user.setFirstName(updated.getFirstName());
         user.setLastName(updated.getLastName());
         user.setEmail(updated.getEmail());
