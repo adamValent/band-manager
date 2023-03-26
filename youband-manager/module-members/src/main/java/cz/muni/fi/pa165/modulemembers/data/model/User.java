@@ -12,15 +12,18 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private String password;
 
     public User() {}
 
-    public User(Long id, UserType userType, String firstName, String lastName, String email) {
+    public User(Long id, UserType userType, String firstName, String lastName, String email,
+                String password) {
         this.id = id;
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -63,20 +66,27 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof User user)) {
-            return false;
-        }
-        return this.getId().equals(user.getId());
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
+        User user = (User) o;
+        return Objects.equals(id, user.id) && userType == user.userType
+               && firstName.equals(user.firstName) && lastName.equals(user.lastName)
+               && email.equals(user.email) && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id, userType, firstName, lastName, email, password);
     }
 
     @Override

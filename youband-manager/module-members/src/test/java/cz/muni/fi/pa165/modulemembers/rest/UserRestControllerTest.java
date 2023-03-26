@@ -64,7 +64,7 @@ class UserRestControllerTest {
     @Test
     void createUserOk() throws Exception {
         UserDto expectedResponse = userMapper.mapToDto(
-                new User(null, UserType.BAND_MEMBER, "John", "Person", "john@person.com"));
+                new User(null, UserType.BAND_MEMBER, "John", "Person", "john@person.com", password));
         String response = mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
@@ -87,7 +87,7 @@ class UserRestControllerTest {
     @Test
     void updateUserOk() throws Exception {
         UserDto expectedResponse = userMapper.mapToDto(
-                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com"));
+                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com", password));
         String response = mockMvc.perform(put("/api/users/20")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))

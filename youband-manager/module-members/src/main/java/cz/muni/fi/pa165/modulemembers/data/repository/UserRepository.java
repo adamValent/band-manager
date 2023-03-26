@@ -15,10 +15,14 @@ public class UserRepository {
 
     @PostConstruct
     private void init() {
-        User user1 = new User(100L, UserType.MANAGER, "manager", "one-hundred", "manager@mail.com");
-        User user2 = new User(10L, UserType.BAND_MEMBER, "member1", "ten", "member1@mail.com");
-        User user3 = new User(20L, UserType.BAND_MEMBER, "member2", "twenty", "member2@mail.com");
-        User user4 = new User(30L, UserType.BAND_MEMBER, "member3", "thirty", "member3@mail.com");
+        User user1 = new User(100L, UserType.MANAGER, "manager", "one-hundred", "manager@mail.com",
+                              "password");
+        User user2 = new User(10L, UserType.BAND_MEMBER, "member1", "ten", "member1@mail.com",
+                              "123456");
+        User user3 = new User(20L, UserType.BAND_MEMBER, "member2", "twenty", "member2@mail.com",
+                              "weakpwd");
+        User user4 = new User(30L, UserType.BAND_MEMBER, "member3", "thirty", "member3@mail.com",
+                              "juhujuhu");
 
         users.add(user1);
         users.add(user2);
@@ -30,7 +34,7 @@ public class UserRepository {
         return users.stream()
                     .filter(user -> user.getId().equals(id))
                     .findFirst()
-                    .orElseThrow(() -> new ResourceNotFoundException("Person was not found."));
+                    .orElseThrow(() -> new ResourceNotFoundException("User was not found."));
     }
 
     public List<User> getAll() {
@@ -49,6 +53,7 @@ public class UserRepository {
         user.setFirstName(updated.getFirstName());
         user.setLastName(updated.getLastName());
         user.setEmail(updated.getEmail());
+        user.setPassword(updated.getPassword());
 
         return user;
     }
