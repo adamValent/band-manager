@@ -11,7 +11,10 @@ public class SongDto {
     private String title;
     @NotNull
     private Duration duration;
-    
+
+    public SongDto() {
+    }
+
     public SongDto(Long id, @NotNull String title, @NotNull Duration duration) {
         this.id = id;
         this.title = title;

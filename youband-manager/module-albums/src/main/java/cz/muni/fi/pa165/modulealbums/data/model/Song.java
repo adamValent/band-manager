@@ -1,17 +1,21 @@
 package cz.muni.fi.pa165.modulealbums.data.model;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Objects;
 
 public class Song implements Serializable {
     private Long id;
+    @NotNull
     private String title;
+    @NotNull
     private Duration duration;
 
     public Song() {}
 
-    public Song(Long id, String title, Duration duration) {
+    public Song(Long id, @NotNull String title, @NotNull Duration duration) {
         this.id = id;
         this.title = title;
         this.duration = duration;
@@ -21,11 +25,11 @@ public class Song implements Serializable {
         return id;
     }
 
-    public String getTitle() {
+    public @NotNull String getTitle() {
         return title;
     }
 
-    public Duration getDuration() {
+    public @NotNull Duration getDuration() {
         return duration;
     }
 
@@ -33,27 +37,25 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(@NotNull String title) {
         this.title = title;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(@NotNull Duration duration) {
         this.duration = duration;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Song song = (Song) obj;
-        return id.equals(song.id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Song song = (Song) o;
+        return Objects.equals(id, song.id) && Objects.equals(title, song.title) && Objects.equals(duration, song.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, title, duration);
     }
 
     @Override
