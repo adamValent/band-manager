@@ -71,24 +71,25 @@ public class UserDto {
     }
 
     @Override
-    public String toString() {
-        return "UserDetailViewDto{" + "id=" + id +
-                ", userType=" + userType +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + "'}";
-    }
-
-    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
         UserDto userDto = (UserDto) o;
-        return userType == userDto.userType && firstName.equals(userDto.firstName) && lastName.equals(userDto.lastName) && email.equals(userDto.email);
+        return userType == userDto.userType && firstName.equals(userDto.firstName)
+               && lastName.equals(userDto.lastName) && email.equals(userDto.email);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(userType, firstName, lastName, email);
+    }
+
+    @Override
+    public String toString() {
+        return "UserDetailViewDto{" + "id=" + id +
+               ", userType=" + userType +
+               ", firstName='" + firstName + '\'' +
+               ", lastName='" + lastName + '\'' +
+               ", email='" + email + "'}";
     }
 }
