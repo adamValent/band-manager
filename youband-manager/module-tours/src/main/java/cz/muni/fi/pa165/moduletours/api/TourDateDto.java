@@ -13,6 +13,8 @@ public class TourDateDto {
     @NotNull
     private String venue;
 
+    public TourDateDto() {
+    }
 
     public TourDateDto(@NotNull String city,
                        @NotNull LocalDate date,

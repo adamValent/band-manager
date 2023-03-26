@@ -16,6 +16,9 @@ public class TourDto {
     @NotNull
     private List<TourDateDto> tourDates;
 
+    public TourDto() {
+    }
+
     public TourDto(Long id,
                    @NotNull String name,
                    @NotNull List<Long> bandList,
