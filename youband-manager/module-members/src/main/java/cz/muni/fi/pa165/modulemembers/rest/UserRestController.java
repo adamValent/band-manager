@@ -50,7 +50,7 @@ public class UserRestController {
     }
 
     @DeleteMapping(path="/{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id){
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id){
         try{
             userFacade.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.OK);

@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.modulemembers.api;
 import cz.muni.fi.pa165.modulemembers.data.enums.UserType;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 public class UserDto {
     private Long id;
     @NotNull
@@ -75,5 +77,18 @@ public class UserDto {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + "'}";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return userType == userDto.userType && firstName.equals(userDto.firstName) && lastName.equals(userDto.lastName) && email.equals(userDto.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userType, firstName, lastName, email);
     }
 }
