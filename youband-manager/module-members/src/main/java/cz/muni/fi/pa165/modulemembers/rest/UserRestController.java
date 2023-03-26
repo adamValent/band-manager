@@ -60,14 +60,17 @@ public class UserRestController {
         }
     }
 
-    public ResponseEntity<Void> registerUser() {
+    @PostMapping("register")
+    public ResponseEntity<Void> registerUser(@Valid @RequestBody UserDto user) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> loginUser() {
+    @PostMapping("login")
+    public ResponseEntity<Void> loginUser(@Valid @RequestBody UserDto user) {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("logout")
     public ResponseEntity<Void> logoutUser() {
         return new ResponseEntity<>(HttpStatus.OK);
     }

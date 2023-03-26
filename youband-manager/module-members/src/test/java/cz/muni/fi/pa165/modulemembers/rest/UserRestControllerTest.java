@@ -64,7 +64,8 @@ class UserRestControllerTest {
     @Test
     void createUserOk() throws Exception {
         UserDto expectedResponse = userMapper.mapToDto(
-                new User(null, UserType.BAND_MEMBER, "John", "Person", "john@person.com", password));
+                new User(null, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
+                        "password"));
         String response = mockMvc.perform(post("/api/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
@@ -87,7 +88,8 @@ class UserRestControllerTest {
     @Test
     void updateUserOk() throws Exception {
         UserDto expectedResponse = userMapper.mapToDto(
-                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com", password));
+                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
+                        "password"));
         String response = mockMvc.perform(put("/api/users/20")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
@@ -117,5 +119,33 @@ class UserRestControllerTest {
     void deleteUserNotFound() throws Exception {
         mockMvc.perform(delete("/api/users/0"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void registerUser() throws Exception {
+        UserDto user = userMapper.mapToDto(
+                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
+                        "password"));
+        mockMvc.perform(post("/api/users/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void loginUser() throws Exception {
+        UserDto user = userMapper.mapToDto(
+                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
+                        "password"));
+        mockMvc.perform(post("/api/users/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void logoutUser() throws Exception {
+        mockMvc.perform(post("/api/users/logout"))
+                .andExpect(status().isOk());
     }
 }
