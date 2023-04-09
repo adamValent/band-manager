@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.moduleemail.rest.exceptionhandling;
 
+import cz.muni.fi.pa165.moduleemail.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,15 @@ import java.util.Map;
 public class CustomRestGlobalExceptionHandling {
 
     private static final UrlPathHelper URL_PATH_HELPER = new UrlPathHelper();
+
+    @ExceptionHandler({ResourceNotFoundException.class})
+    public ResponseEntity<ApiError> handleResourceNotFound(final ResourceNotFoundException ex, final HttpServletRequest request) {
+        final ApiError apiError = new ApiError(
+                HttpStatus.NOT_FOUND,
+                ex.getLocalizedMessage(),
+                URL_PATH_HELPER.getRequestUri(request));
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class, IllegalStateException.class})
     public ResponseEntity<Map<String, String>> handleValidationExceptions(

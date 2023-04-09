@@ -12,16 +12,19 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     private final JavaMailSender emailSender;
+    private final BandService bandService;
+    private final TourService tourService;
 
     @Autowired
-    public EmailService(JavaMailSender emailSender) {
+    public EmailService(JavaMailSender emailSender,
+                        BandService bandService,
+                        TourService tourService) {
         this.emailSender = emailSender;
+        this.bandService = bandService;
+        this.tourService = tourService;
     }
 
     public void sendEmail(EmailDto emailDto) {
-        System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(emailDto);
-
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("youband.manager@gmail.com");
         message.setTo(emailDto.getRecipients());
@@ -32,23 +35,26 @@ public class EmailService {
 
     public void sendEmailToAllBandMembers(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                           Long bandId) {
-        System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(bandId);
-        System.out.println(emailWithoutRecipientsDto);
+        sendEmail(new EmailDto(
+                emailWithoutRecipientsDto.getSubject(),
+                bandService.getMembersEmailFromBandByiD(bandId).toArray(String[]::new),
+                emailWithoutRecipientsDto.getEmailBody()
+        ));
     }
 
     public void sendEmailToBandManager(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                        Long bandId) {
-        System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(bandId);
-        System.out.println(emailWithoutRecipientsDto);
+        sendEmail(new EmailDto(
+                emailWithoutRecipientsDto.getSubject(),
+                new String[]{bandService.getManagerEmailFromBandByiD(bandId)},
+                emailWithoutRecipientsDto.getEmailBody()
+        ));
     }
 
     public void sendEmailToTourBand(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                     Long tourId) {
-        System.out.println("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        System.out.println(tourId);
-        System.out.println(emailWithoutRecipientsDto);
+        sendEmailToAllBandMembers(emailWithoutRecipientsDto,
+                tourService.getBandIdFromTourId(tourId));
     }
 
 }
