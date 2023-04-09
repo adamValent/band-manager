@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.util.UrlPathHelper;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,15 @@ import java.util.Map;
 public class CustomRestGlobalExceptionHandling {
 
     private static final UrlPathHelper URL_PATH_HELPER = new UrlPathHelper();
+
+    @ExceptionHandler({IOException.class})
+    public ResponseEntity<ApiError> handleIOException(final ResourceNotFoundException ex, final HttpServletRequest request) {
+        final ApiError apiError = new ApiError(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                ex.getLocalizedMessage(),
+                URL_PATH_HELPER.getRequestUri(request));
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
     @ExceptionHandler({ResourceNotFoundException.class})
     public ResponseEntity<ApiError> handleResourceNotFound(final ResourceNotFoundException ex, final HttpServletRequest request) {
