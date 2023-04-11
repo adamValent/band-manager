@@ -24,6 +24,7 @@
 		<module>module-tours</module>
 		<module>module-data-access</module>
 		<module>module-pdf</module>
+		<module>module-core</module>
 	</modules>
 	<dependencies>
 		<dependency>
