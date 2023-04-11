@@ -18,7 +18,6 @@
 	</properties>
 	<packaging>pom</packaging>
 	<modules>
-		<module>module-members</module>
 		<module>module-tours</module>
 		<module>module-pdf</module>
 		<module>module-core</module>
