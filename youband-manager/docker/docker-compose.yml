@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+
+  db-users:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: users
+      ENCODING: "UTF8"
+      TABLESPACE: "pg_default"
+      CONNECTION LIMIT: "-1"
+      TEMPLATE: "template0"
+    command: -p 5433
+    volumes:
+      - postgres-data_users:/var/lib/postgresql/data
+
+
+  db-core:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: core
+      ENCODING: "UTF8"
+      TABLESPACE: "pg_default"
+      CONNECTION LIMIT: "-1"
+      TEMPLATE: "template0"
+    command: -p 5432
+    volumes:
+      - postgres-data_core:/var/lib/postgresql/data
+
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "youband_manager@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgadmin_data:
+  postgres-data_core:
+  postgres-data_users:
