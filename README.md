@@ -16,6 +16,10 @@
 
 Music band manager is a simple system for managing music bands.
 
+### How to run project?
+
+Run command ```docker-compose up``` in directory containing file docker-compose.yml.
+
 ## Roles
 
 The system has two authorization roles - **Manager** and **Band Member**.
