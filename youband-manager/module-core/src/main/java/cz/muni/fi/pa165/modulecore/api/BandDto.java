@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.api;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Style;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,8 +13,8 @@ public class BandDto {
     @Schema(name = "name", example = "Misty", description = "full name", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
     @NotNull
-    @Schema(name = "style", example = "ROCK", description = "band style", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Style style;
+    @Schema(name = "genre", example = "ROCK", description = "band genre", requiredMode = Schema.RequiredMode.REQUIRED)
+    private Genre genre;
     @NotNull
     @Schema(name = "image", example = "[\"67\",\"7\",\"89\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private Byte[] image;
@@ -24,12 +24,12 @@ public class BandDto {
 
     public BandDto(Long id,
                    @NotNull String name,
-                   @NotNull Style style,
+                   @NotNull Genre genre,
                    @NotNull Byte[] image,
                    @NotNull Long managerId) {
         this.id = id;
         this.name = name;
-        this.style = style;
+        this.genre = genre;
         this.image = image;
         this.managerId = managerId;
     }
@@ -50,12 +50,12 @@ public class BandDto {
         this.name = name;
     }
 
-    public @NotNull Style getStyle() {
-        return style;
+    public @NotNull Genre getGenre() {
+        return genre;
     }
 
-    public void setStyle(@NotNull Style style) {
-        this.style = style;
+    public void setGenre(@NotNull Genre genre) {
+        this.genre = genre;
     }
 
     public @NotNull Byte[] getImage() {
@@ -83,13 +83,13 @@ public class BandDto {
             return false;
         }
         BandDto bandDto = (BandDto) o;
-        return Objects.equals(id, bandDto.id) && name.equals(bandDto.name) && style == bandDto.style
+        return Objects.equals(id, bandDto.id) && name.equals(bandDto.name) && genre == bandDto.genre
                 && Arrays.equals(image, bandDto.image) && managerId.equals(bandDto.managerId);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, style, managerId);
+        int result = Objects.hash(id, name, genre, managerId);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }
@@ -99,7 +99,7 @@ public class BandDto {
         return "Band{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", style=" + style +
+                ", genre=" + genre +
                 ", image=" + Arrays.toString(image) +
                 ", managerId=" + managerId +
                 '}';

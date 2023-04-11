@@ -1,7 +1,7 @@
-package cz.muni.fi.pa165.modulealbums.mappers;
+package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulealbums.api.AlbumDto;
-import cz.muni.fi.pa165.modulealbums.data.model.Album;
+import cz.muni.fi.pa165.modulecore.api.AlbumDto;
+import cz.muni.fi.pa165.modulecore.data.model.Album;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AlbumMapper {
     AlbumDto mapToDto(Album album);
+
     Album mapFromDto(AlbumDto albumDto);
 
     List<AlbumDto> mapToList(List<Album> albums);

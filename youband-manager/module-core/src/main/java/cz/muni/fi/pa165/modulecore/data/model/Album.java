@@ -1,6 +1,6 @@
-package cz.muni.fi.pa165.modulealbums.data.model;
+package cz.muni.fi.pa165.modulecore.data.model;
 
-import cz.muni.fi.pa165.modulealbums.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -16,7 +16,8 @@ public class Album implements Serializable {
 
     private long bandId;
 
-    public Album() {}
+    public Album() {
+    }
 
     public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs, long bandId) {
         this.id = id;
@@ -31,36 +32,36 @@ public class Album implements Serializable {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public LocalDate getReleaseDate() {
-        return releaseDate;
-    }
-
-    public Genre getGenre() {
-        return genre;
-    }
-
-    public List<Song> getSongs() {
-        return songs;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+
     public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
+    public Genre getGenre() {
+        return genre;
+    }
+
     public void setGenre(Genre genre) {
         this.genre = genre;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
     }
 
     public void setSongs(List<Song> songs) {

@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.BandDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Style;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
 import cz.muni.fi.pa165.modulecore.mapper.BandMapper;
 import org.json.JSONObject;
@@ -103,7 +103,7 @@ class BandRestControllerTest {
     void testBandCreateOK() throws Exception {
         log.debug("testBandCreateOK running");
 
-        BandDto expectedResponse = new BandDto(null, "BestBand", Style.FUNK, new Byte[0], 100L);
+        BandDto expectedResponse = new BandDto(null, "BestBand", Genre.FUNK, new Byte[0], 100L);
         String response = mockMvc.perform(post("/bands").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 expectedResponse)))

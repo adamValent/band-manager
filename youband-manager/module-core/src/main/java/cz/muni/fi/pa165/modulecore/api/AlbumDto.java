@@ -1,6 +1,6 @@
-package cz.muni.fi.pa165.modulealbums.api;
+package cz.muni.fi.pa165.modulecore.api;
 
-import cz.muni.fi.pa165.modulealbums.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

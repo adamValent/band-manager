@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.modulealbums.api;
+package cz.muni.fi.pa165.modulecore.api;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -25,20 +25,20 @@ public class SongDto {
         return id;
     }
 
-    public @NotNull String getTitle() {
-        return title;
-    }
-
-    public @NotNull Duration getDuration() {
-        return duration;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
+    public @NotNull String getTitle() {
+        return title;
+    }
+
     public void setTitle(@NotNull String title) {
         this.title = title;
+    }
+
+    public @NotNull Duration getDuration() {
+        return duration;
     }
 
     public void setDuration(@NotNull Duration duration) {

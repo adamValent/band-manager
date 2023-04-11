@@ -1,9 +1,8 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Style;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
-import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,13 +12,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class BandRepository {
     private final List<Band> bandsMockData = new CopyOnWriteArrayList<>();
 
-    @PostConstruct
-    private void init() {
-
+    public BandRepository() {
         Band band1 = new Band(
                 1L,
                 "Band1",
-                Style.COUNTRY,
+                Genre.COUNTRY,
                 new Byte[0],
                 1L
         );
@@ -27,7 +24,7 @@ public class BandRepository {
         Band band2 = new Band(
                 2L,
                 "Band2",
-                Style.COUNTRY,
+                Genre.COUNTRY,
                 new Byte[0],
                 1L
         );
@@ -35,7 +32,7 @@ public class BandRepository {
         Band band3 = new Band(
                 3L,
                 "Band3",
-                Style.COUNTRY,
+                Genre.COUNTRY,
                 new Byte[0],
                 1L
         );
@@ -43,7 +40,7 @@ public class BandRepository {
         Band band4 = new Band(
                 4L,
                 "Band4",
-                Style.COUNTRY,
+                Genre.COUNTRY,
                 new Byte[0],
                 1L
         );
@@ -76,7 +73,7 @@ public class BandRepository {
         Band bandOld = findById(id);
 
         bandOld.setName(bandUpdated.getName());
-        bandOld.setStyle(bandUpdated.getStyle());
+        bandOld.setGenre(bandUpdated.getGenre());
         bandOld.setImage(bandUpdated.getImage());
         bandOld.setManagerId(bandUpdated.getManagerId());
 

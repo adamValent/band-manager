@@ -1,10 +1,9 @@
-package cz.muni.fi.pa165.modulealbums.data.repository;
+package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulealbums.data.enums.Genre;
-import cz.muni.fi.pa165.modulealbums.data.model.Album;
-import cz.muni.fi.pa165.modulealbums.data.model.Song;
-import cz.muni.fi.pa165.modulealbums.exceptions.ResourceNotFoundException;
-import jakarta.annotation.PostConstruct;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.model.Album;
+import cz.muni.fi.pa165.modulecore.data.model.Song;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.time.Duration;
@@ -17,8 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class AlbumRepository {
     private final List<Album> albums = new CopyOnWriteArrayList<>();
 
-    @PostConstruct
-    private void init() {
+    public AlbumRepository() {
         Album album1 = new Album(100L, "In Utero", LocalDate.of(1993, 9, 21), Genre.ROCK, new ArrayList<>(
                 List.of(new Song(1L, "Dumb", Duration.ofSeconds(120)),
                         new Song(2L, "Rape me", Duration.ofSeconds(123)))), 0L);
@@ -32,12 +30,14 @@ public class AlbumRepository {
 
     public Album findById(Long id) {
         return albums.stream()
-                     .filter(album -> album.getId().equals(id))
-                     .findFirst()
-                     .orElseThrow(() -> new ResourceNotFoundException("Album was not found."));
+                .filter(album -> album.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Album was not found."));
     }
 
-    public List<Album> getAll() {return albums;}
+    public List<Album> getAll() {
+        return albums;
+    }
 
     public Album createAlbum(Album newAlbum) {
         newAlbum.setId(albums.get(albums.size() - 1).getId() + 1);
@@ -60,5 +60,4 @@ public class AlbumRepository {
         Album album = findById(id);
         albums.remove(album);
     }
-
 }

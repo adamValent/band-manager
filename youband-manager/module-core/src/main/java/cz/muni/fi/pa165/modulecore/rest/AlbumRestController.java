@@ -1,8 +1,8 @@
-package cz.muni.fi.pa165.modulealbums.rest;
+package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulealbums.api.AlbumDto;
-import cz.muni.fi.pa165.modulealbums.exceptions.ResourceNotFoundException;
-import cz.muni.fi.pa165.modulealbums.facade.AlbumFacade;
+import cz.muni.fi.pa165.modulecore.api.AlbumDto;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
+import cz.muni.fi.pa165.modulecore.facade.AlbumFacade;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/albums")
+@RequestMapping(path = "albums")
 public class AlbumRestController {
     private final AlbumFacade albumFacade;
 
@@ -21,7 +21,7 @@ public class AlbumRestController {
         this.albumFacade = albumFacade;
     }
 
-    @GetMapping(path = "/{id}")
+    @GetMapping(path = "{id}")
     public ResponseEntity<AlbumDto> findById(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(albumFacade.findById(id));
@@ -36,11 +36,11 @@ public class AlbumRestController {
     }
 
     @PostMapping
-    public ResponseEntity<AlbumDto> createAlbum(@Valid @RequestBody AlbumDto albumDto){
+    public ResponseEntity<AlbumDto> createAlbum(@Valid @RequestBody AlbumDto albumDto) {
         return ResponseEntity.ok(albumFacade.createAlbum(albumDto));
     }
 
-    @PutMapping(path = "/{id}")
+    @PutMapping(path = "{id}")
     public ResponseEntity<AlbumDto> updateAlbum(@PathVariable("id") Long id, @Valid @RequestBody AlbumDto albumDto) {
         try {
             return ResponseEntity.ok(albumFacade.updateAlbum(id, albumDto));
@@ -49,7 +49,7 @@ public class AlbumRestController {
         }
     }
 
-    @DeleteMapping(path = "/{id}")
+    @DeleteMapping(path = "{id}")
     public ResponseEntity<AlbumDto> deleteAlbum(@PathVariable("id") Long id) {
         try {
             albumFacade.deleteAlbum(id);
@@ -58,6 +58,4 @@ public class AlbumRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
 }

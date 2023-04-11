@@ -1,8 +1,8 @@
-package cz.muni.fi.pa165.modulealbums.facade;
+package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.modulealbums.api.AlbumDto;
-import cz.muni.fi.pa165.modulealbums.mappers.AlbumMapper;
-import cz.muni.fi.pa165.modulealbums.service.AlbumService;
+import cz.muni.fi.pa165.modulecore.api.AlbumDto;
+import cz.muni.fi.pa165.modulecore.mapper.AlbumMapper;
+import cz.muni.fi.pa165.modulecore.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,13 @@ public class AlbumFacade {
         this.albumMapper = albumMapper;
     }
 
-    public AlbumDto findById(Long id) {return albumMapper.mapToDto(albumService.findById(id));}
+    public AlbumDto findById(Long id) {
+        return albumMapper.mapToDto(albumService.findById(id));
+    }
 
-    public List<AlbumDto> getAll() {return albumMapper.mapToList(albumService.getAll());}
+    public List<AlbumDto> getAll() {
+        return albumMapper.mapToList(albumService.getAll());
+    }
 
     public AlbumDto createAlbum(AlbumDto albumDto) {
         return albumMapper.mapToDto(albumService.createAlbum(albumMapper.mapFromDto(albumDto)));
@@ -31,5 +35,7 @@ public class AlbumFacade {
         return albumMapper.mapToDto(albumService.updateAlbum(id, albumMapper.mapFromDto(albumDto)));
     }
 
-    public void deleteAlbum(Long id) {albumService.deleteAlbum(id);}
+    public void deleteAlbum(Long id) {
+        albumService.deleteAlbum(id);
+    }
 }

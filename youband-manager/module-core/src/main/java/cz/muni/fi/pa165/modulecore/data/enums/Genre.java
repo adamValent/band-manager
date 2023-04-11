@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.data.enums;
 
-public enum Style {
+public enum Genre {
     ROCK,
     POP,
     PUNK,

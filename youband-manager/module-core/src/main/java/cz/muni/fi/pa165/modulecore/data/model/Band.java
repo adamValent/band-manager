@@ -1,23 +1,24 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Style;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Band {
+public class Band implements Serializable {
     private Long id;
     private String name;
-    private Style style;
+    private Genre genre;
     private Byte[] image;
     private Long managerId;
 
     public Band() {
     }
 
-    public Band(Long id, String name, Style style, Byte[] image, Long managerId) {
+    public Band(Long id, String name, Genre genre, Byte[] image, Long managerId) {
         this.id = id;
         this.name = name;
-        this.style = style;
+        this.genre = genre;
         this.image = image;
         this.managerId = managerId;
     }
@@ -46,12 +47,12 @@ public class Band {
         this.name = name;
     }
 
-    public Style getStyle() {
-        return style;
+    public Genre getGenre() {
+        return genre;
     }
 
-    public void setStyle(Style style) {
-        this.style = style;
+    public void setGenre(Genre genre) {
+        this.genre = genre;
     }
 
     public Byte[] getImage() {
@@ -67,7 +68,7 @@ public class Band {
         return "Band{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", style=" + style +
+                ", genre=" + genre +
                 ", image=" + Arrays.toString(image) +
                 ", managerId=" + managerId +
                 '}';
