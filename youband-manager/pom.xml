@@ -24,6 +24,7 @@
 		<module>module-tours</module>
 		<module>module-data-access</module>
 		<module>module-email</module>
+		<module>module-pdf</module>
 	</modules>
 	<dependencies>
 		<dependency>
