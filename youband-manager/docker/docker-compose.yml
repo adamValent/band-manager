@@ -2,6 +2,27 @@ version: "3.8"
 
 services:
 
+  core:
+    build:
+      dockerfile: ../module-core/Dockerfile
+      context: ../module-core
+    volumes:
+      - module-core:/tmp
+
+  pdf:
+    build:
+      dockerfile: ../module-pdf/Dockerfile
+      context: ../module-pdf
+    volumes:
+      - module-pdf:/tmp
+
+  emial:
+    build:
+      dockerfile: ../module-email/Dockerfile
+      context: ../module-email
+    volumes:
+      - module-email:/tmp
+
   db-users:
     image: postgres:latest
     restart: on-failure
@@ -50,3 +71,6 @@ volumes:
   pgadmin_data:
   postgres-data_core:
   postgres-data_users:
+  module-pdf:
+  module-core:
+  module-email:

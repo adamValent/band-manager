@@ -6,9 +6,7 @@
         <groupId>cz.muni.fi.pa165</groupId>
         <artifactId>youband-manager</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cz.muni.fi.pa165</groupId>
     <artifactId>module-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>module-core</name>
