@@ -154,10 +154,8 @@ class BandRestControllerTest {
     @Test
     void testBandUpdateMissingId() throws Exception {
         log.debug("testBandUpdateMissingId running");
-
         BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L));
-
-        mockMvc.perform(put(String.format("/tours/%s",
+        mockMvc.perform(put(String.format("/bands/%s",
                         0L)).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 expectedResponse)))

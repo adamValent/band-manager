@@ -1,7 +1,7 @@
-package cz.muni.fi.pa165.moduletours.service;
+package cz.muni.fi.pa165.modulecore.service;
 
-import cz.muni.fi.pa165.moduletours.data.model.Tour;
-import cz.muni.fi.pa165.moduletours.data.repository.TourRepository;
+import cz.muni.fi.pa165.modulecore.data.model.Tour;
+import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class TourService {
-
     private final TourRepository tourRepository;
 
     @Autowired
@@ -36,5 +35,4 @@ public class TourService {
     public void deleteTour(Long id) {
         tourRepository.deleteTour(id);
     }
-
 }

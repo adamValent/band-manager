@@ -1,11 +1,10 @@
-package cz.muni.fi.pa165.moduletours;
+package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.moduletours.api.TourDateDto;
-import cz.muni.fi.pa165.moduletours.api.TourDto;
-import cz.muni.fi.pa165.moduletours.data.model.TourDate;
-import cz.muni.fi.pa165.moduletours.data.repository.TourRepository;
-import cz.muni.fi.pa165.moduletours.mappers.TourMapper;
+import cz.muni.fi.pa165.modulecore.api.TourDateDto;
+import cz.muni.fi.pa165.modulecore.api.TourDto;
+import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
+import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -23,37 +22,28 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ModuleToursApplicationTests {
+class TourRestControllerTest {
+    private static final Logger log = LoggerFactory.getLogger(TourRestControllerTest.class);
 
-    private static final Logger log = LoggerFactory.getLogger(ModuleToursApplicationTests.class);
-
-    private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
-    private TourRepository tourRepository;
-    private TourMapper tourMapper;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
+    private final TourRepository tourRepository;
+    private final TourMapper tourMapper;
 
     @Autowired
-    public ModuleToursApplicationTests(ObjectMapper objectMapper,
-                                       MockMvc mockMvc,
-                                       TourRepository tourRepository,
-                                       TourMapper tourMapper) {
+    public TourRestControllerTest(ObjectMapper objectMapper,
+                                  MockMvc mockMvc,
+                                  TourRepository tourRepository,
+                                  TourMapper tourMapper) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
         this.tourRepository = tourRepository;
         this.tourMapper = tourMapper;
-    }
-
-
-    @Test
-    void contextLoads() {
     }
 
     @Test
@@ -62,7 +52,7 @@ class ModuleToursApplicationTests {
 
         TourDto expectedResponse = tourMapper.mapToDto(tourRepository.getAll().get(0));
 
-        String response = mockMvc.perform(get(String.format("/api/tours/%s", expectedResponse.getId())))
+        String response = mockMvc.perform(get(String.format("/tours/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
@@ -74,7 +64,7 @@ class ModuleToursApplicationTests {
     void testActivityFindByIdNotFound() throws Exception {
         log.debug("testActivityFindByIdNotFound running");
 
-        mockMvc.perform(get("/api/tours/10000")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/tours/10000")).andExpect(status().isNotFound());
     }
 
 
@@ -82,7 +72,7 @@ class ModuleToursApplicationTests {
     void testActivityGetAll() throws Exception {
         log.debug("testActivityGetAll running");
 
-        String response = mockMvc.perform(get("/api/tours"))
+        String response = mockMvc.perform(get("/tours"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
@@ -97,7 +87,7 @@ class ModuleToursApplicationTests {
         JSONObject json = new JSONObject();
         json.put("name", "INVALID");
 
-        mockMvc.perform(post("/api/tours")
+        mockMvc.perform(post("/tours")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
                 .andExpect(status().isBadRequest());
@@ -115,7 +105,7 @@ class ModuleToursApplicationTests {
                                 new TourDateDto("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
                         ));
 
-        String response = mockMvc.perform(post("/api/tours")
+        String response = mockMvc.perform(post("/tours")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
                 .andExpect(status().isOk())
@@ -133,7 +123,7 @@ class ModuleToursApplicationTests {
         TourDto expectedResponse = tourMapper.mapToDto(tourRepository.findById(41L));
         expectedResponse.setBandList(new ArrayList<>());
 
-        String response = mockMvc.perform(put(String.format("/api/tours/%s", expectedResponse.getId()))
+        String response = mockMvc.perform(put(String.format("/tours/%s", expectedResponse.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
                 .andExpect(status().isOk())
@@ -150,7 +140,7 @@ class ModuleToursApplicationTests {
         JSONObject json = new JSONObject();
         json.put("name", "INVALID");
 
-        mockMvc.perform(put(String.format("/api/tours/%s", tourRepository.getAll().get(0).getId()))
+        mockMvc.perform(put(String.format("/tours/%s", tourRepository.getAll().get(0).getId()))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
                 .andExpect(status().isBadRequest());
@@ -163,7 +153,7 @@ class ModuleToursApplicationTests {
         TourDto expectedResponse = tourMapper.mapToDto(tourRepository.findById(41L));
         expectedResponse.setBandList(new ArrayList<>());
 
-        mockMvc.perform(put(String.format("/api/tours/%s", 0L))
+        mockMvc.perform(put(String.format("/tours/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
                 .andExpect(status().isNotFound());
@@ -175,7 +165,7 @@ class ModuleToursApplicationTests {
 
         TourDto expectedResponse = tourMapper.mapToDto(tourRepository.getAll().get(0));
 
-        mockMvc.perform(delete(String.format("/api/tours/%s", expectedResponse.getId())))
+        mockMvc.perform(delete(String.format("/tours/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
     }
@@ -184,9 +174,7 @@ class ModuleToursApplicationTests {
     void testActivityDeleteNotFound() throws Exception {
         log.debug("testActivityDeleteNotFound running");
 
-        mockMvc.perform(delete(String.format("/api/tours/%s", 0L)))
+        mockMvc.perform(delete(String.format("/tours/%s", 0L)))
                 .andExpect(status().isNotFound());
     }
-
-
 }

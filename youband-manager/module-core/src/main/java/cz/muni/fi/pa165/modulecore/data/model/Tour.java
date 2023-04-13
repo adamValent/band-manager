@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.moduletours.data.model;
+package cz.muni.fi.pa165.modulecore.data.model;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -9,7 +9,8 @@ public class Tour {
     private ArrayList<Long> bandList;
     private ArrayList<TourDate> tourDates;
 
-    public Tour() {}
+    public Tour() {
+    }
 
     public Tour(Long id, String name, ArrayList<Long> bandList, ArrayList<TourDate> tourDates) {
         this.id = id;

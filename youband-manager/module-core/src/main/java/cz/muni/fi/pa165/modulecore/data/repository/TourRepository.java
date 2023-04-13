@@ -1,8 +1,8 @@
-package cz.muni.fi.pa165.moduletours.data.repository;
+package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.moduletours.data.model.Tour;
-import cz.muni.fi.pa165.moduletours.data.model.TourDate;
-import cz.muni.fi.pa165.moduletours.exceptions.ResourceNotFoundException;
+import cz.muni.fi.pa165.modulecore.data.model.Tour;
+import cz.muni.fi.pa165.modulecore.data.model.TourDate;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
@@ -20,20 +20,20 @@ public class TourRepository {
         Tour tour1 = new Tour(100L, "PopTour",
                 new ArrayList<Long>(List.of(0L, 1L)),
                 new ArrayList<TourDate>(List.of(
-                        new TourDate("New York", LocalDate.of(2023,5,5), "Venue1"),
-                        new TourDate("Sydney", LocalDate.of(2023,6,3), "Venue2")
+                        new TourDate("New York", LocalDate.of(2023, 5, 5), "Venue1"),
+                        new TourDate("Sydney", LocalDate.of(2023, 6, 3), "Venue2")
                 )));
         Tour tour2 = new Tour(41L, "RockTour",
                 new ArrayList<Long>(List.of(0L, 2L)),
                 new ArrayList<TourDate>(List.of(
-                        new TourDate("London", LocalDate.of(2023,3,3), "Venue1"),
-                        new TourDate("Amsterdam", LocalDate.of(2023,3,12), "Venue2")
+                        new TourDate("London", LocalDate.of(2023, 3, 3), "Venue1"),
+                        new TourDate("Amsterdam", LocalDate.of(2023, 3, 12), "Venue2")
                 )));
         Tour tour3 = new Tour(32L, "PopTour2",
                 new ArrayList<Long>(List.of(2L, 1L)),
                 new ArrayList<TourDate>(List.of(
-                        new TourDate("Dublin", LocalDate.of(2023,4,5), "Venue1"),
-                        new TourDate("Belfast", LocalDate.of(2023,4,6), "Venue2")
+                        new TourDate("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
+                        new TourDate("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
                 )));
 
         tours.add(tour1);

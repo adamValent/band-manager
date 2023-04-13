@@ -1,8 +1,8 @@
-package cz.muni.fi.pa165.moduletours.facade;
+package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.moduletours.api.TourDto;
-import cz.muni.fi.pa165.moduletours.mappers.TourMapper;
-import cz.muni.fi.pa165.moduletours.service.TourService;
+import cz.muni.fi.pa165.modulecore.api.TourDto;
+import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
+import cz.muni.fi.pa165.modulecore.service.TourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

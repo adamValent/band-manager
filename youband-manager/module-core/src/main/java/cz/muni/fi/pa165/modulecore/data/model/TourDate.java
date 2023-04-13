@@ -1,50 +1,43 @@
-package cz.muni.fi.pa165.moduletours.api;
-
-import jakarta.validation.constraints.NotNull;
+package cz.muni.fi.pa165.modulecore.data.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class TourDateDto {
-    @NotNull
+public class TourDate {
     private String city;
-    @NotNull
     private LocalDate date;
-    @NotNull
     private String venue;
 
-    public TourDateDto() {
+    public TourDate() {
     }
 
-    public TourDateDto(@NotNull String city,
-                       @NotNull LocalDate date,
-                       @NotNull String venue) {
+    public TourDate(String city, LocalDate date, String venue) {
         this.city = city;
         this.date = date;
         this.venue = venue;
     }
 
-    public @NotNull String getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(@NotNull String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public @NotNull LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NotNull LocalDate date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public @NotNull String getVenue() {
+    public String getVenue() {
         return venue;
     }
 
-    public void setVenue(@NotNull String venue) {
+    public void setVenue(String venue) {
         this.venue = venue;
     }
 
@@ -52,7 +45,7 @@ public class TourDateDto {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TourDateDto tourDate = (TourDateDto) o;
+        TourDate tourDate = (TourDate) o;
         return Objects.equals(city, tourDate.city) && Objects.equals(date, tourDate.date) && Objects.equals(venue, tourDate.venue);
     }
 

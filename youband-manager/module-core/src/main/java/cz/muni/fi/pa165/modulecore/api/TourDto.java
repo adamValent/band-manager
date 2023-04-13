@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.moduletours.api;
+package cz.muni.fi.pa165.modulecore.api;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
