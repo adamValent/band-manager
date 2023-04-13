@@ -19,6 +19,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>module-tours</module>
+		<module>module-email</module>
 		<module>module-pdf</module>
 		<module>module-core</module>
 	</modules>

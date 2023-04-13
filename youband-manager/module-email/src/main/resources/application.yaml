@@ -1,0 +1,19 @@
+server:
+  port: 8089
+
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: youband.manager@gmail.com
+    password: gdgtqcwrajxrskmz
+    transport:
+      potocol: smtp
+    properties:
+      mail:
+        from:
+          email: youband.manager@gmail.com
+        smtp:
+          auth: true
+          starttls:
+            enable: true
