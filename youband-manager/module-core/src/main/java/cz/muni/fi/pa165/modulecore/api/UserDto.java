@@ -20,10 +20,10 @@ public class UserDto {
     }
 
     public UserDto(Long id,
-                   @NotNull UserType usrType,
-                   @NotNull String fName,
-                   @NotNull String lName,
-                   @NotNull String email) {
+                   UserType usrType,
+                   String fName,
+                   String lName,
+                   String email) {
         this.id = id;
         this.userType = usrType;
         this.firstName = fName;
@@ -39,35 +39,35 @@ public class UserDto {
         this.id = id;
     }
 
-    public @NotNull UserType getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(@NotNull UserType userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
-    public @NotNull String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(@NotNull String firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public @NotNull String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(@NotNull String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public @NotNull String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotNull String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

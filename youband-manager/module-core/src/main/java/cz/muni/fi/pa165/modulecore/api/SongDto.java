@@ -15,7 +15,7 @@ public class SongDto {
     public SongDto() {
     }
 
-    public SongDto(Long id, @NotNull String title, @NotNull Duration duration) {
+    public SongDto(Long id, String title, Duration duration) {
         this.id = id;
         this.title = title;
         this.duration = duration;
@@ -29,19 +29,19 @@ public class SongDto {
         this.id = id;
     }
 
-    public @NotNull String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(@NotNull String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public @NotNull Duration getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(@NotNull Duration duration) {
+    public void setDuration(Duration duration) {
         this.duration = duration;
     }
 

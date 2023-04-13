@@ -44,43 +44,43 @@ public class InvitationDto {
         this.id = id;
     }
 
-    public @NotNull Long getFromBandId() {
+    public Long getFromBandId() {
         return fromBandId;
     }
 
-    public void setFromBandId(@NotNull Long fromBandId) {
+    public void setFromBandId(Long fromBandId) {
         this.fromBandId = fromBandId;
     }
 
-    public @NotNull Long getToUserId() {
+    public Long getToUserId() {
         return toUserId;
     }
 
-    public void setToUserId(@NotNull Long toUserId) {
+    public void setToUserId(Long toUserId) {
         this.toUserId = toUserId;
     }
 
-    public @NotNull String getMessage() {
+    public String getMessage() {
         return message;
     }
 
-    public void setMessage(@NotNull String message) {
+    public void setMessage(String message) {
         this.message = message;
     }
 
-    public @NotNull InvitationStatus getStatus() {
+    public InvitationStatus getStatus() {
         return status;
     }
 
-    public void setStatus(@NotNull InvitationStatus status) {
+    public void setStatus(InvitationStatus status) {
         this.status = status;
     }
 
-    public @NotNull LocalDate getDateReceived() {
+    public LocalDate getDateReceived() {
         return dateReceived;
     }
 
-    public void setDateReceived(@NotNull LocalDate dateReceived) {
+    public void setDateReceived(LocalDate dateReceived) {
         this.dateReceived = dateReceived;
     }
 

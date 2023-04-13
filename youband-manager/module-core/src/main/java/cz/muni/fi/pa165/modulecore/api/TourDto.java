@@ -20,9 +20,9 @@ public class TourDto {
     }
 
     public TourDto(Long id,
-                   @NotNull String name,
-                   @NotNull List<Long> bandList,
-                   @NotNull List<TourDateDto> tourDates) {
+                   String name,
+                   List<Long> bandList,
+                   List<TourDateDto> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -37,27 +37,27 @@ public class TourDto {
         this.id = id;
     }
 
-    public @NotNull String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotNull List<Long> getBandList() {
+    public List<Long> getBandList() {
         return bandList;
     }
 
-    public void setBandList(@NotNull List<Long> bandList) {
+    public void setBandList(List<Long> bandList) {
         this.bandList = bandList;
     }
 
-    public @NotNull List<TourDateDto> getTourDates() {
+    public List<TourDateDto> getTourDates() {
         return tourDates;
     }
 
-    public void setTourDates(@NotNull List<TourDateDto> tourDates) {
+    public void setTourDates(List<TourDateDto> tourDates) {
         this.tourDates = tourDates;
     }
 

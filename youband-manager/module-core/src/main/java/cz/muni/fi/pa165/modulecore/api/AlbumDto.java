@@ -21,9 +21,10 @@ public class AlbumDto {
 
     private long bandId;
 
-    public AlbumDto(Long id, @NotNull String name,
-                    @NotNull LocalDate releaseDate,
-                    @NotNull Genre genre,
+    public AlbumDto(Long id,
+                    String name,
+                    LocalDate releaseDate,
+                    Genre genre,
                     List<SongDto> songs,
                     long bandId) {
         this.id = id;
@@ -42,27 +43,27 @@ public class AlbumDto {
         this.id = id;
     }
 
-    public @NotNull String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotNull LocalDate getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(@NotNull LocalDate releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public @NotNull Genre getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(@NotNull Genre genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 

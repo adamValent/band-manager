@@ -16,35 +16,35 @@ public class TourDateDto {
     public TourDateDto() {
     }
 
-    public TourDateDto(@NotNull String city,
-                       @NotNull LocalDate date,
-                       @NotNull String venue) {
+    public TourDateDto(String city,
+                       LocalDate date,
+                       String venue) {
         this.city = city;
         this.date = date;
         this.venue = venue;
     }
 
-    public @NotNull String getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(@NotNull String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public @NotNull LocalDate getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(@NotNull LocalDate date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public @NotNull String getVenue() {
+    public String getVenue() {
         return venue;
     }
 
-    public void setVenue(@NotNull String venue) {
+    public void setVenue(String venue) {
         this.venue = venue;
     }
 

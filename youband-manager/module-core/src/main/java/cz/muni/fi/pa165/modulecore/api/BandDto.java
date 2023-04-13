@@ -23,10 +23,10 @@ public class BandDto {
     private Long managerId;
 
     public BandDto(Long id,
-                   @NotNull String name,
-                   @NotNull Genre genre,
-                   @NotNull Byte[] image,
-                   @NotNull Long managerId) {
+                   String name,
+                   Genre genre,
+                   Byte[] image,
+                   Long managerId) {
         this.id = id;
         this.name = name;
         this.genre = genre;
@@ -42,35 +42,35 @@ public class BandDto {
         this.id = id;
     }
 
-    public @NotNull String getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(@NotNull String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public @NotNull Genre getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(@NotNull Genre genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
-    public @NotNull Byte[] getImage() {
+    public Byte[] getImage() {
         return image;
     }
 
-    public void setImage(@NotNull Byte[] image) {
+    public void setImage( Byte[] image) {
         this.image = image;
     }
 
-    public @NotNull Long getManagerId() {
+    public Long getManagerId() {
         return managerId;
     }
 
-    public void setManagerId(@NotNull Long managerId) {
+    public void setManagerId(Long managerId) {
         this.managerId = managerId;
     }
 
