@@ -128,7 +128,7 @@ class UserRestControllerTest {
         UserDto user = userMapper.mapToDto(
                 new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
                         "password"));
-        mockMvc.perform(post("/users/register")
+        mockMvc.perform(post("/users/registration")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk());
