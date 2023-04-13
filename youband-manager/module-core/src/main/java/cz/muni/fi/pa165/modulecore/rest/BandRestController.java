@@ -23,11 +23,7 @@ public class BandRestController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<BandDto> findById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(bandFacade.findById(id));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(bandFacade.findById(id));
     }
 
     @GetMapping
@@ -42,20 +38,12 @@ public class BandRestController {
 
     @PutMapping(path = "{id}")
     public ResponseEntity<BandDto> updateBand(@PathVariable("id") Long id, @Valid @RequestBody BandDto bandDto) {
-        try {
-            return ResponseEntity.ok(bandFacade.updateBand(id, bandDto));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(bandFacade.updateBand(id, bandDto));
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<BandDto> deleteBand(@PathVariable("id") Long id) {
-        try {
-            bandFacade.deleteBand(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        bandFacade.deleteBand(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

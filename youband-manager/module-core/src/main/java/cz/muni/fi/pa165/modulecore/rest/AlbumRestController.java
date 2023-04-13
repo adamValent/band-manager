@@ -23,11 +23,7 @@ public class AlbumRestController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<AlbumDto> findById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(albumFacade.findById(id));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(albumFacade.findById(id));
     }
 
     @GetMapping
@@ -42,20 +38,12 @@ public class AlbumRestController {
 
     @PutMapping(path = "{id}")
     public ResponseEntity<AlbumDto> updateAlbum(@PathVariable("id") Long id, @Valid @RequestBody AlbumDto albumDto) {
-        try {
-            return ResponseEntity.ok(albumFacade.updateAlbum(id, albumDto));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(albumFacade.updateAlbum(id, albumDto));
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<AlbumDto> deleteAlbum(@PathVariable("id") Long id) {
-        try {
-            albumFacade.deleteAlbum(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        albumFacade.deleteAlbum(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

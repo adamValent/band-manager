@@ -23,11 +23,7 @@ public class TourRestController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<TourDto> findById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(tourFacade.findById(id));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(tourFacade.findById(id));
     }
 
     @GetMapping
@@ -42,20 +38,12 @@ public class TourRestController {
 
     @PutMapping(path = "{id}")
     public ResponseEntity<TourDto> updateTour(@PathVariable("id") Long id, @Valid @RequestBody TourDto tourDto) {
-        try {
-            return ResponseEntity.ok(tourFacade.updateTour(id, tourDto));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(tourFacade.updateTour(id, tourDto));
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<TourDto> deleteTour(@PathVariable("id") Long id) {
-        try {
-            tourFacade.deleteTour(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        tourFacade.deleteTour(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -23,11 +23,7 @@ public class UserRestController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<UserDto> findById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(userFacade.findById(id));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(userFacade.findById(id));
     }
 
     @GetMapping
@@ -43,21 +39,13 @@ public class UserRestController {
     @PutMapping(path = "{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
                                               @Valid @RequestBody UserDto userDto) {
-        try {
-            return ResponseEntity.ok(userFacade.updateUser(id, userDto));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(userFacade.updateUser(id, userDto));
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
-        try {
-            userFacade.deleteUser(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        userFacade.deleteUser(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("register")

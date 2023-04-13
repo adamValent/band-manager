@@ -21,11 +21,7 @@ public class InvitationRestController {
 
     @GetMapping(path = "{id}")
     public ResponseEntity<InvitationDto> findById(@PathVariable("id") Long id) {
-        try {
-            return ResponseEntity.ok(invitationFacade.findById(id));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(invitationFacade.findById(id));
     }
 
     @PostMapping
@@ -36,20 +32,12 @@ public class InvitationRestController {
     @PutMapping(path = "{id}")
     public ResponseEntity<InvitationDto> updateInvitation(@PathVariable("id") Long id,
                                                           @Valid @RequestBody InvitationDto invitationDto) {
-        try {
-            return ResponseEntity.ok(invitationFacade.updateInvitation(id, invitationDto));
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return ResponseEntity.ok(invitationFacade.updateInvitation(id, invitationDto));
     }
 
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Void> deleteInvitation(@PathVariable("id") Long id) {
-        try {
-            invitationFacade.deleteInvitation(id);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (ResourceNotFoundException ex) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        invitationFacade.deleteInvitation(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
