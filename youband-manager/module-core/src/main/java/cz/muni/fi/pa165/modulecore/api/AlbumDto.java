@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class AlbumDto {
     private Long id;
-    @NotNull
+    @NotNull(message="{message.error.null}")
     private String name;
     @NotNull
     private LocalDate releaseDate;
