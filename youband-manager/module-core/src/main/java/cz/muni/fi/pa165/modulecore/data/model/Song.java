@@ -1,17 +1,25 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Objects;
 
+@Entity
+@Table(name = "song")
 public class Song implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String title;
     @NotNull
     private Duration duration;
+    @ManyToOne
+    @NotNull
+    private Album album;
 
     public Song() {
     }
@@ -44,6 +52,14 @@ public class Song implements Serializable {
 
     public void setDuration(@NotNull Duration duration) {
         this.duration = duration;
+    }
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     @Override

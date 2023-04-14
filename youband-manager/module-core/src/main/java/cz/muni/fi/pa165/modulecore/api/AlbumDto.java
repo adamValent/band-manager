@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.api;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,21 +19,21 @@ public class AlbumDto {
     private Genre genre;
     @Valid
     private List<SongDto> songs;
-
-    private long bandId;
+    @NotNull
+    private Band band;
 
     public AlbumDto(Long id,
                     String name,
                     LocalDate releaseDate,
                     Genre genre,
                     List<SongDto> songs,
-                    long bandId) {
+                    Band band) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.songs = songs;
-        this.bandId = bandId;
+        this.band = band;
     }
 
     public Long getId() {
@@ -75,12 +76,12 @@ public class AlbumDto {
         this.songs = songs;
     }
 
-    public long getBandId() {
-        return bandId;
+    public Band getBand() {
+        return band;
     }
 
-    public void setBandId(long bandId) {
-        this.bandId = bandId;
+    public void setBand(Band band) {
+        this.band = band;
     }
 
     @Override
@@ -103,6 +104,6 @@ public class AlbumDto {
                 ", releaseLocalDate=" + releaseDate +
                 ", genre=" + genre +
                 ", songs=" + songs +
-                ", bandId=" + bandId + '}';
+                ", band=" + band + '}';
     }
 }

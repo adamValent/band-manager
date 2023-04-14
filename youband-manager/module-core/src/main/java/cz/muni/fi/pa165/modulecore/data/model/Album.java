@@ -1,31 +1,39 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "album")
 public class Album implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private LocalDate releaseDate;
     private Genre genre;
+    @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Song> songs;
-
-    private long bandId;
+    @ManyToOne
+    @NotNull
+    private Band band;
 
     public Album() {
     }
 
-    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs, long bandId) {
+    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs, Band band) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
         this.songs = songs;
-        this.bandId = bandId;
+        this.band = band;
     }
 
     public Long getId() {
@@ -68,12 +76,12 @@ public class Album implements Serializable {
         this.songs = songs;
     }
 
-    public long getBandId() {
-        return bandId;
+    public Band getBand() {
+        return band;
     }
 
-    public void setBandId(long bandId) {
-        this.bandId = bandId;
+    public void setBand(Band band) {
+        this.band = band;
     }
 
     @Override
@@ -98,6 +106,6 @@ public class Album implements Serializable {
                 ", releaseDate=" + releaseDate +
                 ", genre=" + genre +
                 ", songs=" + songs +
-                ", bandId=" + bandId + '}';
+                ", band=" + band + '}';
     }
 }

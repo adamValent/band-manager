@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.AlbumDto;
 import cz.muni.fi.pa165.modulecore.api.SongDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;
 import cz.muni.fi.pa165.modulecore.mapper.AlbumMapper;
 import org.json.JSONObject;
@@ -127,7 +128,7 @@ class AlbumRestControllerTest {
                         Genre.ROCK,
                         List.of(new SongDto(1L, "Personal Jesus", Duration.ofSeconds(295)),
                                 new SongDto(2L, "Sweetest perfection", Duration.ofSeconds(282)),
-                                new SongDto(3L, "Waiting for the night", Duration.ofSeconds(367))), 0L);
+                                new SongDto(3L, "Waiting for the night", Duration.ofSeconds(367))), new Band());
 
 
         String response = mockMvc.perform(post("/albums")
