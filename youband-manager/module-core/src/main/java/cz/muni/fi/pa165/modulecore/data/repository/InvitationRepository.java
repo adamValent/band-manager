@@ -14,28 +14,6 @@ public class InvitationRepository {
     private final List<Invitation> invitations = new CopyOnWriteArrayList<>();
 
     public InvitationRepository() {
-        Invitation i1 = new Invitation(100L,
-                123L,
-                321L,
-                "simple invitation",
-                InvitationStatus.PENDING,
-                LocalDate.now());
-        Invitation i2 = new Invitation(200L,
-                111L,
-                222L,
-                "invitation to Pinkfloyd",
-                InvitationStatus.ACCEPTED,
-                LocalDate.now());
-        Invitation i3 = new Invitation(300L,
-                43L,
-                88L,
-                "weak invitation",
-                InvitationStatus.DECLINED,
-                LocalDate.now());
-
-        invitations.add(i1);
-        invitations.add(i2);
-        invitations.add(i3);
     }
 
     public Invitation findById(Long id) {
@@ -54,7 +32,7 @@ public class InvitationRepository {
 
     public Invitation updateInvitation(Long id, Invitation updated) {
         Invitation invitation = findById(id);
-        invitation.setFromBandId(updated.getFromBandId());
+        invitation.setBand(updated.getBand());
         invitation.setToUserId(updated.getToUserId());
         invitation.setMessage(updated.getMessage());
         invitation.setStatus(updated.getStatus());

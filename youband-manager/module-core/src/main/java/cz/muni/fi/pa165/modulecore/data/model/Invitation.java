@@ -1,31 +1,39 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
 import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "invitation")
 public class Invitation implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long fromBandId;
     private Long toUserId;
     private String message;
     private InvitationStatus status;
     private LocalDate dateReceived;
+    @ManyToOne
+    @NotNull
+    private Band band;
 
     public Invitation() {
     }
 
-    public Invitation(Long id, Long fromBandId,
+    public Invitation(Long id,
                       Long toUserId,
-                      String message, InvitationStatus status, LocalDate dateReceived) {
+                      String message, InvitationStatus status, LocalDate dateReceived, Band band) {
         this.id = id;
-        this.fromBandId = fromBandId;
         this.toUserId = toUserId;
         this.message = message;
         this.status = status;
         this.dateReceived = dateReceived;
+        this.band = band;
     }
 
     public Long getId() {
@@ -60,20 +68,20 @@ public class Invitation implements Serializable {
         this.dateReceived = dateReceived;
     }
 
-    public Long getFromBandId() {
-        return fromBandId;
-    }
-
-    public void setFromBandId(Long fromBandId) {
-        this.fromBandId = fromBandId;
-    }
-
     public Long getToUserId() {
         return toUserId;
     }
 
     public void setToUserId(Long toUserId) {
         this.toUserId = toUserId;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    public void setBand(Band band) {
+        this.band = band;
     }
 
     @Override
@@ -85,20 +93,20 @@ public class Invitation implements Serializable {
             return false;
         }
         Invitation that = (Invitation) o;
-        return Objects.equals(id, that.id) && fromBandId.equals(that.fromBandId) && toUserId.equals(
+        return Objects.equals(id, that.id) && band.equals(that.band) && toUserId.equals(
                 that.toUserId) && message.equals(that.message) && status == that.status
                 && dateReceived.equals(that.dateReceived);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fromBandId, toUserId, message, status, dateReceived);
+        return Objects.hash(id, band, toUserId, message, status, dateReceived);
     }
 
     @Override
     public String toString() {
         return "Invitation{" + "id=" + id +
-                ", fromBandId=" + fromBandId +
+                ", fromBandId=" + band +
                 ", toUserId=" + toUserId +
                 ", message='" + message + '\'' +
                 ", status=" + status +

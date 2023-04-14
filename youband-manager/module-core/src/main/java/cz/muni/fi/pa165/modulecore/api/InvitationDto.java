@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.api;
 
 import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -9,8 +10,6 @@ import java.util.Objects;
 public class InvitationDto {
     private Long id;
     @NotNull
-    private Long fromBandId;
-    @NotNull
     private Long toUserId;
     @NotNull
     private String message;
@@ -18,18 +17,20 @@ public class InvitationDto {
     private InvitationStatus status;
     @NotNull
     private LocalDate dateReceived;
+    @NotNull
+    private Band band;
 
     public InvitationDto() {
     }
 
     public InvitationDto(Long id,
-                         Long fromBandId,
                          Long toUserId,
                          String message,
                          InvitationStatus status,
-                         LocalDate dateReceived) {
+                         LocalDate dateReceived,
+                         Band band) {
         this.id = id;
-        this.fromBandId = fromBandId;
+        this.band = band;
         this.toUserId = toUserId;
         this.message = message;
         this.status = status;
@@ -44,12 +45,12 @@ public class InvitationDto {
         this.id = id;
     }
 
-    public Long getFromBandId() {
-        return fromBandId;
+    public @NotNull Band getBand() {
+        return band;
     }
 
-    public void setFromBandId(Long fromBandId) {
-        this.fromBandId = fromBandId;
+    public void setBand(@NotNull Band band) {
+        this.band = band;
     }
 
     public Long getToUserId() {
@@ -93,20 +94,20 @@ public class InvitationDto {
             return false;
         }
         InvitationDto invitationDto = (InvitationDto) o;
-        return Objects.equals(id, invitationDto.id) && fromBandId.equals(invitationDto.fromBandId)
+        return Objects.equals(id, invitationDto.id) && band.equals(invitationDto.band)
                 && toUserId.equals(invitationDto.toUserId) && message.equals(invitationDto.message)
                 && status == invitationDto.status && dateReceived.equals(invitationDto.dateReceived);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fromBandId, toUserId, message, status, dateReceived);
+        return Objects.hash(id, band, toUserId, message, status, dateReceived);
     }
 
     @Override
     public String toString() {
         return "InviteDto{" + "id=" + id +
-                ", fromBandId=" + fromBandId +
+                ", fromBandId=" + band +
                 ", toUserId=" + toUserId +
                 ", message='" + message + '\'' +
                 ", status=" + status +
