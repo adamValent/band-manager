@@ -1,17 +1,26 @@
 package cz.muni.fi.pa165.moduleuser.data.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "user")
 public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String email;
+    @NotNull
     private String password;
 
     public User() {
     }
 
-    public User(Long id, String email, String password) {
+    public User(Long id, @NotNull String email, @NotNull String password) {
         this.id = id;
         this.email = email;
         this.password = password;
