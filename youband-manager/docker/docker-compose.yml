@@ -35,6 +35,8 @@ services:
       CONNECTION LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5433
+    ports:
+      - "5433:5433"
     volumes:
       - postgres-data_users:/var/lib/postgresql/data
 
@@ -51,6 +53,8 @@ services:
       CONNECTION LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5432
+    ports:
+      - "5432:5432"
     volumes:
       - postgres-data_core:/var/lib/postgresql/data
 
