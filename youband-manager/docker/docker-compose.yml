@@ -9,6 +9,13 @@ services:
     volumes:
       - module-core:/tmp
 
+  users:
+    build:
+      dockerfile: ../module-user/Dockerfile
+      context: ../module-user
+    volumes:
+      - module-user:/tmp
+
   pdf:
     build:
       dockerfile: ../module-pdf/Dockerfile
@@ -16,7 +23,7 @@ services:
     volumes:
       - module-pdf:/tmp
 
-  emial:
+  email:
     build:
       dockerfile: ../module-email/Dockerfile
       context: ../module-email
@@ -78,3 +85,4 @@ volumes:
   module-pdf:
   module-core:
   module-email:
+  module-user:
