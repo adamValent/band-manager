@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="module-core" />
         <module name="module-pdf" />
+        <module name="module-user" />
         <module name="module-email" />
       </profile>
     </annotationProcessing>
@@ -29,6 +30,7 @@
       <module name="module-members" options="-parameters" />
       <module name="module-pdf" options="-parameters" />
       <module name="module-tours" options="-parameters" />
+      <module name="module-user" options="-parameters" />
     </option>
   </component>
 </project>
