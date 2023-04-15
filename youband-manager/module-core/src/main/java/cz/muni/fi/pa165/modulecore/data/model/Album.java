@@ -15,13 +15,18 @@ public class Album implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "release_date")
     private LocalDate releaseDate;
+    @Column(name = "genre")
     private Genre genre;
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "songs")
     private List<Song> songs;
     @ManyToOne
     @NotNull
+    @Column(name = "band")
     private Band band;
 
     public Album() {

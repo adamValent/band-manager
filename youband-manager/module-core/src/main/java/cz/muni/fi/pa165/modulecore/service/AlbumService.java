@@ -17,7 +17,7 @@ public class AlbumService {
     }
 
     public Album findById(Long id) {
-        return albumRepository.findById(id);
+        return albumRepository.findById(id).get();
     }
 
     public List<Album> getAll() {

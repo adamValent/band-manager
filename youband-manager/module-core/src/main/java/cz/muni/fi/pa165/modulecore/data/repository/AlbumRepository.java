@@ -1,54 +1,30 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
-import cz.muni.fi.pa165.modulecore.data.model.Song;
-import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.Duration;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Optional;
 
 @Repository
-public class AlbumRepository {
-    private final List<Album> albums = new CopyOnWriteArrayList<>();
+public interface AlbumRepository extends JpaRepository<Album, Long> {
 
-    public AlbumRepository() {
-    }
+    @Query("SELECT album FROM Album album WHERE album.id = :id")
+    Optional<Album> findById(@Param("id") Long id);
 
-    public Album findById(Long id) {
-        return albums.stream()
-                .filter(album -> album.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Album was not found."));
-    }
+    @Query("SELECT album FROM Album album")
+    List<Album> getAll();
 
-    public List<Album> getAll() {
-        return albums;
-    }
+    @Modifying
+    Album createAlbum(Album newAlbum);
 
-    public Album createAlbum(Album newAlbum) {
-        newAlbum.setId(albums.get(albums.size() - 1).getId() + 1);
-        albums.add(newAlbum);
+    @Modifying
+    Album updateAlbum(@Param("id") Long id, Album updated);
 
-        return newAlbum;
-    }
-
-    public Album updateAlbum(Long id, Album updated) {
-        Album album = findById(id);
-        album.setName(updated.getName());
-        album.setReleaseDate(updated.getReleaseDate());
-        album.setGenre(updated.getGenre());
-        album.setSongs(updated.getSongs());
-
-        return album;
-    }
-
-    public void deleteAlbum(Long id) {
-        Album album = findById(id);
-        albums.remove(album);
-    }
+    @Modifying
+    void deleteAlbum(@Param("id") Long id);
 }
