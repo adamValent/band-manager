@@ -13,11 +13,11 @@ build:
      - shared-fi
    stage: build
    script:
-     - ./mvnw clean install $MAVEN_CLI_OPTS
+     - ./youband-manager/mvnw clean install $MAVEN_CLI_OPTS
 
 test:
    tags:
      - shared-fi
    stage: test
    script:
-     - ./mvnw test $MAVEN_CLI_OPTS
+     - ./youband-manager/mvnw test $MAVEN_CLI_OPTS
