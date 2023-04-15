@@ -9,14 +9,14 @@ import java.util.Arrays;
 
 public class EmailDto {
 
-    @NotNull
+    @NotNull(message="{message.error.null}")
     @Schema(name = "subject", example = "Tour 13.2.2021", description = "subject of email", requiredMode = Schema.RequiredMode.REQUIRED)
     private String subject;
-    @NotNull
-    @NotEmpty
+    @NotNull(message="{message.error.null}")
+    @NotEmpty(message="{message.error.empty}")
     @Schema(name = "recipients", example = "[\"ferko@gmail.com\",\"jozko@gmail.com\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private String[] recipients;
-    @NotNull
+    @NotNull(message="{message.error.null}")
     @Schema(name = "emailBody", example = "Tour re-planned to  13.2.2021", description = "body of email", requiredMode = Schema.RequiredMode.REQUIRED)
     private String emailBody;
 

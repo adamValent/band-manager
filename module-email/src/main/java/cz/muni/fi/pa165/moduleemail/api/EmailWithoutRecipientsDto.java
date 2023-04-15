@@ -9,10 +9,10 @@ import java.util.Arrays;
 
 public class EmailWithoutRecipientsDto {
 
-    @NotNull
+    @NotNull(message="{message.error.null}")
     @Schema(name = "subject", example = "Tour 13.2.2021", description = "subject of email", requiredMode = Schema.RequiredMode.REQUIRED)
     private String subject;
-    @NotNull
+    @NotNull(message="{message.error.null}")
     @Schema(name = "emailBody", example = "Tour re-planned to  13.2.2021", description = "body of email", requiredMode = Schema.RequiredMode.REQUIRED)
     private String emailBody;
 
