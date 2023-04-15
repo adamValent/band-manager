@@ -146,7 +146,7 @@ class AlbumRestControllerTest {
     void testAlbumUpdate() throws Exception {
         log.debug("testAlbumUpdate running");
 
-        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findById(100L));
+        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findById(100L).get());
         expectedResponse.setSongs(new ArrayList<>());
 
         String response = mockMvc.perform(put(String.format("/albums/%s", expectedResponse.getId()))
@@ -163,7 +163,7 @@ class AlbumRestControllerTest {
     void testAlbumUpdateMissingId() throws Exception {
         log.debug("testAlbumUpdateMissingId running");
 
-        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findById(100L));
+        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findById(100L).get());
         expectedResponse.setSongs(new ArrayList<>());
 
         mockMvc.perform(put(String.format("/albums/%s", 0L))

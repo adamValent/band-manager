@@ -39,7 +39,7 @@ class UserRestControllerTest {
 
     @Test
     void findByIdOk() throws Exception {
-        UserDto expectedResponse = userMapper.mapToDto(userRepository.findById(10L));
+        UserDto expectedResponse = userMapper.mapToDto(userRepository.findById(10L).get());
         String response = mockMvc.perform(get("/users/10"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -88,7 +88,7 @@ class UserRestControllerTest {
 
     @Test
     void updateUserOk() throws Exception {
-        UserDto expectedResponse = userMapper.mapToDto(userRepository.findById(20L));
+        UserDto expectedResponse = userMapper.mapToDto(userRepository.findById(20L).get());
         expectedResponse.setFirstName("John");
         expectedResponse.setLastName("Person");
         expectedResponse.setEmail("john@person.com");
