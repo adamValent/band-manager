@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.modulecore.service;
 
+import com.google.common.collect.Lists;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,18 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        return userRepository.getAll();
+        return Lists.newArrayList(userRepository.findAll());
     }
 
     public User createUser(User user) {
-        return userRepository.createUser(user);
+        return userRepository.save(user);
     }
 
     public User updateUser(Long id, User user) {
-        return userRepository.updateUser(id, user);
+        return createUser(user);
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteUser(id);
+        userRepository.deleteById(id);
     }
 }

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.modulecore.service;
 
+import com.google.common.collect.Lists;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +22,18 @@ public class AlbumService {
     }
 
     public List<Album> getAll() {
-        return albumRepository.getAll();
+        return Lists.newArrayList(albumRepository.findAll());
     }
 
     public Album createAlbum(Album album) {
-        return albumRepository.createAlbum(album);
+        return albumRepository.save(album);
     }
 
     public Album updateAlbum(Long id, Album album) {
-        return albumRepository.updateAlbum(id, album);
+        return createAlbum(album);
     }
 
     public void deleteAlbum(Long id) {
-        albumRepository.deleteAlbum(id);
+        albumRepository.deleteById(id);
     }
 }

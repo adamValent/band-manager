@@ -26,7 +26,6 @@ public class Album implements Serializable {
     private List<Song> songs;
     @ManyToOne
     @NotNull
-    @Column(name = "band")
     private Band band;
 
     public Album() {

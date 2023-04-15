@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.UserRepository;
 import cz.muni.fi.pa165.modulecore.mapper.UserMapper;
+import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ class UserRestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readerForListOf(UserDto.class).readValue(response),
-                is(equalTo(userMapper.mapToList(userRepository.getAll()))));
+                is(equalTo(userMapper.mapToList(Lists.newArrayList(userRepository.findAll())))));
     }
 
     @Test

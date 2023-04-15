@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;
 import cz.muni.fi.pa165.modulecore.mapper.AlbumMapper;
+import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -52,7 +53,7 @@ class AlbumRestControllerTest {
     void testAlbumsFindByIdOK() throws Exception {
         log.debug("testActivityFindByIdOK running");
 
-        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.getAll().get(0));
+        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findAll().iterator().next());
 
         String response = mockMvc.perform(get(String.format("/albums/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())
@@ -79,7 +80,7 @@ class AlbumRestControllerTest {
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
         List<AlbumDto> responseTours = objectMapper.readerForListOf(AlbumDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(albumRepository.getAll().stream().map(albumMapper::mapToDto).toList())));
+        assertThat("response", responseTours, is(equalTo(Lists.newArrayList(albumRepository.findAll()).stream().map(albumMapper::mapToDto).toList())));
     }
 
     @Test
@@ -188,7 +189,7 @@ class AlbumRestControllerTest {
     void testAlbumDeleteOK() throws Exception {
         log.debug("testAlbumDeleteOK running");
 
-        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.getAll().get(0));
+        AlbumDto expectedResponse = albumMapper.mapToDto(albumRepository.findAll().iterator().next());
 
         mockMvc.perform(delete(String.format("/albums/%s", expectedResponse.getId())))
                 .andExpect(status().isOk());
