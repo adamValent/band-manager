@@ -1,17 +1,18 @@
 package cz.muni.fi.pa165.modulepdf.data.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Tour {
     private Long id;
     private String name;
-    private ArrayList<Long> bandList;
-    private ArrayList<TourDate> tourDates;
+    private List<Long> bandList;
+    private List<TourDate> tourDates;
 
     public Tour() {}
 
-    public Tour(Long id, String name, ArrayList<Long> bandList, ArrayList<TourDate> tourDates) {
+    public Tour(Long id, String name, List<Long> bandList, List<TourDate> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -34,15 +35,15 @@ public class Tour {
         this.name = name;
     }
 
-    public ArrayList<Long> getBandList() {
+    public List<Long> getBandList() {
         return bandList;
     }
 
-    public void setBandList(ArrayList<Long> bandList) {
+    public void setBandList(List<Long> bandList) {
         this.bandList = bandList;
     }
 
-    public ArrayList<TourDate> getTourDates() {
+    public List<TourDate> getTourDates() {
         return tourDates;
     }
 

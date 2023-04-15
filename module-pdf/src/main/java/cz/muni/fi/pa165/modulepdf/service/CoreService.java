@@ -44,8 +44,8 @@ public class CoreService {
 
         toursOfBands.put(1L,
                 List.of(
-                        new Tour(101L, "Rock for people", (ArrayList<Long>) List.of(1L), (ArrayList<TourDate>) List.of(new TourDate("Las vegas", LocalDate.now(), "Main"))),
-                        new Tour(102L, "Rock for people2", (ArrayList<Long>) List.of(1L), (ArrayList<TourDate>) List.of(new TourDate("Las vegas2", LocalDate.now(), "Main2")))
+                        new Tour(101L, "Rock for people", List.of(1L), List.of(new TourDate("Las vegas", LocalDate.now(), "Main"))),
+                        new Tour(102L, "Rock for people2", List.of(1L), List.of(new TourDate("Las vegas2", LocalDate.now(), "Main2")))
                 ));
 
         songsOfAlbum.put(100L, List.of(

@@ -27,7 +27,7 @@ public class PdfFacade {
     }
 
     public void generatePdfTourAllTourDates(Long idTour, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfBandAllTours(idTour, response);
+        pdfService.generatePdfToursAllTourDates(idTour, response);
     }
 
     public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response) throws IOException {

@@ -32,7 +32,7 @@ public class PdfService {
     }
 
     public void generatePdfBandAllTours(Long idBand, HttpServletResponse response) throws IOException {
-        export(idBand, response, PdfType.ALL_MEMBERS_OF_BAND);
+        export(idBand, response, PdfType.ALL_TOURS_OF_BAND);
     }
 
     public void generatePdfToursAllTourDates(Long idTour, HttpServletResponse response) throws IOException {
@@ -40,11 +40,11 @@ public class PdfService {
     }
 
     public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response) throws IOException {
-        export(idBand, response, PdfType.ALL_MEMBERS_OF_BAND);
+        export(idBand, response, PdfType.ALL_ALBUMS_OF_BAND);
     }
 
     public void generatePdfAlbumAllSong(Long idAlbum, HttpServletResponse response) throws IOException {
-        export(idAlbum, response, PdfType.ALL_MEMBERS_OF_BAND);
+        export(idAlbum, response, PdfType.ALL_SONG_OF_ALBUM);
     }
 
     public void export(Long id,
