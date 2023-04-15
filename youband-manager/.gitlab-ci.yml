@@ -1,0 +1,23 @@
+image: 'maven:3.8.5-openjdk-17-slim'
+cache:
+  paths:
+    - .m2/repository
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+stages:
+  - build
+  - test
+build:
+   tags:
+     - shared-fi
+   stage: build
+   script:
+     - ./mvnw clean install $MAVEN_CLI_OPTS
+
+test:
+   tags:
+     - shared-fi
+   stage: test
+   script:
+     - ./mvnw test $MAVEN_CLI_OPTS
