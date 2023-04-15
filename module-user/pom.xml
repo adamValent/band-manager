@@ -61,6 +61,11 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.diffplug.guava</groupId>
+            <artifactId>guava-collect</artifactId>
+            <version>19.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
