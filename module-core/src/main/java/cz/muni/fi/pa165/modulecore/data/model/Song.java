@@ -21,13 +21,13 @@ public class Song implements Serializable {
     @NotNull
     private Album album;
 
-    public Song() {
-    }
-
     public Song(Long id, @NotNull String title, @NotNull Duration duration) {
         this.id = id;
         this.title = title;
         this.duration = duration;
+    }
+
+    public Song() {
     }
 
     public Long getId() {
