@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping(path = "api/email")
+@RequestMapping(path = "email")
 public class EmailRestController {
 
     private final EmailFacade emailFacade;
