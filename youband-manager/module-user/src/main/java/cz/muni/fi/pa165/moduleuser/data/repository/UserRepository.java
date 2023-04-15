@@ -2,52 +2,34 @@ package cz.muni.fi.pa165.moduleuser.data.repository;
 
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Repository
-public class UserRepository {
-    private final List<User> users = new CopyOnWriteArrayList<>();
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    public UserRepository() {
-    }
+    @Query("SELECT user FROM User user WHERE user.id = :id")
+    Optional<User> findById(@Param("id") Long id);
 
-    public User findById(Long id) {
-        return users.stream()
-                    .filter(user -> user.getId().equals(id))
-                    .findFirst()
-                    .orElseThrow(() -> new ResourceNotFoundException("User was not found."));
-    }
+    @Query("SELECT user FROM User user WHERE user.email = :email")
+    User findByEmail(@Param("email") String email);
 
-    public User findByEmail(String email) {
-        return users.stream()
-                    .filter(user -> user.getEmail().equals(email))
-                    .findFirst()
-                    .orElseThrow(() -> new ResourceNotFoundException("Email was not found."));
-    }
+    @Modifying
+    User createUser(User newUser);
 
-    public User createUser(User newUser){
-        newUser.setId(users.get(users.size()-1).getId() + 1);
-        users.add(newUser);
-        return newUser;
-    }
+    @Modifying
+    User updateUserEmail(@Param("id") Long id, @Param("email") String newMail);
 
-    public User updateUserEmail(Long id, String newMail){
-        User user = findById(id);
-        user.setEmail(newMail);
-        return user;
-    }
+    @Modifying
+    public User updateUserPassword(@Param("id") Long id, @Param("password") String newPassword);
 
-    public User updateUserPassword(Long id, String newPassword){
-        User user = findById(id);
-        user.setPassword(newPassword);
-        return user;
-    }
-
-    public void deleteUser(Long id){
-        User user = findById(id);
-        users.remove(user);
-    }
+    @Modifying
+    public void deleteUser(@Param("id") Long id);
 }

@@ -13,8 +13,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(name = "email")
     private String email;
     @NotNull
+    @Column(name = "password")
     private String password;
 
     public User() {
