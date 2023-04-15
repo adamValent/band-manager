@@ -2,6 +2,9 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.SongDto;
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.model.Album;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.repository.SongRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
@@ -17,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,26 +33,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class SongRestControllerTest {
-    private final MockMvc mockMvc;
-    private final SongMapper songMapper;
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private SongMapper songMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
     @MockBean
     private SongRepository songRepository;
 
-    @Autowired
-    public SongRestControllerTest(MockMvc mockMvc, SongMapper songMapper, ObjectMapper objectMapper) {
-        this.mockMvc = mockMvc;
-        this.songMapper = songMapper;
-        this.objectMapper = objectMapper;
-    }
-
     @Test
     void findByIdOk() throws Exception {
-        Song song = new Song(1L, "test", Duration.ofSeconds(15));
+        Song song = new Song(1L, "title", Duration.ofSeconds(15));
         Mockito.when(songRepository.findById(1L)).thenReturn(Optional.of(song));
+
         String response = mockMvc.perform(get("/songs/1"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
+
         assertThat(objectMapper.readValue(response, SongDto.class),
                 is(equalTo(songMapper.mapToDto(songRepository.findById(1L).get()))));
     }
@@ -55,20 +58,23 @@ class SongRestControllerTest {
     @Test
     void findByIdNotFound() throws Exception {
         Mockito.when(songRepository.findById(0L)).thenReturn(Optional.empty());
+
         mockMvc.perform(get("/songs/0"))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void createOk() throws Exception {
-        Song song = new Song(null, "test", Duration.ofSeconds(15));
+        Song song = new Song(null, "title", Duration.ofSeconds(15));
         SongDto expectedResponse = songMapper.mapToDto(song);
-        Mockito.when(songRepository.save(song)).thenReturn(new Song(1L, "test", Duration.ofSeconds(15)));
+        Mockito.when(songRepository.save(song)).thenReturn(song);
+
         String response = mockMvc.perform(post("/songs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
+
         SongDto actual = objectMapper.readValue(response, SongDto.class);
         expectedResponse.setId(actual.getId());
         assertThat(actual, is(equalTo(expectedResponse)));
@@ -78,6 +84,7 @@ class SongRestControllerTest {
     void createBadRequest() throws Exception {
         JSONObject content = new JSONObject();
         content.put("test", "invalid");
+
         mockMvc.perform(post("/songs")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content.toString()))
@@ -90,11 +97,13 @@ class SongRestControllerTest {
         SongDto expectedResponse = songMapper.mapToDto(song);
         Mockito.when(songRepository.save(song)).thenReturn(song);
         Mockito.when(songRepository.existsById(song.getId())).thenReturn(true);
+
         String response = mockMvc.perform(put("/songs/2")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
+
         assertThat(objectMapper.readValue(response, SongDto.class),
                 is(equalTo(expectedResponse)));
     }
@@ -103,6 +112,7 @@ class SongRestControllerTest {
     void updateBadRequest() throws Exception {
         JSONObject content = new JSONObject();
         content.put("test", "invalid");
+
         mockMvc.perform(put("/songs/100")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content.toString()))
@@ -112,6 +122,7 @@ class SongRestControllerTest {
     @Test
     void deleteInvitationOk() throws Exception {
         Mockito.doNothing().when(songRepository).deleteById(1L);
+
         mockMvc.perform(delete("/songs/1"))
                 .andExpect(status().isOk());
     }
@@ -119,6 +130,7 @@ class SongRestControllerTest {
     @Test
     void deleteNotFound() throws Exception {
         Mockito.doThrow(new ResourceNotFoundException()).when(songRepository).deleteById(0L);
+
         mockMvc.perform(delete("/songs/0"))
                 .andExpect(status().isNotFound());
     }
