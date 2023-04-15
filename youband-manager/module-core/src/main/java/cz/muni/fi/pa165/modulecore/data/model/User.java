@@ -1,16 +1,26 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
+@Table(name = "user")
 public class User implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "user_type")
     private UserType userType;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String password;
 
     public User() {
@@ -76,16 +86,15 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
         User user = (User) o;
-        return Objects.equals(id, user.id) && userType == user.userType
-                && firstName.equals(user.firstName) && lastName.equals(user.lastName)
-                && email.equals(user.email) && password.equals(user.password);
+        return Objects.equals(id, user.id) &&
+               userType == user.userType &&
+               firstName.equals(user.firstName) &&
+               lastName.equals(user.lastName) &&
+               email.equals(user.email) &&
+               password.equals(user.password);
     }
 
     @Override
