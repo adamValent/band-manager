@@ -13,7 +13,7 @@ build:
      - shared-fi
    stage: build
    script:
-     - ./mvnw clean install $MAVEN_CLI_OPTS
+     - ./mvnw clean install -DskipTests $MAVEN_CLI_OPTS
 
 test:
    tags:
