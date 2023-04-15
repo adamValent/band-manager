@@ -4,29 +4,29 @@ services:
 
   core:
     build:
-      dockerfile: ../module-core/Dockerfile
-      context: ../module-core
+      dockerfile: module-core/Dockerfile
+      context: module-core
     volumes:
       - module-core:/tmp
 
   users:
     build:
-      dockerfile: ../module-user/Dockerfile
-      context: ../module-user
+      dockerfile: module-user/Dockerfile
+      context: module-user
     volumes:
       - module-user:/tmp
 
   pdf:
     build:
-      dockerfile: ../module-pdf/Dockerfile
-      context: ../module-pdf
+      dockerfile: module-pdf/Dockerfile
+      context: module-pdf
     volumes:
       - module-pdf:/tmp
 
   email:
     build:
-      dockerfile: ../module-email/Dockerfile
-      context: ../module-email
+      dockerfile: module-email/Dockerfile
+      context: module-email
     volumes:
       - module-email:/tmp
 
