@@ -90,18 +90,21 @@ public class Album implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Album album = (Album) obj;
-        return id.equals(album.id);
+    public boolean equals(Object o) {
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
+        Album album = (Album) o;
+        return Objects.equals(id, album.id) &&
+               Objects.equals(name, album.name) &&
+               Objects.equals(releaseDate, album.releaseDate) &&
+               genre == album.genre &&
+               Objects.equals(songs, album.songs) &&
+               Objects.equals(band, album.band);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, releaseDate, genre, songs, band);
     }
 
     @Override
