@@ -47,7 +47,7 @@ class InvitationRestControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, InvitationDto.class),
-                is(equalTo(invitationMapper.mapToDto(invitationRepository.findById(100L)))));
+                is(equalTo(invitationMapper.mapToDto(invitationRepository.findById(100L).get()))));
     }
 
     @Test
