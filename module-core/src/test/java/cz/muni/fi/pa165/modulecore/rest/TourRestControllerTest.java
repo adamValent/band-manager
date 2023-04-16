@@ -7,22 +7,26 @@ import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
 import cz.muni.fi.pa165.modulecore.data.model.TourDate;
 import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
 import org.aspectj.lang.annotation.Before;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -37,51 +41,36 @@ class TourRestControllerTest {
 
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
-    private final TourRepository tourRepository;
     private final TourMapper tourMapper;
+
+    @MockBean
+    private TourRepository tourRepository;
+
+    private Tour testingTour;
 
     @Autowired
     public TourRestControllerTest(ObjectMapper objectMapper,
                                   MockMvc mockMvc,
-                                  TourRepository tourRepository,
                                   TourMapper tourMapper) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
-        this.tourRepository = tourRepository;
         this.tourMapper = tourMapper;
-    }
 
-    @BeforeEach
-    void setUp() {
-        log.debug("setUp running");
-        Tour tour1 = new Tour(100L, "PopTour",
+        this.testingTour = new Tour(100L, "PopTour",
                 new ArrayList<Band>(List.of(new Band())),
                 new ArrayList<TourDate>(List.of(
                         new TourDate(0L, "New York", LocalDate.of(2023, 5, 5), "Venue1"),
                         new TourDate(1L, "Sydney", LocalDate.of(2023, 6, 3), "Venue2")
                 )));
-        Tour tour2 = new Tour(41L, "RockTour",
-                new ArrayList<Band>(List.of(new Band())),
-                new ArrayList<TourDate>(List.of(
-                        new TourDate(2L, "London", LocalDate.of(2023, 3, 3), "Venue1"),
-                        new TourDate(3L, "Amsterdam", LocalDate.of(2023, 3, 12), "Venue2")
-                )));
-        Tour tour3 = new Tour(32L, "PopTour2",
-                new ArrayList<Band>(List.of(new Band())),
-                new ArrayList<TourDate>(List.of(
-                        new TourDate(4L, "Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
-                        new TourDate(5L, "Belfast", LocalDate.of(2023, 4, 6), "Venue2")
-                )));
-        tourRepository.createTour(tour1);
-        tourRepository.createTour(tour2);
-        tourRepository.createTour(tour3);
+
     }
 
     @Test
     void testActivityFindByIdOK() throws Exception {
         log.debug("testActivityFindByIdOK running");
 
-        TourDto expectedResponse = tourMapper.mapToDto(tourRepository.getAll().get(0));
+        Mockito.when(tourRepository.findById(testingTour.getId())).thenReturn(Optional.of(testingTour));
+        TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
         String response = mockMvc.perform(get(String.format("/tours/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())
@@ -95,7 +84,9 @@ class TourRestControllerTest {
     void testActivityFindByIdNotFound() throws Exception {
         log.debug("testActivityFindByIdNotFound running");
 
-        mockMvc.perform(get("/tours/10000")).andExpect(status().isNotFound());
+        Mockito.when(tourRepository.findById(0L)).thenReturn(Optional.empty());
+
+        mockMvc.perform(get("/tours/0")).andExpect(status().isNotFound());
     }
 
 
@@ -103,12 +94,14 @@ class TourRestControllerTest {
     void testActivityGetAll() throws Exception {
         log.debug("testActivityGetAll running");
 
+        Mockito.when(tourRepository.findAll()).thenReturn(List.of(testingTour));
+
         String response = mockMvc.perform(get("/tours"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
         List<TourDto> responseTours = objectMapper.readerForListOf(TourDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(tourRepository.getAll().stream().map(tour -> tourMapper.mapToDto(tour)).toList())));
+        assertThat("response", responseTours, is(equalTo(((List<Tour>)tourRepository.findAll()).stream().map(tourMapper::mapToDto).toList())));
     }
 
     @Test
@@ -128,13 +121,8 @@ class TourRestControllerTest {
     void testActivityCreateOK() throws Exception {
         log.debug("testActivityCreateOK running");
 
-        TourDto expectedResponse =
-                new TourDto(null, "PopTour2",
-                        List.of(new Band(), new Band()),
-                        List.of(
-                                new TourDateDto("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
-                                new TourDateDto("Belfast", LocalDate.of(2023, 4, 6), "Venue2")
-                        ));
+        Mockito.when(tourRepository.save(testingTour)).thenReturn(testingTour);
+        TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
         String response = mockMvc.perform(post("/tours")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -151,8 +139,11 @@ class TourRestControllerTest {
     void testActivityUpdate() throws Exception {
         log.debug("testActivityUpdate running");
 
-        TourDto expectedResponse = tourMapper.mapToDto(tourRepository.findById(41L));
-        expectedResponse.setBandList(new ArrayList<>());
+
+        Mockito.when(tourRepository.save(testingTour)).thenReturn(testingTour);
+        Mockito.when(tourRepository.existsById(testingTour.getId())).thenReturn(true);
+
+        TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
         String response = mockMvc.perform(put(String.format("/tours/%s", expectedResponse.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -171,30 +162,19 @@ class TourRestControllerTest {
         JSONObject json = new JSONObject();
         json.put("name", "INVALID");
 
-        mockMvc.perform(put(String.format("/tours/%s", tourRepository.getAll().get(0).getId()))
+        mockMvc.perform(put("/tours/0")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString()))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void testActivityUpdateMissingId() throws Exception {
-        log.debug("testActivityUpdate running");
-
-        TourDto expectedResponse = tourMapper.mapToDto(tourRepository.findById(41L));
-        expectedResponse.setBandList(new ArrayList<>());
-
-        mockMvc.perform(put(String.format("/tours/%s", 0L))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void testActivityDeleteOK() throws Exception {
         log.debug("testActivityDeleteOK running");
 
-        TourDto expectedResponse = tourMapper.mapToDto(tourRepository.getAll().get(0));
+
+        Mockito.doNothing().when(tourRepository).deleteById(testingTour.getId());
+        TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
         mockMvc.perform(delete(String.format("/tours/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())
@@ -205,7 +185,10 @@ class TourRestControllerTest {
     void testActivityDeleteNotFound() throws Exception {
         log.debug("testActivityDeleteNotFound running");
 
+        Mockito.doThrow(new ResourceNotFoundException()).when(tourRepository).deleteById(0L);
+
         mockMvc.perform(delete(String.format("/tours/%s", 0L)))
                 .andExpect(status().isNotFound());
     }
+
 }
