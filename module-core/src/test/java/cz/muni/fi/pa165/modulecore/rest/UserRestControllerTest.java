@@ -151,32 +151,32 @@ class UserRestControllerTest {
     }
 
     @Test
-    void registerUser() throws Exception {
-        UserDto user = userMapper.mapToDto(new User(20L,
-                                                    UserType.BAND_MEMBER,
-                                                    "John",
-                                                    "Person",
-                                                    "john@person.com"));
-        mockMvc.perform(post("/users/registration").contentType(MediaType.APPLICATION_JSON)
-                                                   .content(objectMapper.writeValueAsString(user)))
-               .andExpect(status().isOk());
+    void getAllUsersWithoutBandOk() throws Exception {
+        User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
+        Mockito.when(userRepository.getAllUsersWithoutBand()).thenReturn(List.of(user));
+        UserDto expectedResponse = userMapper.mapToDto(user);
+
+        String response = mockMvc.perform(get("/users/withoutBand"))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(objectMapper.readerForListOf(UserDto.class).readValue(response),
+                is(equalTo(userMapper.mapToList(List.of(user)))));
     }
 
-    @Test
-    void loginUser() throws Exception {
-        UserDto user = userMapper.mapToDto(new User(20L,
-                                                    UserType.BAND_MEMBER,
-                                                    "John",
-                                                    "Person",
-                                                    "john@person.com"));
-        mockMvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON)
-                                            .content(objectMapper.writeValueAsString(user)))
-               .andExpect(status().isOk());
-    }
 
     @Test
-    void logoutUser() throws Exception {
-        mockMvc.perform(post("/users/logout"))
-                .andExpect(status().isOk());
+    void getUsersFromBandBySongIdOk() throws Exception {
+        User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
+        Mockito.when(userRepository.getUsersFromBandBySongId(1L)).thenReturn(List.of(user));
+        UserDto expectedResponse = userMapper.mapToDto(user);
+
+        String response = mockMvc.perform(get(String.format("/users/bySong/%s", 1L)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(objectMapper.readerForListOf(UserDto.class).readValue(response),
+                is(equalTo(userMapper.mapToList(List.of(user)))));
     }
+
 }

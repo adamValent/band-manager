@@ -39,4 +39,12 @@ public class UserService {
     public void delete(Long id) {
         userRepository.deleteById(id);
     }
+
+    public List<User> getAllUsersWithoutBand() {
+        return userRepository.getAllUsersWithoutBand();
+    }
+
+    public List<User> getUsersFromBandBySongId(Long idSong) {
+        return userRepository.getUsersFromBandBySongId(idSong);
+    }
 }

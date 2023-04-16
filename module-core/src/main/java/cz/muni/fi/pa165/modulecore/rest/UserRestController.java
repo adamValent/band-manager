@@ -81,36 +81,24 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "Register user.")
+    @Operation(summary = "Find all users without band.")
     @ApiResponses
             ({
-                    @ApiResponse(responseCode = "200", description = "User was registered."),
-                    @ApiResponse(responseCode = "400", description = "User given to be registered cannot be validated.")
+                    @ApiResponse(responseCode = "200", description = "User was found."),
             })
-    @PostMapping("registration")
-    public ResponseEntity<Void> registerUser(@Valid @RequestBody UserDto user) {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping(path = "withoutBand")
+    public ResponseEntity<List<UserDto>> getAllUsersWithoutBand() {
+        return ResponseEntity.ok(userFacade.getAllUsersWithoutBand());
     }
 
-    @Operation(summary = "Log in user.")
+    @Operation(summary = "Find users by song ID.")
     @ApiResponses
             ({
-                    @ApiResponse(responseCode = "200", description = "User was logged in."),
-                    @ApiResponse(responseCode = "400", description = "User given to be logged in cannot be validated.")
+                    @ApiResponse(responseCode = "200", description = "User was found."),
+                    @ApiResponse(responseCode = "404", description = "User with given ID does not exist.")
             })
-    @PostMapping("login")
-    public ResponseEntity<Void> loginUser(@Valid @RequestBody UserDto user) {
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Operation(summary = "Log out user.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was logged out."),
-                    @ApiResponse(responseCode = "400", description = "User given to be logged out cannot be validated.")
-            })
-    @PostMapping("logout")
-    public ResponseEntity<Void> logoutUser() {
-        return new ResponseEntity<>(HttpStatus.OK);
+    @GetMapping(path = "bySong/{id}")
+    public ResponseEntity<List<UserDto>> getUsersFromBandBySongId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userFacade.getUsersFromBandBySongId(id));
     }
 }

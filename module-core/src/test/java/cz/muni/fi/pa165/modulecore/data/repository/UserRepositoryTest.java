@@ -1,6 +1,10 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
+import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.modulecore.data.model.Album;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
+import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -9,6 +13,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -77,4 +84,56 @@ public class UserRepositoryTest {
         assertThat("user is still present",
                    Objects.isNull(entityManager.find(User.class, user.getId())));
     }
+
+    @Test
+    void getAllUsersWithoutBandAllUsersWithoutBand() {
+        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
+        User user2 = new User(null, UserType.BAND_MEMBER, "a", "b", "ab@mail");
+        entityManager.persist(user1);
+        entityManager.persist(user2);
+        entityManager.flush();
+        List<User> found = Lists.newArrayList(userRepository.getAllUsersWithoutBand());
+        assertThat("wrong number of records", found.size() == 2);
+    }
+
+    @Test
+    void getAllUsersWithoutBandSomeHaveBand() {
+        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
+        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], user1);
+        user1.setManagerOfBand(band);
+        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail");
+        band.setMembers(List.of(user2));
+        user2.setMemberOfBand(band);
+        entityManager.persist(user1);
+        entityManager.persist(band);
+        entityManager.persist(user2);
+        entityManager.flush();
+        List<User> found = Lists.newArrayList(userRepository.getAllUsersWithoutBand());
+        assertThat("wrong number of records", found.size() == 1);
+    }
+
+    @Test
+    void getUsersFromBandBySongId() {
+        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
+        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], user1);
+        user1.setManagerOfBand(band);
+        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail");
+        band.setMembers(List.of(user2));
+        user2.setMemberOfBand(band);
+        Album album = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        band.setAlbums(List.of(album));
+        Song song = new Song(null, "titlez", Duration.ofSeconds(11));
+        song.setAlbum(album);
+        album.setSongs(List.of(song));
+
+        entityManager.persist(user1);
+        entityManager.persist(band);
+        entityManager.persist(user2);
+        entityManager.persist(album);
+        entityManager.persist(song);
+        entityManager.flush();
+        List<User> found = Lists.newArrayList(userRepository.getUsersFromBandBySongId(song.getId()));
+        assertThat("wrong number of records", found.size() == 1);
+    }
+
 }

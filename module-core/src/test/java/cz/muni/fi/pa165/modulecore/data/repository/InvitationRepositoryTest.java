@@ -125,7 +125,7 @@ public class InvitationRepositoryTest {
     void deleteInvitationOk() {
         entityManager.persistAndFlush(testinInvitation);
         invitationRepository.deleteById(testinInvitation.getId());
-        assertThat("album is still present",
+        assertThat("invitation is still present",
                 Objects.isNull(entityManager.find(Invitation.class, testinInvitation.getId())));
     }
 

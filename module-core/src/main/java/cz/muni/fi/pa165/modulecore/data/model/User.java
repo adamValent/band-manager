@@ -142,7 +142,10 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(userType, firstName, lastName, email, managerOfBand, memberOfBand);
+        if (memberOfBand == null) {
+            return Objects.hash(userType, firstName, lastName, email, managerOfBand);
+        }
+        return Objects.hash(userType, firstName, lastName, email, managerOfBand, memberOfBand.getId());
     }
 
     @Override

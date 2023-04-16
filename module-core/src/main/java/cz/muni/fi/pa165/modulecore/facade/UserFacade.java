@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
 import cz.muni.fi.pa165.modulecore.api.UserDto;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.mapper.UserMapper;
 import cz.muni.fi.pa165.modulecore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,13 @@ public class UserFacade {
 
     public void deleteUser(Long id) {
         userService.delete(id);
+    }
+
+    public List<UserDto> getAllUsersWithoutBand() {
+        return userMapper.mapToList(userService.getAllUsersWithoutBand());
+    }
+
+    public List<UserDto> getUsersFromBandBySongId(Long idSong) {
+        return userMapper.mapToList(userService.getUsersFromBandBySongId(idSong));
     }
 }
