@@ -28,7 +28,7 @@ public class Band implements Serializable {
     private User manager;
     @OneToMany(mappedBy = "memberOfBand", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> members;
-    @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private List<Album> albums;
     @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Invitation> invitations;

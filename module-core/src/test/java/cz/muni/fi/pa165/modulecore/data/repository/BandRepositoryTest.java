@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.modulecore.data.repository;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import org.assertj.core.util.Lists;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,6 +28,8 @@ public class BandRepositoryTest {
     @Autowired
     private BandRepository bandRepository;
     @Autowired
+    private AlbumRepository albumRepository;
+    @Autowired
     private TestEntityManager entityManager;
     private Band band;
     private User user;
@@ -36,6 +40,8 @@ public class BandRepositoryTest {
         entityManager.persistAndFlush(manager);
         this.user = manager;
         Band band = new Band(null, "name", Genre.BLUES, new Byte[0], manager);
+        band.setAlbums(Lists.newArrayList(new Album(0L, "album", LocalDate.now(), Genre.BLUES,
+                Lists.newArrayList(), band)));
         entityManager.persist(band);
         entityManager.flush();
         this.band = band;
@@ -99,6 +105,9 @@ public class BandRepositoryTest {
         bandRepository.deleteById(band.getId());
         assertThat("band is still present",
                 Objects.isNull(entityManager.find(Band.class, band.getId())));
+        Optional<Album> found = albumRepository.findById(0L);
+
+        assertThat("album is still present", found.isEmpty());
     }
 
 }
