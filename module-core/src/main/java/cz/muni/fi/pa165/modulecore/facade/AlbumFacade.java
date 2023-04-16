@@ -28,14 +28,14 @@ public class AlbumFacade {
     }
 
     public AlbumDto createAlbum(AlbumDto albumDto) {
-        return albumMapper.mapToDto(albumService.createAlbum(albumMapper.mapFromDto(albumDto)));
+        return albumMapper.mapToDto(albumService.create(albumMapper.mapFromDto(albumDto)));
     }
 
     public AlbumDto updateAlbum(Long id, AlbumDto albumDto) {
-        return albumMapper.mapToDto(albumService.updateAlbum(id, albumMapper.mapFromDto(albumDto)));
+        return albumMapper.mapToDto(albumService.update(id, albumMapper.mapFromDto(albumDto)));
     }
 
     public void deleteAlbum(Long id) {
-        albumService.deleteAlbum(id);
+        albumService.delete(id);
     }
 }

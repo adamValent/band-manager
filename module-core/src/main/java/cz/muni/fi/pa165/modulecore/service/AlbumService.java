@@ -3,9 +3,11 @@ package cz.muni.fi.pa165.modulecore.service;
 import com.google.common.collect.Lists;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -18,22 +20,22 @@ public class AlbumService {
     }
 
     public Album findById(Long id) {
-        return albumRepository.findById(id).get();
+        return albumRepository.findById(id).orElseThrow(ResolutionException::new);
     }
 
     public List<Album> getAll() {
         return Lists.newArrayList(albumRepository.findAll());
     }
 
-    public Album createAlbum(Album album) {
+    public Album create(Album album) {
         return albumRepository.save(album);
     }
 
-    public Album updateAlbum(Long id, Album album) {
-        return createAlbum(album);
+    public Album update(Long id, Album album) {
+        if (!albumRepository.existsById(id))
+            throw new ResourceNotFoundException("Album does not exist.");
+        return albumRepository.save(album);
     }
 
-    public void deleteAlbum(Long id) {
-        albumRepository.deleteById(id);
-    }
+    public void delete(Long id) { albumRepository.deleteById(id); }
 }
