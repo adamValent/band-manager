@@ -10,31 +10,26 @@ import java.util.Objects;
 public class InvitationDto {
     private Long id;
     @NotNull
-    private Long toUserId;
-    @NotNull
     private String message;
     @NotNull
     private InvitationStatus status;
     @NotNull
     private LocalDate dateReceived;
     @NotNull
-    private Band band;
+    private BandDto band;
+    @NotNull
+    private UserDto user;
 
     public InvitationDto() {
     }
 
-    public InvitationDto(Long id,
-                         Long toUserId,
-                         String message,
-                         InvitationStatus status,
-                         LocalDate dateReceived,
-                         Band band) {
+    public InvitationDto(Long id, String message, InvitationStatus status, LocalDate dateReceived, BandDto band, UserDto userDto) {
         this.id = id;
-        this.band = band;
-        this.toUserId = toUserId;
         this.message = message;
         this.status = status;
         this.dateReceived = dateReceived;
+        this.band = band;
+        this.user = userDto;
     }
 
     public Long getId() {
@@ -43,22 +38,6 @@ public class InvitationDto {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public @NotNull Band getBand() {
-        return band;
-    }
-
-    public void setBand(@NotNull Band band) {
-        this.band = band;
-    }
-
-    public Long getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(Long toUserId) {
-        this.toUserId = toUserId;
     }
 
     public String getMessage() {
@@ -85,32 +64,44 @@ public class InvitationDto {
         this.dateReceived = dateReceived;
     }
 
+    public BandDto getBand() {
+        return band;
+    }
+
+    public void setBand(BandDto band) {
+        this.band = band;
+    }
+
+    public UserDto getUser() {
+        return user;
+    }
+
+    public void setUser(UserDto user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        InvitationDto invitationDto = (InvitationDto) o;
-        return Objects.equals(id, invitationDto.id) && band.equals(invitationDto.band)
-                && toUserId.equals(invitationDto.toUserId) && message.equals(invitationDto.message)
-                && status == invitationDto.status && dateReceived.equals(invitationDto.dateReceived);
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InvitationDto that = (InvitationDto) o;
+        return Objects.equals(id, that.id) && Objects.equals(message, that.message) && status == that.status && Objects.equals(dateReceived, that.dateReceived) && Objects.equals(band, that.band) && Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, band, toUserId, message, status, dateReceived);
+        return Objects.hash(id, message, status, dateReceived, band, user);
     }
 
     @Override
     public String toString() {
-        return "InviteDto{" + "id=" + id +
-                ", fromBandId=" + band +
-                ", toUserId=" + toUserId +
+        return "InvitationDto{" +
+                "id=" + id +
                 ", message='" + message + '\'' +
                 ", status=" + status +
-                ", dateReceived=" + dateReceived + '}';
+                ", dateReceived=" + dateReceived +
+                ", band=" + band +
+                ", user=" + user +
+                '}';
     }
 }
