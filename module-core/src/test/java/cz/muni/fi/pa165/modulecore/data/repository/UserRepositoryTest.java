@@ -27,7 +27,7 @@ public class UserRepositoryTest {
 
     @Test
     void findByIdOk() {
-        User user = new User(null, UserType.MANAGER, "first", "last", "mail", "pwd");
+        User user = new User(null, UserType.MANAGER, "first", "last", "mail");
         entityManager.persistAndFlush(user);
         Optional<User> found = userRepository.findById(user.getId());
         assertThat("user is no present", found.isPresent());
@@ -42,8 +42,8 @@ public class UserRepositoryTest {
 
     @Test
     void getAll() {
-        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail", "pwd");
-        User user2 = new User(null, UserType.BAND_MEMBER, "a", "b", "ab@mail", "12345");
+        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
+        User user2 = new User(null, UserType.BAND_MEMBER, "a", "b", "ab@mail");
         entityManager.persist(user1);
         entityManager.persist(user2);
         entityManager.flush();
@@ -53,7 +53,7 @@ public class UserRepositoryTest {
 
     @Test
     void createUserOk() {
-        User user = new User(null, UserType.MANAGER, "first", "last", "mail", "pwd");
+        User user = new User(null, UserType.MANAGER, "first", "last", "mail");
         User result = userRepository.save(user);
         User created = entityManager.find(User.class, result.getId());
         assertThat("user is not present", Objects.nonNull(created));
@@ -62,7 +62,7 @@ public class UserRepositoryTest {
 
     @Test
     void updateUserOk() {
-        User user = new User(null, UserType.MANAGER, "first", "last", "mail", "pwd");
+        User user = new User(null, UserType.MANAGER, "first", "last", "mail");
         entityManager.persistAndFlush(user);
         user.setEmail("123@mail");
         User updated = entityManager.find(User.class, user.getId());
@@ -71,7 +71,7 @@ public class UserRepositoryTest {
 
     @Test
     void deleteUserOk() {
-        User user = new User(null, UserType.MANAGER, "first", "last", "mail", "pwd");
+        User user = new User(null, UserType.MANAGER, "first", "last", "mail");
         entityManager.persistAndFlush(user);
         userRepository.deleteById(user.getId());
         assertThat("user is still present",

@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.BandDto;
+import cz.muni.fi.pa165.modulecore.api.UserDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
 import cz.muni.fi.pa165.modulecore.mapper.BandMapper;
 import org.json.JSONObject;
@@ -47,7 +49,7 @@ class BandRestControllerTest {
     void testBandFindByIdOK() throws Exception {
         log.debug("testBandFindByIdOK running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findAll().get(0));
+        BandDto expectedResponse = bandMapper.mapToDto(((List<Band>)(bandRepository.findAll())).get(0));
 
         String response =
                 mockMvc.perform(get(String.format("/bands/%s", expectedResponse.getId())))
@@ -82,7 +84,7 @@ class BandRestControllerTest {
                 objectMapper.readerForListOf(BandDto.class).readValue(response);
         assertThat("response",
                 bandsResponse,
-                is(equalTo(bandRepository.findAll()
+                is(equalTo(((List<Band>)bandRepository.findAll())
                         .stream()
                         .map(bandMapper::mapToDto).toList())));
     }
@@ -103,7 +105,7 @@ class BandRestControllerTest {
     void testBandCreateOK() throws Exception {
         log.debug("testBandCreateOK running");
 
-        BandDto expectedResponse = new BandDto(null, "BestBand", Genre.FUNK, new Byte[0], 100L);
+        BandDto expectedResponse = new BandDto(null, "BestBand", Genre.FUNK, new Byte[0], new UserDto(), List.of(new UserDto()));
         String response = mockMvc.perform(post("/bands").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 expectedResponse)))
@@ -122,7 +124,7 @@ class BandRestControllerTest {
     void testBandUpdate() throws Exception {
         log.debug("testBandUpdate running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L));
+        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L).get());
         String response = mockMvc.perform(put(String.format("/bands/%s",
                         expectedResponse.getId())).contentType(
                                 MediaType.APPLICATION_JSON)
@@ -154,7 +156,7 @@ class BandRestControllerTest {
     @Test
     void testBandUpdateMissingId() throws Exception {
         log.debug("testBandUpdateMissingId running");
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L));
+        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L).get());
         mockMvc.perform(put(String.format("/bands/%s",
                         0L)).contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
@@ -166,7 +168,7 @@ class BandRestControllerTest {
     void testBandDeleteOK() throws Exception {
         log.debug("testBandDeleteOK running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findAll().get(0));
+        BandDto expectedResponse = bandMapper.mapToDto(((List<Band>)bandRepository.findAll()).get(0));
 
         mockMvc.perform(delete(String.format("/bands/%s", expectedResponse.getId())))
                 .andExpect(status().isOk())

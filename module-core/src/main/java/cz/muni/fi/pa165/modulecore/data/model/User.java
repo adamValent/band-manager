@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user_test")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,26 +26,35 @@ public class User implements Serializable {
     @Column(name = "email")
     @NotNull
     private String email;
-    @Column(name = "password")
-    @NotNull
-    private String password;
+    @OneToOne()
+    @JoinColumn(name = "band_id", referencedColumnName = "id")
+    private Band managerOfBand;
+    @ManyToOne
+    private Band memberOfBand;
 
-    public User(Long id,
-                UserType userType,
-                String firstName,
-                String lastName,
-                String email,
-                String password) {
+    public User(Long id, UserType userType, String firstName, String lastName, String email, Band managerOfBand, Band memberOfBand) {
         this.id = id;
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.managerOfBand = managerOfBand;
+        this.memberOfBand = memberOfBand;
+    }
+
+    public User(Long id, UserType userType, String firstName, String lastName, String email) {
+        this.id = id;
+        this.userType = userType;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
     }
 
     public User() {
+
     }
+
+
 
     public Long getId() {
         return id;
@@ -86,12 +96,20 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public Band getManagerOfBand() {
+        return managerOfBand;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setManagerOfBand(Band managerOfBand) {
+        this.managerOfBand = managerOfBand;
+    }
+
+    public Band getMemberOfBand() {
+        return memberOfBand;
+    }
+
+    public void setMemberOfBand(Band memberOfBand) {
+        this.memberOfBand = memberOfBand;
     }
 
     @Override
@@ -99,17 +117,24 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userType == user.userType && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
+        return userType == user.userType && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(managerOfBand, user.managerOfBand) && Objects.equals(memberOfBand, user.memberOfBand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userType, firstName, lastName, email);
+        return Objects.hash(userType, firstName, lastName, email, managerOfBand, memberOfBand);
     }
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", userType='" + userType + '\'' + ", firstName='" + firstName
-               + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + "'}";
+        return "User{" +
+                "id=" + id +
+                ", userType=" + userType +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", managerOfBand=" + managerOfBand +
+                ", memberOfBand=" + memberOfBand +
+                '}';
     }
 }

@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.modulecore.data.repository;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class AlbumRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], 0L);
+        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], new User());
         entityManager.persist(band);
         entityManager.flush();
         this.band = band;

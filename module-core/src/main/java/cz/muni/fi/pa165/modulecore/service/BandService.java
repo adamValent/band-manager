@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.modulecore.service;
 
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,22 +18,23 @@ public class BandService {
     }
 
     public Band findById(Long id) {
-        return bandRepository.findById(id);
+        return bandRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public List<Band> findAll() {
-        return bandRepository.findAll();
+        return (List<Band>) bandRepository.findAll();
     }
 
     public Band createBand(Band band) {
-        return bandRepository.createBand(band);
+        return bandRepository.save(band);
     }
 
     public Band updateBand(Long id, Band band) {
-        return bandRepository.updateBand(id, band);
+        band.setId(id);
+        return bandRepository.save(band);
     }
 
     public void deleteBand(Long id) {
-        bandRepository.deleteBand(id);
+        bandRepository.deleteById(id);
     }
 }

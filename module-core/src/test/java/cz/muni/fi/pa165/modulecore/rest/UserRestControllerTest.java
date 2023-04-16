@@ -46,7 +46,7 @@ class UserRestControllerTest {
 
     @Test
     void findByIdOk() throws Exception {
-        User user = new User(1L, UserType.MANAGER, "name", "surname", "me@mail.com", "psw");
+        User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         UserDto expectedResponse = userMapper.mapToDto(user);
 
@@ -68,8 +68,8 @@ class UserRestControllerTest {
 
     @Test
     void getAll() throws Exception {
-        User user1 = new User(1L, UserType.MANAGER, "name1", "surname", "me@mail.com", "psw");
-        User user2 = new User(1L, UserType.MANAGER, "name2", "surname", "me@mail.com", "psw");
+        User user1 = new User(1L, UserType.MANAGER, "name1", "surname", "me@mail.com");
+        User user2 = new User(1L, UserType.MANAGER, "name2", "surname", "me@mail.com");
         Mockito.when(userRepository.findAll()).thenReturn(List.of(user1, user2));
 
         String response = mockMvc.perform(get("/users"))
@@ -82,7 +82,7 @@ class UserRestControllerTest {
 
     @Test
     void createUserOk() throws Exception {
-        User user = new User(1L, UserType.MANAGER, "name", "surname", "me@mail.com", "psw");
+        User user = new User(null, UserType.MANAGER, "name", "last", "mail");
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
 
@@ -109,7 +109,7 @@ class UserRestControllerTest {
 
     @Test
     void updateUserOk() throws Exception {
-        User user = new User(1L, UserType.MANAGER, "name", "surname", "me@mail.com", "psw");
+        User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
@@ -152,24 +152,26 @@ class UserRestControllerTest {
 
     @Test
     void registerUser() throws Exception {
-        UserDto user = userMapper.mapToDto(
-                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
-                        "password"));
-        mockMvc.perform(post("/users/registration")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk());
+        UserDto user = userMapper.mapToDto(new User(20L,
+                                                    UserType.BAND_MEMBER,
+                                                    "John",
+                                                    "Person",
+                                                    "john@person.com"));
+        mockMvc.perform(post("/users/registration").contentType(MediaType.APPLICATION_JSON)
+                                                   .content(objectMapper.writeValueAsString(user)))
+               .andExpect(status().isOk());
     }
 
     @Test
     void loginUser() throws Exception {
-        UserDto user = userMapper.mapToDto(
-                new User(20L, UserType.BAND_MEMBER, "John", "Person", "john@person.com",
-                        "password"));
-        mockMvc.perform(post("/users/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(user)))
-                .andExpect(status().isOk());
+        UserDto user = userMapper.mapToDto(new User(20L,
+                                                    UserType.BAND_MEMBER,
+                                                    "John",
+                                                    "Person",
+                                                    "john@person.com"));
+        mockMvc.perform(post("/users/login").contentType(MediaType.APPLICATION_JSON)
+                                            .content(objectMapper.writeValueAsString(user)))
+               .andExpect(status().isOk());
     }
 
     @Test

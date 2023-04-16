@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ class SongRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], 0L);
+        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], new User());
         Album album = new Album(null, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), band);
         entityManager.persist(band);
         entityManager.persist(album);

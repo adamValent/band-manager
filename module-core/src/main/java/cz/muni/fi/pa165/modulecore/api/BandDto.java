@@ -5,9 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class BandDto {
+    //TODO opravit open api
+
     private Long id;
     @NotNull
     @Schema(name = "name", example = "Misty", description = "full name", requiredMode = Schema.RequiredMode.REQUIRED)
@@ -18,21 +21,19 @@ public class BandDto {
     @NotNull
     @Schema(name = "image", example = "[\"67\",\"7\",\"89\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private Byte[] image;
-    @NotNull
-    @Schema(name = "managerId", example = "8", description = "manager ID", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long managerId;
+    @Schema(name = "manager", example = "8", description = "manager ID", requiredMode = Schema.RequiredMode.REQUIRED)
+    private UserDto manager;
+    private List<UserDto> members;
 
-    public BandDto(Long id,
-                   String name,
-                   Genre genre,
-                   Byte[] image,
-                   Long managerId) {
+    public BandDto(Long id, String name, Genre genre, @NotNull Byte[] image, UserDto manager, List<UserDto> members) {
         this.id = id;
         this.name = name;
         this.genre = genre;
         this.image = image;
-        this.managerId = managerId;
+        this.manager = manager;
+        this.members = members;
     }
+
 
     public Long getId() {
         return id;
@@ -62,46 +63,50 @@ public class BandDto {
         return image;
     }
 
-    public void setImage( Byte[] image) {
+    public void setImage(Byte[] image) {
         this.image = image;
     }
 
-    public Long getManagerId() {
-        return managerId;
+    public UserDto getManager() {
+        return manager;
     }
 
-    public void setManagerId(Long managerId) {
-        this.managerId = managerId;
+    public void setManager(UserDto manager) {
+        this.manager = manager;
+    }
+
+    public List<UserDto> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<UserDto> members) {
+        this.members = members;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         BandDto bandDto = (BandDto) o;
-        return Objects.equals(id, bandDto.id) && name.equals(bandDto.name) && genre == bandDto.genre
-                && Arrays.equals(image, bandDto.image) && managerId.equals(bandDto.managerId);
+        return Objects.equals(id, bandDto.id) && Objects.equals(name, bandDto.name) && genre == bandDto.genre && Arrays.equals(image, bandDto.image) && Objects.equals(manager, bandDto.manager) && Objects.equals(members, bandDto.members);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(id, name, genre, managerId);
+        int result = Objects.hash(id, name, genre, manager, members);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Band{" +
+        return "BandDto{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", genre=" + genre +
                 ", image=" + Arrays.toString(image) +
-                ", managerId=" + managerId +
+                ", manager=" + manager +
+                ", members=" + members +
                 '}';
     }
 }
