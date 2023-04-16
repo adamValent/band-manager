@@ -13,14 +13,19 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "user_type")
     @NotNull
     private UserType userType;
+    @Column(name = "first_name")
     @NotNull
     private String firstName;
+    @Column(name = "last_name")
     @NotNull
     private String lastName;
+    @Column(name = "email")
     @NotNull
     private String email;
+    @Column(name = "password")
     @NotNull
     private String password;
 
@@ -91,17 +96,15 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) {return false;}
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && userType == user.userType
-               && firstName.equals(user.firstName) && lastName.equals(user.lastName)
-               && email.equals(user.email) && password.equals(user.password);
+        return userType == user.userType && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userType, firstName, lastName, email, password);
+        return Objects.hash(userType, firstName, lastName, email);
     }
 
     @Override

@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext
 class AlbumRestControllerTest {
     private static final Logger log = LoggerFactory.getLogger(AlbumRestControllerTest.class);
     @Autowired

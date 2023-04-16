@@ -19,7 +19,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(RuntimeException::new);
+        return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public List<User> getAll() {
