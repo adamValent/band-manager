@@ -21,8 +21,6 @@ public class Band implements Serializable {
     private List<Album> albums;
     @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Invitation> invitations;
-    @OneToMany(mappedBy = "band", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<User> users;
 
     public Band() {
     }
@@ -89,14 +87,6 @@ public class Band implements Serializable {
 
     public void setInvitations(List<Invitation> invitations) {
         this.invitations = invitations;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     @Override

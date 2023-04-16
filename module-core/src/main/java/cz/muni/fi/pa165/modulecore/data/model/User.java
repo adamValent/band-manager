@@ -28,8 +28,6 @@ public class User implements Serializable {
     @Column(name = "password")
     @NotNull
     private String password;
-    @ManyToOne(optional = true)
-    private Band band;
 
     public User(Long id,
                 UserType userType,
@@ -94,14 +92,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Band getBand() {
-        return band;
-    }
-
-    public void setBand(Band band) {
-        this.band = band;
     }
 
     @Override
