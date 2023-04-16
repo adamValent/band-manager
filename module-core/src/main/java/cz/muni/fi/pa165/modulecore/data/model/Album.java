@@ -15,21 +15,17 @@ public class Album implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
+    @NotNull
     private String name;
-    @Column(name = "release_date")
+    @NotNull
     private LocalDate releaseDate;
-    @Column(name = "genre")
+    @NotNull
     private Genre genre;
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(name = "songs")
     private List<Song> songs;
     @ManyToOne
     @NotNull
     private Band band;
-
-    public Album() {
-    }
 
     public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs, Band band) {
         this.id = id;
@@ -38,6 +34,9 @@ public class Album implements Serializable {
         this.genre = genre;
         this.songs = songs;
         this.band = band;
+    }
+
+    public Album() {
     }
 
     public Long getId() {
@@ -96,7 +95,7 @@ public class Album implements Serializable {
         return Objects.equals(id, album.id) &&
                Objects.equals(name, album.name) &&
                Objects.equals(releaseDate, album.releaseDate) &&
-               genre == album.genre &&
+               Objects.equals(genre, album.genre) &&
                Objects.equals(songs, album.songs) &&
                Objects.equals(band, album.band);
     }
