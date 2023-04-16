@@ -14,26 +14,33 @@ public class Invitation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long toUserId;
     private String message;
+    @NotNull
     private InvitationStatus status;
+    @NotNull
     private LocalDate dateReceived;
     @ManyToOne
     @NotNull
     private Band band;
+    @ManyToOne
+    @NotNull
+    private User user;
 
     public Invitation() {
     }
 
     public Invitation(Long id,
-                      Long toUserId,
-                      String message, InvitationStatus status, LocalDate dateReceived, Band band) {
+                      String message,
+                      InvitationStatus status,
+                      LocalDate dateReceived,
+                      Band band,
+                      User user) {
         this.id = id;
-        this.toUserId = toUserId;
         this.message = message;
         this.status = status;
         this.dateReceived = dateReceived;
         this.band = band;
+        this.user = user;
     }
 
     public Long getId() {
@@ -68,20 +75,20 @@ public class Invitation implements Serializable {
         this.dateReceived = dateReceived;
     }
 
-    public Long getToUserId() {
-        return toUserId;
-    }
-
-    public void setToUserId(Long toUserId) {
-        this.toUserId = toUserId;
-    }
-
     public Band getBand() {
         return band;
     }
 
     public void setBand(Band band) {
         this.band = band;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -93,23 +100,18 @@ public class Invitation implements Serializable {
             return false;
         }
         Invitation that = (Invitation) o;
-        return Objects.equals(id, that.id) && band.equals(that.band) && toUserId.equals(
-                that.toUserId) && message.equals(that.message) && status == that.status
-                && dateReceived.equals(that.dateReceived);
+        return Objects.equals(id, that.id) && band.equals(that.band) && message.equals(that.message)
+               && status == that.status && dateReceived.equals(that.dateReceived);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, band, toUserId, message, status, dateReceived);
+        return Objects.hash(id, band, user, message, status, dateReceived);
     }
 
     @Override
     public String toString() {
-        return "Invitation{" + "id=" + id +
-                ", fromBandId=" + band +
-                ", toUserId=" + toUserId +
-                ", message='" + message + '\'' +
-                ", status=" + status +
-                ", dateReceived=" + dateReceived + '}';
+        return "Invitation{" + "id=" + id + ", message='" + message + '\'' + ", status=" + status
+               + ", dateReceived=" + dateReceived + '}';
     }
 }

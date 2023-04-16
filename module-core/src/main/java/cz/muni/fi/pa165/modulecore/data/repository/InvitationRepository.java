@@ -33,10 +33,10 @@ public class InvitationRepository {
     public Invitation updateInvitation(Long id, Invitation updated) {
         Invitation invitation = findById(id);
         invitation.setBand(updated.getBand());
-        invitation.setToUserId(updated.getToUserId());
         invitation.setMessage(updated.getMessage());
         invitation.setStatus(updated.getStatus());
         invitation.setDateReceived(updated.getDateReceived());
+        invitation.setUser(updated.getUser());
 
         return invitation;
     }

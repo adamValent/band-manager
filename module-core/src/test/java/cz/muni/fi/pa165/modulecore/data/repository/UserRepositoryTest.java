@@ -75,6 +75,6 @@ public class UserRepositoryTest {
         entityManager.persistAndFlush(user);
         userRepository.deleteById(user.getId());
         assertThat("user is still present",
-                   Objects.nonNull(entityManager.find(User.class, user.getId())));
+                   Objects.isNull(entityManager.find(User.class, user.getId())));
     }
 }

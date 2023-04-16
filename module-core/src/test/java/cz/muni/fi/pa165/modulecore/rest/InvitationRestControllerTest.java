@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.modulecore.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Invitation;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.InvitationRepository;
 import cz.muni.fi.pa165.modulecore.mapper.InvitationMapper;
 import org.json.JSONObject;
@@ -58,8 +59,8 @@ class InvitationRestControllerTest {
     @Test
     void createInvitationOk() throws Exception {
         InvitationDto expectedResponse = invitationMapper.mapToDto(
-                new Invitation(null, 0L, "message",
-                        InvitationStatus.PENDING, LocalDate.now(), new Band()));
+                new Invitation(null, "message",
+                        InvitationStatus.PENDING, LocalDate.now(), new Band(), new User()));
         String response = mockMvc.perform(post("/invitations")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))
@@ -84,8 +85,8 @@ class InvitationRestControllerTest {
     @Test
     void updateInvitationOk() throws Exception {
         InvitationDto expectedResponse = invitationMapper.mapToDto(
-                new Invitation(200L, 0L, "message",
-                        InvitationStatus.PENDING, LocalDate.now(), new Band()));
+                new Invitation(200L, "message",
+                        InvitationStatus.PENDING, LocalDate.now(), new Band(), new User()));
         String response = mockMvc.perform(put("/invitations/200")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(expectedResponse)))

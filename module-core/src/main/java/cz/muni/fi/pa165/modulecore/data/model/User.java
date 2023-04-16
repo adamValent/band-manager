@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,8 +32,17 @@ public class User implements Serializable {
     private Band managerOfBand;
     @ManyToOne
     private Band memberOfBand;
+    @OneToMany
+    private List<Invitation> invitations = Collections.emptyList();
 
-    public User(Long id, UserType userType, String firstName, String lastName, String email, Band managerOfBand, Band memberOfBand) {
+
+    public User(Long id,
+                UserType userType,
+                String firstName,
+                String lastName,
+                String email,
+                Band managerOfBand,
+                Band memberOfBand, List<Invitation> invitations) {
         this.id = id;
         this.userType = userType;
         this.firstName = firstName;
@@ -40,6 +50,7 @@ public class User implements Serializable {
         this.email = email;
         this.managerOfBand = managerOfBand;
         this.memberOfBand = memberOfBand;
+        this.invitations = invitations;
     }
 
     public User(Long id, UserType userType, String firstName, String lastName, String email) {
@@ -51,9 +62,7 @@ public class User implements Serializable {
     }
 
     public User() {
-
     }
-
 
 
     public Long getId() {
@@ -112,12 +121,23 @@ public class User implements Serializable {
         this.memberOfBand = memberOfBand;
     }
 
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
+
+    public void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {return true;}
+        if (o == null || getClass() != o.getClass()) {return false;}
         User user = (User) o;
-        return userType == user.userType && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email) && Objects.equals(managerOfBand, user.managerOfBand) && Objects.equals(memberOfBand, user.memberOfBand);
+        return userType == user.userType && Objects.equals(firstName, user.firstName)
+               && Objects.equals(lastName, user.lastName) && Objects.equals(email, user.email)
+               && Objects.equals(managerOfBand, user.managerOfBand) && Objects.equals(memberOfBand,
+                                                                                      user.memberOfBand);
     }
 
     @Override
@@ -127,14 +147,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userType=" + userType +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", managerOfBand=" + managerOfBand +
-                ", memberOfBand=" + memberOfBand +
-                '}';
+        return "User{" + "id=" + id + ", userType=" + userType + ", firstName='" + firstName + '\''
+               + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", managerOfBand="
+               + managerOfBand + ", memberOfBand=" + memberOfBand + '}';
     }
 }
