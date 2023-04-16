@@ -12,8 +12,11 @@ public class TourDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     private String city;
+    @NotNull
     private LocalDate date;
+    @NotNull
     private String venue;
     @ManyToOne
     @NotNull
