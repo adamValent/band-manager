@@ -22,6 +22,18 @@
 
 YouBand manager is a simple system for managing music bands, its memebers, albums, songs and tours.
 
+## Modules
+
+Project is composed of 4 runnable modules.
+
+Runnable modules are in `module-core`, `module-user`, `module-email` and `module-pdf` folders.
+
+* **module-core** (port 5432): responsible for main functionality regarding band management.
+* **module-user** (port 5433): responsible for logging and registration of users.
+* **module-email** (port 8081): responsible for sending emails between users.
+* **module-pdf** (port 8082): responsible for generation of pdfs concerning band info and tours.
+
+
 ## Roles
 
 The system has two authorization roles - **Manager** and **Band Member**.
