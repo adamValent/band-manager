@@ -78,7 +78,7 @@ class SongRepositoryTest {
     }
 
     @Test
-    void createUserOk() {
+    void createSongOk() {
         Song song = new Song(null, "title", Duration.ofSeconds(11));
         song.setAlbum(album);
 
@@ -90,7 +90,7 @@ class SongRepositoryTest {
     }
 
     @Test
-    void updateUserOk() {
+    void updateSongOk() {
         Song song = new Song(null, "title", Duration.ofSeconds(11));
         song.setAlbum(album);
         entityManager.persistAndFlush(song);
@@ -102,7 +102,7 @@ class SongRepositoryTest {
     }
 
     @Test
-    void deleteUserOk() {
+    void deleteSongOk() {
         Song song = new Song(null, "title", Duration.ofSeconds(11));
         song.setAlbum(album);
         entityManager.persistAndFlush(song);
