@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.moduleuser.api.UserDto;
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.data.repository.UserRepository;
 import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;
-import cz.muni.fi.pa165.moduleuser.mapper.UserMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -15,8 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import cz.muni.fi.pa165.moduleuser.mapper.UserMapper;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class UserRestControllerTest {
+class UserAuthRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -91,6 +93,22 @@ class UserRestControllerTest {
                                  .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, UserDto.class),
                    is(equalTo(expectedResponse)));
+    }
+
+
+    @Test
+    void updateUserEmailOk() throws Exception {
+        User user = new User(1L, "me@mail.com", "psw");
+        UserDto expectedResponse = userMapper.mapToDto(user);
+        Mockito.when(userRepository.save(user)).thenReturn(user);
+        Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
+        String response = mockMvc.perform(put("/users-auth/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        assertThat(objectMapper.readValue(response, UserDto.class),
+                is(equalTo(expectedResponse)));
     }
 
     @Test

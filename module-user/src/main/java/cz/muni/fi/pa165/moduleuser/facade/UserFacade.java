@@ -25,6 +25,10 @@ public class UserFacade {
         return userMapper.mapToDto(userService.create(userMapper.mapFromDto(userDto)));
     }
 
+    public UserDto update(UserDto userDto) {
+        return userMapper.mapToDto(userService.update(userMapper.mapFromDto(userDto)));
+    }
+
     public UserDto updateEmail(Long id, String email){
         return userMapper.mapToDto(userService.updateEmail(id, email));
     }

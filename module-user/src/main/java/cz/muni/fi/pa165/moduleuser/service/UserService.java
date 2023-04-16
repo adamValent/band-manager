@@ -23,6 +23,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
     public User updateEmail(Long id, String email) {
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
         user.setEmail(email);
