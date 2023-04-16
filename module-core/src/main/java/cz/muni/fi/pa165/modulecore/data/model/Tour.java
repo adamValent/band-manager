@@ -1,18 +1,27 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tour")
 public class Tour {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private ArrayList<Long> bandList;
-    private ArrayList<TourDate> tourDates;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Band> bandList;
+    @OneToMany(mappedBy = "tour", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TourDate> tourDates;
 
     public Tour() {
     }
 
-    public Tour(Long id, String name, ArrayList<Long> bandList, ArrayList<TourDate> tourDates) {
+    public Tour(Long id, String name, List<Band> bandList, List<TourDate> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -35,19 +44,19 @@ public class Tour {
         this.name = name;
     }
 
-    public ArrayList<Long> getBandList() {
+    public List<Band> getBandList() {
         return bandList;
     }
 
-    public void setBandList(ArrayList<Long> bandList) {
+    public void setBandList(List<Band> bandList) {
         this.bandList = bandList;
     }
 
-    public ArrayList<TourDate> getTourDates() {
+    public List<TourDate> getTourDates() {
         return tourDates;
     }
 
-    public void setTourDates(ArrayList<TourDate> tourDates) {
+    public void setTourDates(List<TourDate> tourDates) {
         this.tourDates = tourDates;
     }
 
