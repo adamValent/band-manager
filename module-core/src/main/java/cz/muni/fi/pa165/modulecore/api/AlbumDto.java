@@ -20,14 +20,14 @@ public class AlbumDto {
     @Valid
     private List<SongDto> songs;
     @NotNull
-    private Band band;
+    private BandDto band;
 
     public AlbumDto(Long id,
                     String name,
                     LocalDate releaseDate,
                     Genre genre,
                     List<SongDto> songs,
-                    Band band) {
+                    BandDto band) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
@@ -76,11 +76,11 @@ public class AlbumDto {
         this.songs = songs;
     }
 
-    public Band getBand() {
+    public BandDto getBand() {
         return band;
     }
 
-    public void setBand(Band band) {
+    public void setBand(BandDto band) {
         this.band = band;
     }
 
