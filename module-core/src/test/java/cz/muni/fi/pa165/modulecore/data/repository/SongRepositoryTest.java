@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
@@ -36,7 +37,9 @@ class SongRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], new User());
+        User manager = new User(null, UserType.MANAGER, "boss", "boss", "boss@gmail.com");
+        entityManager.persistAndFlush(manager);
+        Band band = new Band(null, "name", Genre.BLUES, new Byte[0], manager);
         Album album = new Album(null, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), band);
         entityManager.persist(band);
         entityManager.persist(album);
