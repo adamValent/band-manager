@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class BandDto {
-    //TODO opravit open api
 
     private Long id;
     @NotNull
@@ -21,8 +20,9 @@ public class BandDto {
     @NotNull
     @Schema(name = "image", example = "[\"67\",\"7\",\"89\"]", requiredMode = Schema.RequiredMode.REQUIRED)
     private Byte[] image;
-    @Schema(name = "manager", example = "8", description = "manager ID", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(name = "manager", requiredMode = Schema.RequiredMode.REQUIRED)
     private UserDto manager;
+    @Schema(name = "members", description = "list of members")
     private List<UserDto> members;
 
     public BandDto(Long id, String name, Genre genre, @NotNull Byte[] image, UserDto manager, List<UserDto> members) {
