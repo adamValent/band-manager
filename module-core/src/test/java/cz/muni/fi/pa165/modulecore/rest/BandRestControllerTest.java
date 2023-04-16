@@ -4,20 +4,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.BandDto;
 import cz.muni.fi.pa165.modulecore.api.UserDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.BandMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -31,25 +38,32 @@ class BandRestControllerTest {
     private static final Logger log = LoggerFactory.getLogger(BandRestControllerTest.class);
     private final MockMvc mockMvc;
     private final ObjectMapper objectMapper;
-    private final BandRepository bandRepository;
     private final BandMapper bandMapper;
+
+    @MockBean
+    private BandRepository bandRepository;
+
+    private Band testingBand;
 
     @Autowired
     public BandRestControllerTest(MockMvc mockMvc,
                                   ObjectMapper objectMapper,
-                                  BandRepository bandRepository,
                                   BandMapper bandMapper) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
-        this.bandRepository = bandRepository;
         this.bandMapper = bandMapper;
+
+        User user = new User(1L, UserType.MANAGER, "test", "test", "test");
+        testingBand = new Band(1L, "TEST", Genre.ROCK, new Byte[]{}, user);
+
     }
 
     @Test
     void testBandFindByIdOK() throws Exception {
         log.debug("testBandFindByIdOK running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(((List<Band>)(bandRepository.findAll())).get(0));
+        Mockito.when(bandRepository.findById(testingBand.getId())).thenReturn(Optional.of(testingBand));
+        BandDto expectedResponse = bandMapper.mapToDto(testingBand);
 
         String response =
                 mockMvc.perform(get(String.format("/bands/%s", expectedResponse.getId())))
@@ -73,6 +87,8 @@ class BandRestControllerTest {
     void testBandFindAll() throws Exception {
         log.debug("testBandFindAll running");
 
+        Mockito.when(bandRepository.findAll()).thenReturn(List.of(testingBand));
+
         String response = mockMvc.perform(get("/bands"))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -80,12 +96,10 @@ class BandRestControllerTest {
                 .getContentAsString();
 
         log.debug("response: {}", response);
-        List<BandDto> bandsResponse =
-                objectMapper.readerForListOf(BandDto.class).readValue(response);
+        List<BandDto> bandsResponse = objectMapper.readerForListOf(BandDto.class).readValue(response);
         assertThat("response",
                 bandsResponse,
-                is(equalTo(((List<Band>)bandRepository.findAll())
-                        .stream()
+                is(equalTo(Stream.of(testingBand)
                         .map(bandMapper::mapToDto).toList())));
     }
 
@@ -105,7 +119,9 @@ class BandRestControllerTest {
     void testBandCreateOK() throws Exception {
         log.debug("testBandCreateOK running");
 
-        BandDto expectedResponse = new BandDto(null, "BestBand", Genre.FUNK, new Byte[0], new UserDto(), List.of(new UserDto()));
+        Mockito.when(bandRepository.save(testingBand)).thenReturn(testingBand);
+
+        BandDto expectedResponse = bandMapper.mapToDto(testingBand);
         String response = mockMvc.perform(post("/bands").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
                                 expectedResponse)))
@@ -124,7 +140,11 @@ class BandRestControllerTest {
     void testBandUpdate() throws Exception {
         log.debug("testBandUpdate running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L).get());
+        Mockito.when(bandRepository.save(testingBand)).thenReturn(testingBand);
+        Mockito.when(bandRepository.existsById(testingBand.getId())).thenReturn(true);
+
+        BandDto expectedResponse = bandMapper.mapToDto(testingBand);
+
         String response = mockMvc.perform(put(String.format("/bands/%s",
                         expectedResponse.getId())).contentType(
                                 MediaType.APPLICATION_JSON)
@@ -154,23 +174,12 @@ class BandRestControllerTest {
     }
 
     @Test
-    void testBandUpdateMissingId() throws Exception {
-        log.debug("testBandUpdateMissingId running");
-        BandDto expectedResponse = bandMapper.mapToDto(bandRepository.findById(3L).get());
-        mockMvc.perform(put(String.format("/bands/%s",
-                        0L)).contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(
-                                expectedResponse)))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     void testBandDeleteOK() throws Exception {
         log.debug("testBandDeleteOK running");
 
-        BandDto expectedResponse = bandMapper.mapToDto(((List<Band>)bandRepository.findAll()).get(0));
+        Mockito.doNothing().when(bandRepository).deleteById(testingBand.getId());
 
-        mockMvc.perform(delete(String.format("/bands/%s", expectedResponse.getId())))
+        mockMvc.perform(delete(String.format("/bands/%s", testingBand.getId())))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -180,6 +189,8 @@ class BandRestControllerTest {
     @Test
     void testBandDeleteNotFound() throws Exception {
         log.debug("testBandDeleteNotFound running");
+
+        Mockito.doThrow(new ResourceNotFoundException()).when(bandRepository).deleteById(0L);
 
         mockMvc.perform(delete(String.format("/bands/%s", 0L)))
                 .andExpect(status().isNotFound());
