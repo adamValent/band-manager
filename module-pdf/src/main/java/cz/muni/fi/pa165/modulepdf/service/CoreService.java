@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.modulepdf.exceptions.ResourceNotFoundException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,11 @@ public class CoreService {
     private final HashMap<Long, List<Song>> songsOfAlbum = new HashMap<>();
     private final HashMap<Long, List<TourDate>> tourDatesOfTour = new HashMap<>();
 
+    /**
+     *
+     * Now it is only mock, in next milestone it will be using rest template to call core microservice(module-core) to get data
+     *
+     */
     @PostConstruct
     private void initMock() {
 
@@ -35,6 +41,28 @@ public class CoreService {
                         new Album(100L, "In Utero", LocalDate.of(1993, 9, 21), Genre.ROCK),
                         new Album(101L, "In Utero2", LocalDate.of(1994, 9, 21), Genre.ROCK)
                 ));
+
+        toursOfBands.put(1L,
+                List.of(
+                        new Tour(101L, "Rock for people", List.of(1L), List.of(new TourDate("Las vegas", LocalDate.now(), "Main"))),
+                        new Tour(102L, "Rock for people2", List.of(1L), List.of(new TourDate("Las vegas2", LocalDate.now(), "Main2")))
+                ));
+
+        songsOfAlbum.put(100L, List.of(
+                new Song(1L, "Mega hit", Duration.ZERO),
+                new Song(2L, "Second mega hit", Duration.ofMinutes(3))
+        ));
+
+        tourDatesOfTour.put(101L,
+                List.of(
+                        new TourDate("Las vegas", LocalDate.now(), "Main")
+                ));
+
+        tourDatesOfTour.put(102L,
+                List.of(
+                        new TourDate("Las vegas2", LocalDate.now(), "Main2")
+                ));
+
 
     }
 
