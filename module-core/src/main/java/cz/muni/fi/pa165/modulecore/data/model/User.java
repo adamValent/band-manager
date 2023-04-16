@@ -24,7 +24,11 @@ public class User implements Serializable {
     @NotNull
     private String password;
 
-    public User(Long id, UserType userType, String firstName, String lastName, String email,
+    public User(Long id,
+                UserType userType,
+                String firstName,
+                String lastName,
+                String email,
                 String password) {
         this.id = id;
         this.userType = userType;
@@ -90,12 +94,9 @@ public class User implements Serializable {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
-               userType == user.userType &&
-               firstName.equals(user.firstName) &&
-               lastName.equals(user.lastName) &&
-               email.equals(user.email) &&
-               password.equals(user.password);
+        return Objects.equals(id, user.id) && userType == user.userType
+               && firstName.equals(user.firstName) && lastName.equals(user.lastName)
+               && email.equals(user.email) && password.equals(user.password);
     }
 
     @Override
@@ -105,10 +106,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id +
-                ", userType='" + userType + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + "'}";
+        return "User{" + "id=" + id + ", userType='" + userType + '\'' + ", firstName='" + firstName
+               + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + "'}";
     }
 }
