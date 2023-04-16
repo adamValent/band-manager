@@ -22,7 +22,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(Long id, @NotNull String email, @NotNull String password) {
+    public User(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;

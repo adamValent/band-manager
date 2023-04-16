@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.moduleuser.service;
 
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.data.repository.UserRepository;
+import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,26 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public User createUser(User user) {
-        return userRepository.createUser(user);
+    public User create(User user) {
+        return userRepository.save(user);
     }
 
-    public User updateUserEmail(Long id, String email) {
-        return userRepository.updateUserEmail(id, email);
+    public User updateEmail(Long id, String email) {
+        User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        user.setEmail(email);
+        return userRepository.save(user);
     }
 
-    public User updateUserPassword(Long id, String password) {
-        return userRepository.updateUserPassword(id, password);
+    public User updatePassword(Long id, String password) {
+        User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+        user.setPassword(password);
+        return userRepository.save(user);
     }
 
-    public void deleteUser(Long id){
-        userRepository.deleteUser(id);
+    public void delete(Long id){
+        userRepository.deleteById(id);
     }
 }

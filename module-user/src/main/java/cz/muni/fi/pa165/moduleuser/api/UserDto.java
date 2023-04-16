@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleuser.api;
 
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Objects;

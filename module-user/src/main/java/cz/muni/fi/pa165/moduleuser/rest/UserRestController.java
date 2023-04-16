@@ -37,7 +37,7 @@ public class UserRestController {
                     @ApiResponse(responseCode = "400", description = "User to be created cannot be validated.")
             })
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userFacade.createUser(userDto));
+        return ResponseEntity.ok(userFacade.create(userDto));
     }
 
     @Operation(summary = "Update user's email address")
@@ -47,8 +47,8 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "User's email was updated successfully."),
                     @ApiResponse(responseCode = "404", description = "User could not be found.")
             })
-    public ResponseEntity<UserDto> updateUserEmail(@PathVariable("id") Long id, String email){
-        return ResponseEntity.ok(userFacade.updateUserEmail(id , email));
+    public ResponseEntity<UserDto> updateUserEmail(@PathVariable("id") Long id, @RequestBody String email){
+        return ResponseEntity.ok(userFacade.updateEmail(id , email));
     }
 
     @Operation(summary = "Update user's password")
@@ -58,8 +58,8 @@ public class UserRestController {
                     @ApiResponse(responseCode = "200", description = "User's password was updated successfully."),
                     @ApiResponse(responseCode = "404", description = "User could not be found.")
             })
-    public ResponseEntity<UserDto> updateUserPassword(@PathVariable("id") Long id, String password){
-        return ResponseEntity.ok(userFacade.updateUserPassword(id , password));
+    public ResponseEntity<UserDto> updateUserPassword(@PathVariable("id") Long id, @RequestBody String password){
+        return ResponseEntity.ok(userFacade.updatePassword(id , password));
     }
 
     @Operation(summary = "Delete user.")
@@ -70,7 +70,7 @@ public class UserRestController {
             })
     @DeleteMapping(path = "{id}")
     public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
-        userFacade.deleteUser(id);
+        userFacade.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -21,19 +21,19 @@ public class UserFacade {
         return userMapper.mapToDto(userService.findById(id));
     }
 
-    public UserDto createUser(UserDto userDto) {
-        return userMapper.mapToDto(userService.createUser(userMapper.mapFromDto(userDto)));
+    public UserDto create(UserDto userDto) {
+        return userMapper.mapToDto(userService.create(userMapper.mapFromDto(userDto)));
     }
 
-    public UserDto updateUserEmail(Long id, String email){
-        return userMapper.mapToDto(userService.updateUserEmail(id, email));
+    public UserDto updateEmail(Long id, String email){
+        return userMapper.mapToDto(userService.updateEmail(id, email));
     }
 
-    public UserDto updateUserPassword(Long id, String password){
-        return userMapper.mapToDto(userService.updateUserPassword(id, password));
+    public UserDto updatePassword(Long id, String password){
+        return userMapper.mapToDto(userService.updatePassword(id, password));
     }
 
-    public void deleteUser(Long id){
-        userService.deleteUser(id);
+    public void delete(Long id){
+        userService.delete(id);
     }
 }
