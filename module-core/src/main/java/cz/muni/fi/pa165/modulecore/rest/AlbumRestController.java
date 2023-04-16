@@ -78,4 +78,14 @@ public class AlbumRestController {
         albumFacade.deleteAlbum(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Find all albums by band ID.")
+    @ApiResponses
+            ({
+                    @ApiResponse(responseCode = "200", description = "Found albums returned.")
+            })
+    @GetMapping(path = "allByBand/{id}")
+    public ResponseEntity<List<AlbumDto>> findAllByAlbumId(@PathVariable("id") Long bandId) {
+        return ResponseEntity.ok(albumFacade.findAllByBandId(bandId));
+    }
 }

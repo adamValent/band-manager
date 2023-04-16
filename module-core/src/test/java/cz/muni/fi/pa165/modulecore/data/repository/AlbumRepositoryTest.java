@@ -31,6 +31,7 @@ class AlbumRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
     private Band band;
+    private User manager;
 
     @BeforeEach
     void setUp() {
@@ -40,6 +41,7 @@ class AlbumRepositoryTest {
         entityManager.persist(band);
         entityManager.flush();
         this.band = band;
+        this.manager = manager;
     }
 
     @Test
@@ -104,5 +106,48 @@ class AlbumRepositoryTest {
         albumRepository.deleteById(album.getId());
         assertThat("album is still present",
                    Objects.isNull(entityManager.find(Album.class, album.getId())));
+    }
+
+    @Test
+    void findAllByBandIdMix() {
+        Band band2 = new Band(null, "name2", Genre.BLUES, new Byte[0], manager);
+        Album album1 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band2);
+        entityManager.persist(band2);
+        entityManager.persist(album1);
+        entityManager.persist(album2);
+        entityManager.flush();
+
+        List<Album> found = Lists.newArrayList(albumRepository.findAllByBandId(band.getId()));
+
+        assertThat(found.size(), is(equalTo(1)));
+        assertThat(found.get(0), is(equalTo(album1)));
+    }
+
+    @Test
+    void findAllByBandIdMultiple() {
+        Album album1 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        entityManager.persist(album1);
+        entityManager.persist(album2);
+        entityManager.flush();
+
+        List<Album> found = Lists.newArrayList(albumRepository.findAllByBandId(band.getId()));
+
+        assertThat(found.size(), is(equalTo(2)));
+    }
+
+    @Test
+    void findAllByBandIdNone() {
+        Band band2 = new Band(null, "name2", Genre.BLUES, new Byte[0], manager);
+        Album album1 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
+        entityManager.persist(album1);
+        entityManager.persist(album2);
+        entityManager.flush();
+
+        List<Album> found = Lists.newArrayList(albumRepository.findAllByBandId(band2.getId()));
+
+        assertThat(found.size(), is(equalTo(0)));
     }
 }

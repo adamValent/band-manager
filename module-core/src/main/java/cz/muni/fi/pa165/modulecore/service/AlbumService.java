@@ -37,4 +37,8 @@ public class AlbumService {
     }
 
     public void delete(Long id) { albumRepository.deleteById(id); }
+
+    public List<Album> findAllByBandId(Long bandId) {
+        return albumRepository.findAllByBandId(bandId);
+    }
 }
