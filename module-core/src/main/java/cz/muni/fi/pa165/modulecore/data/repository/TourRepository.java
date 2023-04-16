@@ -23,7 +23,7 @@ public class TourRepository {
         return tours.stream()
                 .filter(tour -> tour.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("Person was not found."));
+                .orElseThrow(() -> new ResourceNotFoundException("Tour was not found."));
     }
 
     public List<Tour> getAll() {
@@ -31,7 +31,11 @@ public class TourRepository {
     }
 
     public Tour createTour(Tour newTour) {
-        newTour.setId(tours.get(tours.size() - 1).getId() + 1);
+        if (tours.isEmpty()) {
+            newTour.setId(1L);
+        } else {
+            newTour.setId(tours.get(tours.size() - 1).getId() + 1);
+        }
         tours.add(newTour);
         return newTour;
     }
