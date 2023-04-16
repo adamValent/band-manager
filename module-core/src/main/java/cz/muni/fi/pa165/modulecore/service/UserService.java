@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.modulecore.service;
 import com.google.common.collect.Lists;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.UserRepository;
+import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +19,24 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     public List<User> getAll() {
         return Lists.newArrayList(userRepository.findAll());
     }
 
-    public User createUser(User user) {
+    public User create(User user) {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User user) {
-        return createUser(user);
+    public User update(Long id, User user) {
+        if(!userRepository.existsById(id))
+            throw new ResourceNotFoundException("User does not exist.");
+        return userRepository.save(user);
     }
 
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 }

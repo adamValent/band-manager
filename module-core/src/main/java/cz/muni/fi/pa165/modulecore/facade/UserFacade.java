@@ -28,14 +28,14 @@ public class UserFacade {
     }
 
     public UserDto createUser(UserDto userDto) {
-        return userMapper.mapToDto(userService.createUser(userMapper.mapFromDto(userDto)));
+        return userMapper.mapToDto(userService.create(userMapper.mapFromDto(userDto)));
     }
 
     public UserDto updateUser(Long id, UserDto userDto) {
-        return userMapper.mapToDto(userService.updateUser(id, userMapper.mapFromDto(userDto)));
+        return userMapper.mapToDto(userService.update(id, userMapper.mapFromDto(userDto)));
     }
 
     public void deleteUser(Long id) {
-        userService.deleteUser(id);
+        userService.delete(id);
     }
 }

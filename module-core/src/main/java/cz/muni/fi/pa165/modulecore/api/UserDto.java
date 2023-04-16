@@ -19,11 +19,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(Long id,
-                   UserType usrType,
-                   String fName,
-                   String lName,
-                   String email) {
+    public UserDto(Long id, UserType usrType, String fName, String lName, String email) {
         this.id = id;
         this.userType = usrType;
         this.firstName = fName;
@@ -81,7 +77,7 @@ public class UserDto {
         }
         UserDto userDto = (UserDto) o;
         return userType == userDto.userType && firstName.equals(userDto.firstName)
-                && lastName.equals(userDto.lastName) && email.equals(userDto.email);
+               && lastName.equals(userDto.lastName) && email.equals(userDto.email);
     }
 
     @Override
@@ -91,10 +87,7 @@ public class UserDto {
 
     @Override
     public String toString() {
-        return "UserDetailViewDto{" + "id=" + id +
-                ", userType=" + userType +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + "'}";
+        return "UserDetailViewDto{" + "id=" + id + ", userType=" + userType + ", firstName='"
+               + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + "'}";
     }
 }

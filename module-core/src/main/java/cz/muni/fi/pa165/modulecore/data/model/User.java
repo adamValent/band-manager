@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.modulecore.data.model;
 
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,19 +13,16 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_type")
+    @NotNull
     private UserType userType;
-    @Column(name = "first_name")
+    @NotNull
     private String firstName;
-    @Column(name = "last_name")
+    @NotNull
     private String lastName;
-    @Column(name = "email")
+    @NotNull
     private String email;
-    @Column(name = "password")
+    @NotNull
     private String password;
-
-    public User() {
-    }
 
     public User(Long id, UserType userType, String firstName, String lastName, String email,
                 String password) {
@@ -34,6 +32,9 @@ public class User implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
     }
 
     public Long getId() {
