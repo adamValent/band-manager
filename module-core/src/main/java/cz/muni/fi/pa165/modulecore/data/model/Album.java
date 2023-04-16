@@ -15,10 +15,13 @@ public class Album implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     @NotNull
     private String name;
+    @Column(name = "release_date")
     @NotNull
     private LocalDate releaseDate;
+    @Column(name = "genre")
     @NotNull
     private Genre genre;
     @OneToMany(mappedBy = "album", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -89,20 +92,15 @@ public class Album implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {return true;}
-        if (o == null || getClass() != o.getClass()) {return false;}
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return Objects.equals(id, album.id) &&
-               Objects.equals(name, album.name) &&
-               Objects.equals(releaseDate, album.releaseDate) &&
-               Objects.equals(genre, album.genre) &&
-               Objects.equals(songs, album.songs) &&
-               Objects.equals(band, album.band);
+        return Objects.equals(name, album.name) && Objects.equals(releaseDate, album.releaseDate) && genre == album.genre;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, releaseDate, genre, songs, band);
+        return Objects.hash(name, releaseDate, genre);
     }
 
     @Override

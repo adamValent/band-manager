@@ -2,9 +2,6 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.SongDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.model.Album;
-import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.repository.SongRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
@@ -20,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;

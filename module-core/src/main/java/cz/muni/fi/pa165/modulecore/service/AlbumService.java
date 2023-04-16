@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -20,7 +19,7 @@ public class AlbumService {
     }
 
     public Album findById(Long id) {
-        return albumRepository.findById(id).orElseThrow(ResolutionException::new);
+        return albumRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public List<Album> getAll() {
