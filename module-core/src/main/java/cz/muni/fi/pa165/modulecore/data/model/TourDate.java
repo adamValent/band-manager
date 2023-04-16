@@ -32,6 +32,14 @@ public class TourDate {
         this.venue = venue;
     }
 
+    public TourDate(Long id, String city, LocalDate date, String venue, Tour tour) {
+        this.id = id;
+        this.city = city;
+        this.date = date;
+        this.venue = venue;
+        this.tour = tour;
+    }
+
     public String getCity() {
         return city;
     }
