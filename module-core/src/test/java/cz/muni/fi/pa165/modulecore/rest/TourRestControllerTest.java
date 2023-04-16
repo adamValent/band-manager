@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.modulecore.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.TourDateDto;
 import cz.muni.fi.pa165.modulecore.api.TourDto;
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
 import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
 import org.json.JSONObject;
@@ -99,7 +100,7 @@ class TourRestControllerTest {
 
         TourDto expectedResponse =
                 new TourDto(null, "PopTour2",
-                        List.of(5L, 6L),
+                        List.of(new Band(), new Band()),
                         List.of(
                                 new TourDateDto("Dublin", LocalDate.of(2023, 4, 5), "Venue1"),
                                 new TourDateDto("Belfast", LocalDate.of(2023, 4, 6), "Venue2")

@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.modulecore.api;
 
+import cz.muni.fi.pa165.modulecore.data.model.Band;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -11,7 +12,7 @@ public class TourDto {
     @NotNull
     private String name;
     @NotNull
-    private List<Long> bandList;
+    private List<Band> bandList;
     @Valid
     @NotNull
     private List<TourDateDto> tourDates;
@@ -21,7 +22,7 @@ public class TourDto {
 
     public TourDto(Long id,
                    String name,
-                   List<Long> bandList,
+                   List<Band> bandList,
                    List<TourDateDto> tourDates) {
         this.id = id;
         this.name = name;
@@ -45,11 +46,11 @@ public class TourDto {
         this.name = name;
     }
 
-    public List<Long> getBandList() {
+    public List<Band> getBandList() {
         return bandList;
     }
 
-    public void setBandList(List<Long> bandList) {
+    public void setBandList(List<Band> bandList) {
         this.bandList = bandList;
     }
 

@@ -1,17 +1,29 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tourdates")
 public class TourDate {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String city;
     private LocalDate date;
     private String venue;
+    @ManyToOne
+    @NotNull
+    private Tour tour;
 
     public TourDate() {
     }
 
-    public TourDate(String city, LocalDate date, String venue) {
+    public TourDate(Long id, String city, LocalDate date, String venue) {
+        this.id = id;
         this.city = city;
         this.date = date;
         this.venue = venue;
@@ -39,6 +51,22 @@ public class TourDate {
 
     public void setVenue(String venue) {
         this.venue = venue;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 
     @Override
