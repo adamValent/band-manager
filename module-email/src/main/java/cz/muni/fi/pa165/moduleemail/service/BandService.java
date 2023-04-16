@@ -14,6 +14,11 @@ public class BandService {
     private final HashMap<Long, List<String>> bandMembersEmailsMock = new HashMap<>();
     private final HashMap<Long, String> bandManagerEmailMock = new HashMap<>();
 
+    /**
+     *
+     * Now it is only mock, in next milestone it will be using rest template to call core microservice(module-core) to get data
+     *
+     */
     @PostConstruct
     private void initMock() {
         bandMembersEmailsMock.put(1L, new ArrayList<>());
