@@ -53,8 +53,9 @@ public class EmailService {
 
     public void sendEmailToTourBand(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                     Long tourId) {
-        sendEmailToAllBandMembers(emailWithoutRecipientsDto,
-                tourService.getBandIdFromTourId(tourId));
+        for (Long id: tourService.getBandIdFromTourId(tourId)) {
+            sendEmailToAllBandMembers(emailWithoutRecipientsDto, id);
+        }
     }
 
 }
