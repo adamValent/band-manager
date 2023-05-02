@@ -54,6 +54,7 @@ services:
 
 
   db-core:
+    container_name: db-core
     image: postgres:latest
     restart: on-failure
     environment:
