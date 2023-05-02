@@ -15,10 +15,12 @@ import java.util.Objects;
 public class MainController {
     @GetMapping("/")
     public String index(Model model,
-                        @AuthenticationPrincipal OidcUser user) {
+                        @AuthenticationPrincipal OidcUser user,
+                        @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient oauth2Client) {
         if (Objects.isNull(user))
             return "redirect:/login";
         model.addAttribute("user", user);
+        model.addAttribute("token", oauth2Client.getAccessToken().getTokenValue());
         model.addAttribute("scopes", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
         return "index";
     }

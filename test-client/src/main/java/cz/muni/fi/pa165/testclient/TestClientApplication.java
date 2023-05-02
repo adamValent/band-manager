@@ -24,11 +24,10 @@ public class TestClientApplication {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(x -> x
-                        .logoutSuccessUrl("/")
+                        .logoutSuccessUrl("/login")
                         .logoutSuccessHandler(oidcLogoutSuccessHandler())
                 )
                 .csrf(c -> c
@@ -43,7 +42,7 @@ public class TestClientApplication {
     private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
         OidcClientInitiatedLogoutSuccessHandler successHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        successHandler.setPostLogoutRedirectUri("http://localhost:8081/");
+        successHandler.setPostLogoutRedirectUri("http://localhost:8081/login");
         return successHandler;
     }
 }

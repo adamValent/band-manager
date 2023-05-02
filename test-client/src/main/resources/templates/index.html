@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User data</title>
+</head>
 <body>
 <p>text about authenticated user</p>
 <table class="table">
     <tbody>
     <tr>
         <th scope="row">token</th>
-        <td th:text="${user.getIdToken().getTokenValue()}"></td>
+        <td th:text="${token}"></td>
     </tr>
     <tr>
         <th scope="row">subject</th>
@@ -69,6 +73,7 @@
     </tbody>
 </table>
 <p>
+    <a th:href="@{/token}">Get token</a>
 <form method="post" th:action="@{/logout}">
     <button class="btn btn-outline-primary" type="submit">Logout</button>
 </form>
