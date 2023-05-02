@@ -35,6 +35,7 @@ services:
       - module-email:/tmp
 
   db-users:
+    container_name: db-users
     image: postgres:latest
     restart: on-failure
     environment:
