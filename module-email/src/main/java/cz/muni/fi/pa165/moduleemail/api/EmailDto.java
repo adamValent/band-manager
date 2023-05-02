@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 
 public class EmailDto {
@@ -48,6 +49,21 @@ public class EmailDto {
 
     public void setEmailBody(String emailBody) {
         this.emailBody = emailBody;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailDto emailDto = (EmailDto) o;
+        return Objects.equals(subject, emailDto.subject) && Arrays.equals(recipients, emailDto.recipients) && Objects.equals(emailBody, emailDto.emailBody);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(subject, emailBody);
+        result = 31 * result + Arrays.hashCode(recipients);
+        return result;
     }
 
     @Override
