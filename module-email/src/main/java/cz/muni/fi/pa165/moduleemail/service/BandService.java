@@ -27,10 +27,20 @@ public class BandService {
     public List<String> getMembersEmailFromBandByiD(Long idBand) {
         String url
                 = String.format("http://core:8080/bands/%s", idBand);
-        ResponseEntity<BandDto> response
-                = restTemplate.getForEntity(url, BandDto.class);
+        ResponseEntity<BandDto> response;
+
+        try {
+            response
+                    = restTemplate.getForEntity(url, BandDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
 
         if (response.hasBody()) {
+            if (Objects.requireNonNull(response.getBody()).getMembers().isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
             return Objects.requireNonNull(response.getBody()).getMembers().stream().map(UserDto::getEmail).toList();
         }
         throw new ResourceNotFoundException();
@@ -39,10 +49,20 @@ public class BandService {
     public String getManagerEmailFromBandByiD(Long idBand) {
         String url
                 = String.format("http://core:8080/bands/%s", idBand);
-        ResponseEntity<BandDto> response
-                = restTemplate.getForEntity(url, BandDto.class);
+        ResponseEntity<BandDto> response;
+
+        try {
+            response
+                    = restTemplate.getForEntity(url, BandDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
 
         if (response.hasBody()) {
+            if (Objects.requireNonNull(response.getBody()).getMembers().isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
             return Objects.requireNonNull(response.getBody()).getManager().getEmail();
         }
         throw new ResourceNotFoundException();

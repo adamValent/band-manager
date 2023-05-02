@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleemail.api;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.moduleemail.api.enums.Genre;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,6 +24,9 @@ public class BandDto {
     private UserDto manager;
     @Schema(name = "members", description = "list of members")
     private List<UserDto> members;
+
+    public BandDto() {
+    }
 
     public BandDto(Long id, String name, Genre genre, @NotNull Byte[] image, UserDto manager, List<UserDto> members) {
         this.id = id;

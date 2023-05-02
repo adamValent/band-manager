@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleemail.api;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.moduleemail.api.enums.Genre;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,6 +20,9 @@ public class AlbumDto {
     private List<SongDto> songs;
     @NotNull
     private BandDto band;
+
+    public AlbumDto() {
+    }
 
     public AlbumDto(Long id,
                     String name,

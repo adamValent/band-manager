@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.moduleemail.api;
 
-import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
+
+import cz.muni.fi.pa165.moduleemail.api.enums.InvitationStatus;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
