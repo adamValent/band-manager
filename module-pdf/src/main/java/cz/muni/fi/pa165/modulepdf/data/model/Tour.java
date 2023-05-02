@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.modulepdf.data.model;
 
+import cz.muni.fi.pa165.modulepdf.api.BandDto;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -7,12 +9,12 @@ import java.util.Objects;
 public class Tour {
     private Long id;
     private String name;
-    private List<Long> bandList;
+    private List<Band> bandList;
     private List<TourDate> tourDates;
 
     public Tour() {}
 
-    public Tour(Long id, String name, List<Long> bandList, List<TourDate> tourDates) {
+    public Tour(Long id, String name, List<Band> bandList, List<TourDate> tourDates) {
         this.id = id;
         this.name = name;
         this.bandList = bandList;
@@ -35,11 +37,11 @@ public class Tour {
         this.name = name;
     }
 
-    public List<Long> getBandList() {
+    public List<Band> getBandList() {
         return bandList;
     }
 
-    public void setBandList(List<Long> bandList) {
+    public void setBandList(List<Band> bandList) {
         this.bandList = bandList;
     }
 

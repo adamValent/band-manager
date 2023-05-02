@@ -1,109 +1,146 @@
 package cz.muni.fi.pa165.modulepdf.service;
 
-import cz.muni.fi.pa165.modulepdf.data.enums.Genre;
-import cz.muni.fi.pa165.modulepdf.data.enums.UserType;
+import cz.muni.fi.pa165.modulepdf.api.AlbumDto;
+import cz.muni.fi.pa165.modulepdf.api.BandDto;
+import cz.muni.fi.pa165.modulepdf.api.TourDto;
 import cz.muni.fi.pa165.modulepdf.data.model.*;
 import cz.muni.fi.pa165.modulepdf.exceptions.ResourceNotFoundException;
-import jakarta.annotation.PostConstruct;
+import cz.muni.fi.pa165.modulepdf.mapper.AlbumMapper;
+import cz.muni.fi.pa165.modulepdf.mapper.TourMapper;
+import cz.muni.fi.pa165.modulepdf.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.time.Duration;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CoreService {
 
-    private final HashMap<Long, List<User>> membersOfBands = new HashMap<>();
-    private final HashMap<Long, List<Album>> albumsOfBands = new HashMap<>();
-    private final HashMap<Long, List<Tour>> toursOfBands = new HashMap<>();
-    private final HashMap<Long, List<Song>> songsOfAlbum = new HashMap<>();
-    private final HashMap<Long, List<TourDate>> tourDatesOfTour = new HashMap<>();
+    private final RestTemplate restTemplate;
+    private final UserMapper userMapper;
+    private final TourMapper tourMapper;
+    private final AlbumMapper albumMapper;
 
-    /**
-     *
-     * Now it is only mock, in next milestone it will be using rest template to call core microservice(module-core) to get data
-     *
-     */
-    @PostConstruct
-    private void initMock() {
-
-        membersOfBands.put(1L,
-                List.of(
-                        new User(1L, UserType.BAND_MEMBER, "Jozko", "Tkr", "Jozko@gmail.com"),
-                        new User(2L, UserType.MANAGER, "Ferko", "Ferkovic", "ferko@gmail.com")
-                ));
-
-        albumsOfBands.put(1L,
-                List.of(
-                        new Album(100L, "In Utero", LocalDate.of(1993, 9, 21), Genre.ROCK),
-                        new Album(101L, "In Utero2", LocalDate.of(1994, 9, 21), Genre.ROCK)
-                ));
-
-        toursOfBands.put(1L,
-                List.of(
-                        new Tour(101L, "Rock for people", List.of(1L), List.of(new TourDate("Las vegas", LocalDate.now(), "Main"))),
-                        new Tour(102L, "Rock for people2", List.of(1L), List.of(new TourDate("Las vegas2", LocalDate.now(), "Main2")))
-                ));
-
-        songsOfAlbum.put(100L, List.of(
-                new Song(1L, "Mega hit", Duration.ZERO),
-                new Song(2L, "Second mega hit", Duration.ofMinutes(3))
-        ));
-
-        tourDatesOfTour.put(101L,
-                List.of(
-                        new TourDate("Las vegas", LocalDate.now(), "Main")
-                ));
-
-        tourDatesOfTour.put(102L,
-                List.of(
-                        new TourDate("Las vegas2", LocalDate.now(), "Main2")
-                ));
-
-
+    @Autowired
+    public CoreService(RestTemplate restTemplate,
+                       UserMapper userMapper,
+                       TourMapper tourMapper,
+                       AlbumMapper albumMapper) {
+        this.restTemplate = restTemplate;
+        this.userMapper = userMapper;
+        this.tourMapper = tourMapper;
+        this.albumMapper = albumMapper;
     }
 
+
     public List<User> getBandMembers(Long idBand) {
-        if (membersOfBands.containsKey(idBand)) {
-            return membersOfBands.get(idBand);
+        String url
+                = String.format("http://core:8080/bands/%s", idBand);
+        ResponseEntity<BandDto> response;
+
+        try {
+            response = restTemplate.getForEntity(url, BandDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
+
+        if (response.hasBody()) {
+            if (Objects.requireNonNull(response.getBody()).getMembers().isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
+            return Objects.requireNonNull(response.getBody()).getMembers().stream().map(userMapper::mapFromDto).toList();
         }
         throw new ResourceNotFoundException();
-
     }
 
     public List<Album> getBandAlbums(Long idBand) {
-        if (albumsOfBands.containsKey(idBand)) {
-            return albumsOfBands.get(idBand);
+        String url
+                = String.format("http://core:8080/albums/allByBand/%s", idBand);
+        ResponseEntity<List<AlbumDto>> response;
+
+        try {
+            response = restTemplate.getForEntity(url, (Class<List<AlbumDto>>) Collections.<AlbumDto>emptyList().getClass());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
+
+        if (response.hasBody()) {
+            if (Objects.requireNonNull(response.getBody()).isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
+            return Objects.requireNonNull(response.getBody()).stream().map(albumMapper::mapFromDto).toList();
         }
         throw new ResourceNotFoundException();
-
     }
 
     public List<Tour> getBandTours(Long idBand) {
-        if (toursOfBands.containsKey(idBand)) {
-            return toursOfBands.get(idBand);
+        String url
+                = String.format("http://core:8080/tours/allByBand/%s", idBand);
+        ResponseEntity<List<TourDto>> response;
+
+        try {
+            response = restTemplate.getForEntity(url, (Class<List<TourDto>>) Collections.<TourDto>emptyList().getClass());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
+
+        if (response.hasBody()) {
+            if (Objects.requireNonNull(response.getBody()).isEmpty()) {
+                throw new ResourceNotFoundException();
+            }
+            return Objects.requireNonNull(response.getBody()).stream().map(tourMapper::mapFromDto).toList();
         }
         throw new ResourceNotFoundException();
-
     }
 
-    public List<Song> getAlbumSongs(Long idBand) {
-        if (songsOfAlbum.containsKey(idBand)) {
-            return songsOfAlbum.get(idBand);
+    public List<Song> getAlbumSongs(Long idAlbum) {
+        String url
+                = String.format("http://core:8080/albums/allByBand/%s", idAlbum);
+        ResponseEntity<AlbumDto> response;
+
+        try {
+            response = restTemplate.getForEntity(url, AlbumDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
+
+        if (response.hasBody()) {
+            if (response.getBody() == null) {
+                throw new ResourceNotFoundException();
+            }
+            return albumMapper.mapFromDto(Objects.requireNonNull(response.getBody())).getSongs();
         }
         throw new ResourceNotFoundException();
-
     }
 
-    public List<TourDate> getTourDatesOfTour(Long idBand) {
-        if (tourDatesOfTour.containsKey(idBand)) {
-            return tourDatesOfTour.get(idBand);
+    public List<TourDate> getTourDatesOfTour(Long idTour) {
+        String url
+                = String.format("http://core:8080/tours/%s", idTour);
+        ResponseEntity<TourDto> response;
+
+        try {
+            response = restTemplate.getForEntity(url, TourDto.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResourceNotFoundException();
+        }
+
+        if (response.hasBody()) {
+            if (response.getBody() == null) {
+                throw new ResourceNotFoundException();
+            }
+            return tourMapper.mapFromDto(Objects.requireNonNull(response.getBody())).getTourDates();
         }
         throw new ResourceNotFoundException();
-
     }
 
 

@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import cz.muni.fi.pa165.modulecore.api.AlbumDto;
-import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.facade.AlbumFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
