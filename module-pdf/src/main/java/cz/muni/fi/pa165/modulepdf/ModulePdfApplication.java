@@ -11,11 +11,11 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @SpringBootApplication
 public class ModulePdfApplication {
+    public static final String SECURITY_SCHEME_NAME = "Bearer";
+
     public static void main(String[] args) {
         SpringApplication.run(ModulePdfApplication.class, args);
     }
-
-    public static final String SECURITY_SCHEME_NAME = "Bearer";
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
