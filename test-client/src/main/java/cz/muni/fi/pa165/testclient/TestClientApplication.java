@@ -42,7 +42,7 @@ public class TestClientApplication {
     private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
         OidcClientInitiatedLogoutSuccessHandler successHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-        successHandler.setPostLogoutRedirectUri("http://localhost:8081/login");
+        successHandler.setPostLogoutRedirectUri("http://localhost:8083/login");
         return successHandler;
     }
 }
