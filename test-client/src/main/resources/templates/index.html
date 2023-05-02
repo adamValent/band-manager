@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<p>text about authenticated user</p>
+<table class="table">
+    <tbody>
+    <tr>
+        <th scope="row">token</th>
+        <td th:text="${user.getIdToken().getTokenValue()}"></td>
+    </tr>
+    <tr>
+        <th scope="row">subject</th>
+        <td th:text="${user.subject}"></td>
+    </tr>
+    <tr>
+        <th scope="row">name</th>
+        <td th:text="${user.fullName}"></td>
+    </tr>
+    <tr>
+        <th scope="row">given_name</th>
+        <td th:text="${user.givenName}"></td>
+    </tr>
+    <tr>
+        <th scope="row">family_name</th>
+        <td th:text="${user.familyName}"></td>
+    </tr>
+    <tr>
+        <th scope="row">email</th>
+        <td th:text="${user.email}"></td>
+    </tr>
+    <tr>
+        <th scope="row">email_verified</th>
+        <td th:text="${user.emailVerified}"></td>
+    </tr>
+    <tr>
+        <th scope="row">zoneinfo</th>
+        <td th:text="${user.zoneInfo}"></td>
+    </tr>
+    <tr>
+        <th scope="row">locale</th>
+        <td th:text="${user.locale}"></td>
+    </tr>
+    <tr>
+        <th scope="row">preferred_username</th>
+        <td th:text="${user.preferredUsername}"></td>
+    </tr>
+    <tr>
+        <th scope="row">picture</th>
+        <td><img alt="image" src="" th:if="${user.picture!=null}" th:src="${user.picture}"></td>
+    </tr>
+    <tr th:if="${user.getClaimAsStringList('eduperson_scoped_affiliation')}">
+        <th scope="row">eduperson_scoped_affiliation</th>
+        <td>
+            <ul>
+                <li th:each="affiliation: ${user.getClaimAsStringList('eduperson_scoped_affiliation')}"
+                    th:text="${affiliation}"></li>
+            </ul>
+        </td>
+    </tr>
+    <tr th:if="${scopes}">
+        <th scope="row">scopes</th>
+        <td>
+            <ul>
+                <li th:each="scope: ${scopes}"
+                    th:text="${scope}"></li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<p>
+<form method="post" th:action="@{/logout}">
+    <button class="btn btn-outline-primary" type="submit">Logout</button>
+</form>
+</body>
+</html>

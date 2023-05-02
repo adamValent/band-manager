@@ -1,0 +1,41 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          muni:
+            client-id: 7e02a0a9-446a-412d-ad2b-90add47b0fdd
+            client-secret: 48a2b2e3-4b2b-471e-b7b7-b81a85b6eeef22f347f2-3fc9-4e16-8698-3e2492701a89
+            client-name: "MUNI Unified Login"
+            provider: muni
+            scope:
+              - openid
+              - profile
+              - email
+              - eduperson_scoped_affiliation
+              - test_read
+              - test_write
+              - test_1
+              - test_2
+              - test_3
+              - test_4
+              - test_5
+        provider:
+          muni:
+            issuer-uri: https://oidc.muni.cz/oidc/
+logging:
+  pattern:
+    console: '%clr(%d{HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(%logger){blue} %clr(:){red} %clr(%m){faint}%n'
+  level:
+    root: info
+    cz.muni: debug
+    org.springframework.web.client.RestTemplate: debug
+    org.springframework.security: debug
+    org.springframework.security.web.DefaultSecurityFilterChain: warn
+    org.springframework.security.web.context.HttpSessionSecurityContextRepository: info
+    org.springframework.security.web.FilterChainProxy: info
+    org.springframework.security.web.authentication.AnonymousAuthenticationFilter: info
+    org.springframework.security.config.annotation.authentication.configuration: info
+    org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: warn
+    org.springframework.boot.web.embedded.tomcat: warn
+    org.apache.catalina.core: warn
