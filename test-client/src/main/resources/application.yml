@@ -23,19 +23,3 @@ spring:
         provider:
           muni:
             issuer-uri: https://oidc.muni.cz/oidc/
-logging:
-  pattern:
-    console: '%clr(%d{HH:mm:ss.SSS}){blue} %clr(%-5p) %clr(%logger){blue} %clr(:){red} %clr(%m){faint}%n'
-  level:
-    root: info
-    cz.muni: debug
-    org.springframework.web.client.RestTemplate: debug
-    org.springframework.security: debug
-    org.springframework.security.web.DefaultSecurityFilterChain: warn
-    org.springframework.security.web.context.HttpSessionSecurityContextRepository: info
-    org.springframework.security.web.FilterChainProxy: info
-    org.springframework.security.web.authentication.AnonymousAuthenticationFilter: info
-    org.springframework.security.config.annotation.authentication.configuration: info
-    org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: warn
-    org.springframework.boot.web.embedded.tomcat: warn
-    org.apache.catalina.core: warn
