@@ -27,6 +27,7 @@ import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,7 +62,8 @@ class InvitationRestControllerTest {
 
         Mockito.when(invitationRepository.findById(testingInvitation.getId())).thenReturn(Optional.of(testingInvitation));
 
-        String response = mockMvc.perform(get(String.format("/invitations/%s", testingInvitation.getId())))
+        String response = mockMvc.perform(get(String.format("/invitations/%s", testingInvitation.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, InvitationDto.class),
@@ -72,7 +74,8 @@ class InvitationRestControllerTest {
     void findByIdNotFound() throws Exception {
         Mockito.when(invitationRepository.findById(0L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/invitations/0"))
+        mockMvc.perform(get("/invitations/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -84,7 +87,8 @@ class InvitationRestControllerTest {
 
         String response = mockMvc.perform(post("/invitations")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         InvitationDto actual = objectMapper.readValue(response, InvitationDto.class);
@@ -97,7 +101,8 @@ class InvitationRestControllerTest {
         content.put("test", "invalid");
         mockMvc.perform(post("/invitations")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -111,7 +116,8 @@ class InvitationRestControllerTest {
 
         String response = mockMvc.perform(put(String.format("/invitations/%s", testingInvitation.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, InvitationDto.class),
@@ -124,7 +130,8 @@ class InvitationRestControllerTest {
         content.put("test", "invalid");
         mockMvc.perform(put("/invitations/100")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -132,7 +139,8 @@ class InvitationRestControllerTest {
     void deleteInvitationOk() throws Exception {
         Mockito.doNothing().when(invitationRepository).deleteById(testingInvitation.getId());
 
-        mockMvc.perform(delete(String.format("/invitations/%s", testingInvitation.getId())))
+        mockMvc.perform(delete(String.format("/invitations/%s", testingInvitation.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -140,7 +148,8 @@ class InvitationRestControllerTest {
     void deleteInvitationNotFound() throws Exception {
         Mockito.doThrow(new ResourceNotFoundException()).when(invitationRepository).deleteById(0L);
 
-        mockMvc.perform(delete("/invitations/0"))
+        mockMvc.perform(delete("/invitations/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 }

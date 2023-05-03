@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.UserDto;
 import cz.muni.fi.pa165.modulecore.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find user by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was found."),
@@ -39,7 +39,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Get all users")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All users returned."),
@@ -50,7 +50,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was created."),
@@ -62,7 +62,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update user by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was updated."),
@@ -76,7 +76,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete user by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was deleted."),
@@ -89,7 +89,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find all users without band.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was found."),
@@ -100,7 +100,7 @@ public class UserRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find users by song ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was found."),

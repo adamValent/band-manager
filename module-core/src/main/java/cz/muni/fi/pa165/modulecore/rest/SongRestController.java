@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.SongDto;
 import cz.muni.fi.pa165.modulecore.facade.SongFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ public class SongRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find song by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Song was found."),
@@ -37,7 +37,7 @@ public class SongRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create song.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Song was created."),
@@ -49,7 +49,7 @@ public class SongRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update song by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Song was updated."),
@@ -62,7 +62,7 @@ public class SongRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete song by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Song was deleted."),

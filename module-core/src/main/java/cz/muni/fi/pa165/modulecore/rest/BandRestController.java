@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.BandDto;
 import cz.muni.fi.pa165.modulecore.facade.BandFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class BandRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find band by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was found."),
@@ -39,7 +39,7 @@ public class BandRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Get all bands")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All bands returned."),
@@ -50,7 +50,7 @@ public class BandRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create band.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was created."),
@@ -62,7 +62,7 @@ public class BandRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update band by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was updated."),
@@ -75,7 +75,7 @@ public class BandRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete band by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was deleted."),

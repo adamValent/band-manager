@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -66,7 +67,8 @@ class BandRestControllerTest {
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
 
         String response =
-                mockMvc.perform(get(String.format("/bands/%s", expectedResponse.getId())))
+                mockMvc.perform(get(String.format("/bands/%s", expectedResponse.getId()))
+                                .with(opaqueToken()))
                         .andExpect(status().isOk())
                         .andReturn()
                         .getResponse()
@@ -80,7 +82,8 @@ class BandRestControllerTest {
     @Test
     void testBandFindByIdNotFound() throws Exception {
         log.debug("testBandFindByIdNotFound running");
-        mockMvc.perform(get("/bands/-1")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/bands/-1")
+                .with(opaqueToken())).andExpect(status().isNotFound());
     }
 
     @Test
@@ -89,7 +92,8 @@ class BandRestControllerTest {
 
         Mockito.when(bandRepository.findAll()).thenReturn(List.of(testingBand));
 
-        String response = mockMvc.perform(get("/bands"))
+        String response = mockMvc.perform(get("/bands")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -110,8 +114,10 @@ class BandRestControllerTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", "INVALID");
 
-        mockMvc.perform(post("/bands").contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonObject.toString()))
+        mockMvc.perform(post("/bands")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonObject.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -122,9 +128,10 @@ class BandRestControllerTest {
         Mockito.when(bandRepository.save(testingBand)).thenReturn(testingBand);
 
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
-        String response = mockMvc.perform(post("/bands").contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(
-                                expectedResponse)))
+        String response = mockMvc.perform(post("/bands")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -146,11 +153,10 @@ class BandRestControllerTest {
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
 
         String response = mockMvc.perform(put(String.format("/bands/%s",
-                        expectedResponse.getId())).contentType(
-                                MediaType.APPLICATION_JSON)
-                        .content(
-                                objectMapper.writeValueAsString(
-                                        expectedResponse)))
+                        expectedResponse.getId()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -167,9 +173,10 @@ class BandRestControllerTest {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", "INVALID");
 
-        mockMvc.perform(put(String.format("/bands/%s",
-                        4L)).contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonObject.toString()))
+        mockMvc.perform(put(String.format("/bands/%s", 4L))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonObject.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -179,7 +186,8 @@ class BandRestControllerTest {
 
         Mockito.doNothing().when(bandRepository).deleteById(testingBand.getId());
 
-        mockMvc.perform(delete(String.format("/bands/%s", testingBand.getId())))
+        mockMvc.perform(delete(String.format("/bands/%s", testingBand.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse()
@@ -192,7 +200,8 @@ class BandRestControllerTest {
 
         Mockito.doThrow(new ResourceNotFoundException()).when(bandRepository).deleteById(0L);
 
-        mockMvc.perform(delete(String.format("/bands/%s", 0L)))
+        mockMvc.perform(delete(String.format("/bands/%s", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 }

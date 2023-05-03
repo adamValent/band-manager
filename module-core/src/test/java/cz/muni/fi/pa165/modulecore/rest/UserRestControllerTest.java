@@ -29,6 +29,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,7 +51,8 @@ class UserRestControllerTest {
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         UserDto expectedResponse = userMapper.mapToDto(user);
 
-        String response = mockMvc.perform(get("/users/1"))
+        String response = mockMvc.perform(get("/users/1")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -62,7 +64,8 @@ class UserRestControllerTest {
     void findByIdNotFound() throws Exception {
         Mockito.when(userRepository.findById(0L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/users/0"))
+        mockMvc.perform(get("/users/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -72,7 +75,8 @@ class UserRestControllerTest {
         User user2 = new User(1L, UserType.MANAGER, "name2", "surname", "me@mail.com");
         Mockito.when(userRepository.findAll()).thenReturn(List.of(user1, user2));
 
-        String response = mockMvc.perform(get("/users"))
+        String response = mockMvc.perform(get("/users")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -88,7 +92,8 @@ class UserRestControllerTest {
 
         String response = mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -103,7 +108,8 @@ class UserRestControllerTest {
         content.put("test", "invalid");
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -116,7 +122,8 @@ class UserRestControllerTest {
 
         String response = mockMvc.perform(put("/users/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -130,7 +137,8 @@ class UserRestControllerTest {
         content.put("test", "invalid");
         mockMvc.perform(put("/users/20")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -138,7 +146,8 @@ class UserRestControllerTest {
     void deleteUserOk() throws Exception {
         Mockito.doNothing().when(userRepository).deleteById(1L);
 
-        mockMvc.perform(delete("/users/30"))
+        mockMvc.perform(delete("/users/30")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -146,7 +155,8 @@ class UserRestControllerTest {
     void deleteUserNotFound() throws Exception {
         Mockito.doThrow(new ResourceNotFoundException()).when(userRepository).deleteById(0L);
 
-        mockMvc.perform(delete("/users/0"))
+        mockMvc.perform(delete("/users/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -156,7 +166,8 @@ class UserRestControllerTest {
         Mockito.when(userRepository.getAllUsersWithoutBand()).thenReturn(List.of(user));
         UserDto expectedResponse = userMapper.mapToDto(user);
 
-        String response = mockMvc.perform(get("/users/withoutBand"))
+        String response = mockMvc.perform(get("/users/withoutBand")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -171,7 +182,8 @@ class UserRestControllerTest {
         Mockito.when(userRepository.getUsersFromBandBySongId(1L)).thenReturn(List.of(user));
         UserDto expectedResponse = userMapper.mapToDto(user);
 
-        String response = mockMvc.perform(get(String.format("/users/bySong/%s", 1L)))
+        String response = mockMvc.perform(get(String.format("/users/bySong/%s", 1L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

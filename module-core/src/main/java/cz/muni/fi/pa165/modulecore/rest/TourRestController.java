@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.TourDto;
 import cz.muni.fi.pa165.modulecore.facade.TourFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class TourRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find tour by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tour was found."),
@@ -39,7 +39,7 @@ public class TourRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Get all tours")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All tours returned."),
@@ -50,7 +50,7 @@ public class TourRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create tour.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tour was created."),
@@ -62,7 +62,7 @@ public class TourRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update tour by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tour was updated."),
@@ -75,7 +75,7 @@ public class TourRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete tour by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Tour was deleted."),

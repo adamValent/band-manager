@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.AlbumDto;
 import cz.muni.fi.pa165.modulecore.facade.AlbumFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +27,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find album by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was found."),
@@ -39,7 +39,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Get all albums")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All albums returned."),
@@ -50,7 +50,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create album.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was created."),
@@ -62,7 +62,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update album by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was updated."),
@@ -75,7 +75,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete album by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was deleted."),
@@ -88,7 +88,7 @@ public class AlbumRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find all albums by band ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Found albums returned."),

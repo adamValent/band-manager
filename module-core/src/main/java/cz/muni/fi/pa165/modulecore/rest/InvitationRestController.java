@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.ModuleCoreApplication;
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.facade.InvitationFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ public class InvitationRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find invitation by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Invitation was found."),
@@ -37,7 +37,7 @@ public class InvitationRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create invitation.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Invitation was created."),
@@ -49,7 +49,7 @@ public class InvitationRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update Invitation by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Invitation was updated."),
@@ -63,7 +63,7 @@ public class InvitationRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleCoreApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete invitation by ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Invitation was deleted."),
