@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleuser.rest;
 
-import cz.muni.fi.pa165.moduleuser.ModuleUserApplication;
+import cz.muni.fi.pa165.moduleuser.CustomConfiguration;
 import cz.muni.fi.pa165.moduleuser.api.UserDto;
 import cz.muni.fi.pa165.moduleuser.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +25,7 @@ public class UserAuthRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleUserApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Find user by identification number.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was found."),
@@ -37,7 +37,7 @@ public class UserAuthRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleUserApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Create user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was created successfully."),
@@ -49,7 +49,7 @@ public class UserAuthRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleUserApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Update user")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User's was updated successfully."),
@@ -61,7 +61,7 @@ public class UserAuthRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleUserApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Delete user.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "User was deleted successfully."),
