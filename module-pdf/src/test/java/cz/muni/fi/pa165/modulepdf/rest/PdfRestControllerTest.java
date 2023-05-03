@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -35,7 +36,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllMembersMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllMembersMissingId running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/members", 0L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/members", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -43,7 +45,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllMembersOk() throws Exception {
         log.debug("testGeneratePdfBandAllMembersOk running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/members", 1L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/members", 1L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -51,7 +54,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllToursMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllToursMissingId running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/tours", 0L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/tours", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -59,7 +63,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllToursOk() throws Exception {
         log.debug("testGeneratePdfBandAllToursOk running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/tours", 1L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/tours", 1L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -68,7 +73,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllAlbumsMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllAlbumsMissingId running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/albums", 0L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/albums", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -76,7 +82,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllAlbumsOk() throws Exception {
         log.debug("testGeneratePdfBandAllAlbumsOk running");
 
-        mockMvc.perform(get(String.format("/pdf/band/%s/albums", 1L)))
+        mockMvc.perform(get(String.format("/pdf/band/%s/albums", 1L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -84,7 +91,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfAlbumAllSongMissingId() throws Exception {
         log.debug("testGeneratePdfAlbumAllSongMissingId running");
 
-        mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 0L)))
+        mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -92,7 +100,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfAlbumAllSongOk() throws Exception {
         log.debug("testGeneratePdfAlbumAllSongOk running");
 
-        mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 100L)))
+        mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 100L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -101,7 +110,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfTourAllTourDatesMissingId() throws Exception {
         log.debug("testGeneratePdfTourAllTourDatesMissingId running");
 
-        mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 0L)))
+        mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -109,7 +119,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfTourAllTourDatesOk() throws Exception {
         log.debug("testGeneratePdfTourAllTourDatesOk running");
 
-        mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 101L)))
+        mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 101L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 }
