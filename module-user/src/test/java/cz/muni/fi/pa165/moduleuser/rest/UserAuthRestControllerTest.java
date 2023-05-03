@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.moduleuser.api.UserDto;
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.data.repository.UserRepository;
 import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;
+import cz.muni.fi.pa165.moduleuser.mapper.UserMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -14,15 +15,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import cz.muni.fi.pa165.moduleuser.mapper.UserMapper;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,18 +41,20 @@ class UserAuthRestControllerTest {
     void findByIdOk() throws Exception {
         User user = new User(1L, "me@mail.com", "psw");
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        String response = mockMvc.perform(get("/users-auth/1"))
-                                 .andExpect(status().isOk())
-                                 .andReturn().getResponse().getContentAsString();
+        String response = mockMvc.perform(get("/users-auth/1")
+                        .with(opaqueToken()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, UserDto.class),
-                   is(equalTo(userMapper.mapToDto(userRepository.findById(1L).get()))));
+                is(equalTo(userMapper.mapToDto(userRepository.findById(1L).get()))));
     }
 
     @Test
     void findByIdNotFound() throws Exception {
         Mockito.when(userRepository.findById(0L)).thenReturn(Optional.empty());
-        mockMvc.perform(get("/users-auth/0"))
-               .andExpect(status().isNotFound());
+        mockMvc.perform(get("/users-auth/0")
+                        .with(opaqueToken()))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -62,12 +63,13 @@ class UserAuthRestControllerTest {
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         String response = mockMvc.perform(post("/users-auth")
-                                                  .contentType(MediaType.APPLICATION_JSON)
-                                                  .content(objectMapper.writeValueAsString(expectedResponse)))
-                                 .andExpect(status().isOk())
-                                 .andReturn().getResponse().getContentAsString();
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, UserDto.class),
-                   is(equalTo(expectedResponse)));
+                is(equalTo(expectedResponse)));
     }
 
     @Test
@@ -75,9 +77,10 @@ class UserAuthRestControllerTest {
         JSONObject content = new JSONObject();
         content.put("test", "invalid");
         mockMvc.perform(post("/users-auth")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(content.toString()))
-               .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content.toString())
+                        .with(opaqueToken()))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -87,12 +90,13 @@ class UserAuthRestControllerTest {
         Mockito.when(userRepository.save(user)).thenReturn(user);
         Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
         String response = mockMvc.perform(put("/users-auth/1")
-                                                  .contentType(MediaType.APPLICATION_JSON)
-                                                  .content(objectMapper.writeValueAsString(expectedResponse)))
-                                 .andExpect(status().isOk())
-                                 .andReturn().getResponse().getContentAsString();
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, UserDto.class),
-                   is(equalTo(expectedResponse)));
+                is(equalTo(expectedResponse)));
     }
 
 
@@ -104,7 +108,8 @@ class UserAuthRestControllerTest {
         Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
         String response = mockMvc.perform(put("/users-auth/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         assertThat(objectMapper.readValue(response, UserDto.class),
@@ -116,22 +121,25 @@ class UserAuthRestControllerTest {
         JSONObject content = new JSONObject();
         content.put("test", "invalid");
         mockMvc.perform(put("/users-auth/20")
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(content.toString()))
-               .andExpect(status().isBadRequest());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content.toString())
+                        .with(opaqueToken()))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void deleteUserOk() throws Exception {
         Mockito.doNothing().when(userRepository).deleteById(1L);
-        mockMvc.perform(delete("/users-auth/1"))
-               .andExpect(status().isOk());
+        mockMvc.perform(delete("/users-auth/1")
+                        .with(opaqueToken()))
+                .andExpect(status().isOk());
     }
 
     @Test
     void deleteUserNotFound() throws Exception {
         Mockito.doThrow(new ResourceNotFoundException()).when(userRepository).deleteById(0L);
-        mockMvc.perform(delete("/users-auth/0"))
-               .andExpect(status().isNotFound());
+        mockMvc.perform(delete("/users-auth/0")
+                        .with(opaqueToken()))
+                .andExpect(status().isNotFound());
     }
 }
