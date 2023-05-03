@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.modulepdf.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

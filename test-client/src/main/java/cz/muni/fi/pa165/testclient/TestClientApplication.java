@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.testclient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,22 +12,21 @@ import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @SpringBootApplication
 public class TestClientApplication {
-    @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
-
     public static void main(String[] args) {
         SpringApplication.run(TestClientApplication.class, args);
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity httpSecurity,
+            ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(x -> x
                         .anyRequest().authenticated()
                 )
                 .logout(x -> x
                         .logoutSuccessUrl("/login")
-                        .logoutSuccessHandler(oidcLogoutSuccessHandler())
+                        .logoutSuccessHandler(oidcLogoutSuccessHandler(clientRegistrationRepository))
                 )
                 .csrf(c -> c
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
@@ -39,7 +37,8 @@ public class TestClientApplication {
         return httpSecurity.build();
     }
 
-    private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
+    private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler(
+            ClientRegistrationRepository clientRegistrationRepository) {
         OidcClientInitiatedLogoutSuccessHandler successHandler =
                 new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
         successHandler.setPostLogoutRedirectUri("http://localhost:8083/login");

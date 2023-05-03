@@ -28,8 +28,8 @@ import static org.hamcrest.Matchers.*;
 @DirtiesContext
 public class InvitationRepositoryTest {
 
-    private InvitationRepository invitationRepository;
-    private TestEntityManager entityManager;
+    private final InvitationRepository invitationRepository;
+    private final TestEntityManager entityManager;
     private Invitation testinInvitation;
 
     @Autowired

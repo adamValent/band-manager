@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.modulepdf.data.enums.Genre;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class Album implements Serializable {

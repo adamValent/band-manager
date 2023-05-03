@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.modulepdf.data.model;
 
-import jakarta.validation.constraints.NotNull;
-
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.Objects;

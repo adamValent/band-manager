@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.modulecore.data.model;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.mapstruct.control.MappingControl;
 
 import java.io.Serializable;
 import java.util.Arrays;

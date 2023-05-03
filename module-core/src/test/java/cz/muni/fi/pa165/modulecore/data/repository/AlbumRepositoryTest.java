@@ -70,7 +70,6 @@ class AlbumRepositoryTest {
                                  Genre.ROCK,
                                  Collections.emptyList(),
                                  band);
-        ;
         entityManager.persist(album1);
         entityManager.persist(album2);
         entityManager.flush();
