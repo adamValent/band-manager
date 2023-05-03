@@ -1,19 +1,16 @@
 package cz.muni.fi.pa165.modulepdf.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,14 +19,11 @@ public class PdfRestControllerTest {
 
     private static final Logger log = LoggerFactory.getLogger(PdfRestControllerTest.class);
     private final MockMvc mockMvc;
-    private final ObjectMapper objectMapper;
 
 
     @Autowired
-    public PdfRestControllerTest(ObjectMapper objectMapper,
-                                   MockMvc mockMvc) {
+    public PdfRestControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
     }
 
     @Test

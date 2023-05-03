@@ -2,10 +2,7 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.UserDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
-import cz.muni.fi.pa165.modulecore.data.model.Album;
-import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.UserRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
@@ -21,8 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -164,7 +159,6 @@ class UserRestControllerTest {
     void getAllUsersWithoutBandOk() throws Exception {
         User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
         Mockito.when(userRepository.getAllUsersWithoutBand()).thenReturn(List.of(user));
-        UserDto expectedResponse = userMapper.mapToDto(user);
 
         String response = mockMvc.perform(get("/users/withoutBand")
                         .with(opaqueToken()))
@@ -180,7 +174,6 @@ class UserRestControllerTest {
     void getUsersFromBandBySongIdOk() throws Exception {
         User user = new User(1L, UserType.MANAGER, "name", "last", "mail");
         Mockito.when(userRepository.getUsersFromBandBySongId(1L)).thenReturn(List.of(user));
-        UserDto expectedResponse = userMapper.mapToDto(user);
 
         String response = mockMvc.perform(get(String.format("/users/bySong/%s", 1L))
                         .with(opaqueToken()))

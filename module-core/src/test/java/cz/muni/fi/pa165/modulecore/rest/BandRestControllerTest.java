@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.muni.fi.pa165.modulecore.api.BandDto;
-import cz.muni.fi.pa165.modulecore.api.UserDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
@@ -44,7 +43,7 @@ class BandRestControllerTest {
     @MockBean
     private BandRepository bandRepository;
 
-    private Band testingBand;
+    private final Band testingBand;
 
     @Autowired
     public BandRestControllerTest(MockMvc mockMvc,

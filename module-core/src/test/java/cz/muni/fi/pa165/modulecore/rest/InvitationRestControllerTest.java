@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.BandDto;
 import cz.muni.fi.pa165.modulecore.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
@@ -26,7 +25,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +41,7 @@ class InvitationRestControllerTest {
     @MockBean
     private InvitationRepository invitationRepository;
 
-    private Invitation testingInvitation;
+    private final Invitation testingInvitation;
 
     @Autowired
     public InvitationRestControllerTest(MockMvc mockMvc,

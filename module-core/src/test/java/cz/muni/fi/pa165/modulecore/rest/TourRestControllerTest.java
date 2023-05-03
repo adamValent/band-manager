@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.TourDateDto;
 import cz.muni.fi.pa165.modulecore.api.TourDto;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
@@ -9,9 +8,7 @@ import cz.muni.fi.pa165.modulecore.data.model.TourDate;
 import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
-import org.aspectj.lang.annotation.Before;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -47,7 +44,7 @@ class TourRestControllerTest {
     @MockBean
     private TourRepository tourRepository;
 
-    private Tour testingTour;
+    private final Tour testingTour;
 
     @Autowired
     public TourRestControllerTest(ObjectMapper objectMapper,
@@ -58,8 +55,8 @@ class TourRestControllerTest {
         this.tourMapper = tourMapper;
 
         this.testingTour = new Tour(100L, "PopTour",
-                new ArrayList<Band>(List.of(new Band())),
-                new ArrayList<TourDate>(List.of(
+                new ArrayList<>(List.of(new Band())),
+                new ArrayList<>(List.of(
                         new TourDate(0L, "New York", LocalDate.of(2023, 5, 5), "Venue1"),
                         new TourDate(1L, "Sydney", LocalDate.of(2023, 6, 3), "Venue2")
                 )));
@@ -105,7 +102,7 @@ class TourRestControllerTest {
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
         List<TourDto> responseTours = objectMapper.readerForListOf(TourDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(((List<Tour>)tourRepository.findAll()).stream().map(tourMapper::mapToDto).toList())));
+        assertThat("response", responseTours, is(equalTo(((List<Tour>) tourRepository.findAll()).stream().map(tourMapper::mapToDto).toList())));
     }
 
     @Test
