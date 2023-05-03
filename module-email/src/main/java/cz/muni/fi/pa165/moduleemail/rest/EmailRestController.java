@@ -31,8 +31,8 @@ public class EmailRestController {
             security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters.")
     @ApiResponses({
-                    @ApiResponse(responseCode = "200", description = "Email was sent."),
-                    @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
+            @ApiResponse(responseCode = "200", description = "Email was sent."),
+            @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PostMapping(path = "")
     public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto) {
@@ -44,9 +44,9 @@ public class EmailRestController {
             security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to all band members.")
     @ApiResponses({
-                    @ApiResponse(responseCode = "200", description = "Email was sent."),
-                    @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
-                    @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
+            @ApiResponse(responseCode = "200", description = "Email was sent."),
+            @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
+            @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PostMapping(path = "band/{id}")
     public ResponseEntity<Void> sendEmailToAllBandMembers(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
@@ -59,9 +59,9 @@ public class EmailRestController {
             security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to band manager.")
     @ApiResponses({
-                    @ApiResponse(responseCode = "200", description = "Email was sent."),
-                    @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
-                    @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
+            @ApiResponse(responseCode = "200", description = "Email was sent."),
+            @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
+            @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PostMapping(path = "band/{id}/manager")
     public ResponseEntity<Void> sendEmailToBandManager(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
@@ -74,9 +74,9 @@ public class EmailRestController {
             security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to tour band.")
     @ApiResponses({
-                    @ApiResponse(responseCode = "200", description = "Email was sent."),
-                    @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
-                    @ApiResponse(responseCode = "404", description = "Tour with given ID does not exist."),
+            @ApiResponse(responseCode = "200", description = "Email was sent."),
+            @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
+            @ApiResponse(responseCode = "404", description = "Tour with given ID does not exist."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PostMapping(path = "tour/{id}")
     public ResponseEntity<Void> sendEmailToTourBand(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
