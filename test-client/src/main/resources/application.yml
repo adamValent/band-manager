@@ -12,14 +12,8 @@ spring:
               - openid
               - profile
               - email
-              - eduperson_scoped_affiliation
-              - test_read
-              - test_write
               - test_1
               - test_2
-              - test_3
-              - test_4
-              - test_5
         provider:
           muni:
             issuer-uri: https://oidc.muni.cz/oidc/
