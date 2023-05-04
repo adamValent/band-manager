@@ -5,7 +5,7 @@
     <title>User data</title>
 </head>
 <body>
-<p>text about authenticated user</p>
+<p>data of authenticated user</p>
 <table class="table">
     <tbody>
     <tr>
@@ -51,15 +51,6 @@
     <tr>
         <th scope="row">picture</th>
         <td><img alt="image" src="" th:if="${user.picture!=null}" th:src="${user.picture}"></td>
-    </tr>
-    <tr th:if="${user.getClaimAsStringList('eduperson_scoped_affiliation')}">
-        <th scope="row">eduperson_scoped_affiliation</th>
-        <td>
-            <ul>
-                <li th:each="affiliation: ${user.getClaimAsStringList('eduperson_scoped_affiliation')}"
-                    th:text="${affiliation}"></li>
-            </ul>
-        </td>
     </tr>
     <tr th:if="${scopes}">
         <th scope="row">scopes</th>
