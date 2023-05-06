@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.testclient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -22,6 +23,8 @@ public class TestClientApplication {
             ClientRegistrationRepository clientRegistrationRepository) throws Exception {
         httpSecurity
                 .authorizeHttpRequests(x -> x
+                        // permit anonymous access
+                        .requestMatchers(HttpMethod.GET, "/", "/tours", "/bands", "/bands/{id}","/albums", "/albums/allByBand/{id}", "/albums/{id}", "songs/{id}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(x -> x
