@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,7 +50,8 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmail(request);
+        //TODO add token
+        Mockito.doNothing().when(emailFacade).sendEmail(request, any());
 
         mockMvc.perform(post("/email")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +69,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmail(request);
+        Mockito.doNothing().when(emailFacade).sendEmail(request, any());
 
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -98,7 +100,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToAllBandMembers(request, 0L);
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToAllBandMembers(request, 0L,any());
 
         mockMvc.perform(post(String.format("/email/band/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -128,7 +130,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToAllBandMembers(request, 1L);
+        Mockito.doNothing().when(emailFacade).sendEmailToAllBandMembers(request, 1L,any());
 
         mockMvc.perform(post(String.format("/email/band/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +147,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToBandManager(request, 0L);
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToBandManager(request, 0L, any());
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -175,7 +177,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToBandManager(request, 1L);
+        Mockito.doNothing().when(emailFacade).sendEmailToBandManager(request, 1L, any());
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -193,7 +195,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToTourBand(request, 0L);
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToTourBand(request, 0L, any());
 
         mockMvc.perform(post(String.format("/email/tour/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -223,7 +225,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToTourBand(request, 1L);
+        Mockito.doNothing().when(emailFacade).sendEmailToTourBand(request, 1L, any());
 
         mockMvc.perform(post(String.format("/email/tour/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)

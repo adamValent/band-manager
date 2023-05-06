@@ -4,8 +4,12 @@ import cz.muni.fi.pa165.moduleemail.api.BandDto;
 import cz.muni.fi.pa165.moduleemail.api.TourDto;
 import cz.muni.fi.pa165.moduleemail.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -21,13 +25,16 @@ public class TourService {
         this.restTemplate = restTemplate;
     }
 
-    public List<Long> getBandIdFromTourId(Long idTour) {
+    public List<Long> getBandIdFromTourId(Long idTour, String token) {
         String url
                 = String.format("http://core:8080/tours/%s", idTour);
         ResponseEntity<TourDto> response;
 
+        MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
+        headers.add("Authorization", token);
+
         try {
-            response = restTemplate.getForEntity(url, TourDto.class);
+            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), TourDto.class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException();
