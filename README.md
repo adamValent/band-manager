@@ -51,6 +51,23 @@ The system has two authorization roles - **Manager** and **Band Member**.
 -   **TourDate** - entity representing essential information about specific tour.
 -   **Invitation** - entity representing an invitation to join a band.
 
+## Seeding and cleaning the DB
+
+In order to **seed the database**:
+
+- Database `db_core` or `db_user` (depending on which database you want to seed) **must be** already running and 
+container `core` or `user` (again, depending on which database you want to seed) must have run **at least once**
+- For both requirements for both databases run `docker compose up` in project's root directory
+- Navigate to either `module-core/src/db_utils/` or `module-user/src/db_utils/` depending on which database
+you want to seed and run `docker compose up`, which will run the cleaning job first and then will seed the database
+
+In order to run the cleaning and seeding jobs **manually**:
+- Instead of running `docker compose up` in `module-core/src/db_utils/` or `module-user/src/db_utils/` run
+`docker compose up db_cleaner` for cleaning the database and `docker compose up db_seeder` for seeding the database
+- In the case of triggering the seeding job manually, it is advised to always call the cleaning job first and then the seeding job, since you would
+populate the database with duplicit data if you would keep running the seed job only
+
+
 ## Use case diagram
 
 ![alt text](diagrams/use-case-diagram.png "Use case diagram")
