@@ -1,3 +1,6 @@
+server:
+  port: 8083
+
 spring:
   datasource:
     url: jdbc:postgresql://db-users:5433/users
@@ -8,3 +11,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  application:
+    name: module-pdf
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: [ "health","prometheus", "metrics" ]
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
