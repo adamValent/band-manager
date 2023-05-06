@@ -35,7 +35,6 @@ services:
       - module-email:/tmp
 
   db-users:
-    container_name: db-users
     image: postgres:latest
     restart: on-failure
     environment:
@@ -54,7 +53,6 @@ services:
 
 
   db-core:
-    container_name: db-core
     image: postgres:latest
     restart: on-failure
     environment:
