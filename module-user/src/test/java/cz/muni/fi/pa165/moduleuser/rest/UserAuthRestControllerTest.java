@@ -39,7 +39,7 @@ class UserAuthRestControllerTest {
 
     @Test
     void findByIdOk() throws Exception {
-        User user = new User(1L, "me@mail.com", "psw");
+        User user = new User(1L, "me@mail.com", "usr");
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         String response = mockMvc.perform(get("/users-auth/1")
                         .with(opaqueToken()))
@@ -59,7 +59,7 @@ class UserAuthRestControllerTest {
 
     @Test
     void createUserOk() throws Exception {
-        User user = new User(1L, "me@mail.com", "psw");
+        User user = new User(1L, "me@mail.com", "usr");
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         String response = mockMvc.perform(post("/users-auth")
@@ -85,7 +85,7 @@ class UserAuthRestControllerTest {
 
     @Test
     void updateUserOk() throws Exception {
-        User user = new User(1L, "me@mail.com", "psw");
+        User user = new User(1L, "me@mail.com", "usr");
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);
@@ -102,7 +102,7 @@ class UserAuthRestControllerTest {
 
     @Test
     void updateUserEmailOk() throws Exception {
-        User user = new User(1L, "me@mail.com", "psw");
+        User user = new User(1L, "me@mail.com", "usr");
         UserDto expectedResponse = userMapper.mapToDto(user);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         Mockito.when(userRepository.existsById(user.getId())).thenReturn(true);

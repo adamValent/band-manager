@@ -12,6 +12,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.security.oauth2.server.resource.introspection.OAuth2IntrospectionAuthenticatedPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -44,8 +47,10 @@ public class UserAuthRestController {
             @ApiResponse(responseCode = "400", description = "User to be created cannot be validated."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PostMapping(path = "")
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userFacade.create(userDto));
+    public ResponseEntity<UserDto> createUser(
+            @Valid @RequestBody UserDto userDto,
+            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal) {
+        return ResponseEntity.ok(userFacade.create(userDto, principal.getSubject()));
     }
 
     @Operation(
@@ -55,9 +60,12 @@ public class UserAuthRestController {
             @ApiResponse(responseCode = "200", description = "User's was updated successfully."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
     @PutMapping(path = "{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(
+            @PathVariable("id") Long id,
+            @Valid @RequestBody UserDto userDto,
+            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal) {
         userDto.setId(id);
-        return ResponseEntity.ok(userFacade.update(userDto));
+        return ResponseEntity.ok(userFacade.update(userDto, principal.getSubject()));
     }
 
     @Operation(

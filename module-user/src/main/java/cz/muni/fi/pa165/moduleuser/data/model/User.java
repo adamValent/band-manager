@@ -16,16 +16,16 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
     @NotNull
-    @Column(name = "password")
-    private String password;
+    @Column(name = "oauth_id", unique = true)
+    private String oauthId;
 
     public User() {
     }
 
-    public User(Long id, String email, String password) {
+    public User(Long id, String email, String oauthId) {
         this.id = id;
         this.email = email;
-        this.password = password;
+        this.oauthId = oauthId;
     }
 
     public Long getId() {
@@ -44,12 +44,12 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getOauthId() {
+        return oauthId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setOauthId(String oauthId) {
+        this.oauthId = oauthId;
     }
 
     @Override
@@ -60,12 +60,12 @@ public class User implements Serializable {
 
         return Objects.equals(id, user.id) &&
                Objects.equals(email, user.email) &&
-               Objects.equals(password, user.password);
+               Objects.equals(oauthId, user.oauthId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password);
+        return Objects.hash(id, email, oauthId);
     }
 
     @Override

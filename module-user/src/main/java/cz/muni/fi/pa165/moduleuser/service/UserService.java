@@ -33,9 +33,9 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updatePassword(Long id, String password) {
+    public User updatePassword(Long id, String oauthId) {
         User user = userRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
-        user.setPassword(password);
+        user.setOauthId(oauthId);
         return userRepository.save(user);
     }
 

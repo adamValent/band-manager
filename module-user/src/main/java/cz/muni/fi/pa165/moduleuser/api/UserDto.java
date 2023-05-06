@@ -14,17 +14,9 @@ public class UserDto {
             requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
 
-    @NotNull
-    @Schema(name = "password",
-            example = "safepassword123",
-            description = "user's password",
-            requiredMode = Schema.RequiredMode.REQUIRED)
-    private String password;
-
-    public UserDto(Long id, @NotNull String email, @NotNull String password) {
+    public UserDto(Long id, @NotNull String email) {
         this.id = id;
         this.email = email;
-        this.password = password;
     }
 
     public Long getId() {
@@ -43,27 +35,18 @@ public class UserDto {
         this.email = email;
     }
 
-    public @NotNull String getPassword() {
-        return password;
-    }
-
-    public void setPassword(@NotNull String password) {
-        this.password = password;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {return true;}
         if (o == null || getClass() != o.getClass()) {return false;}
         UserDto userDto = (UserDto) o;
         return Objects.equals(id, userDto.id) &&
-               Objects.equals(email, userDto.email) &&
-               Objects.equals(password, userDto.password);
+               Objects.equals(email, userDto.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password);
+        return Objects.hash(id, email);
     }
 
     @Override
