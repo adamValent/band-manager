@@ -24,7 +24,7 @@ public class TestClientApplication {
         httpSecurity
                 .authorizeHttpRequests(x -> x
                         // permit anonymous access
-                        .requestMatchers(HttpMethod.GET, "/", "/tours", "/bands", "/bands/{id}","/albums", "/albums/allByBand/{id}", "/albums/{id}", "songs/{id}").permitAll()
+                        .requestMatchers( "/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout(x -> x
