@@ -11,6 +11,8 @@ services:
       - "8080:8080"
     volumes:
       - module-core:/tmp
+    networks:
+      - youband-manager-network
 
   users:
     build:
@@ -21,6 +23,8 @@ services:
       - "8083:8083"
     volumes:
       - module-user:/tmp
+    networks:
+      - youband-manager-network
 
   pdf:
     build:
@@ -31,6 +35,8 @@ services:
       - "8082:8082"
     volumes:
       - module-pdf:/tmp
+    networks:
+      - youband-manager-network
 
   email:
     build:
@@ -41,6 +47,8 @@ services:
       - "8081:8081"
     volumes:
       - module-email:/tmp
+    networks:
+      - youband-manager-network
 
   db-users:
     image: postgres:latest
@@ -58,6 +66,9 @@ services:
       - "5433:5433"
     volumes:
       - postgres-data_users:/var/lib/postgresql/data
+      - /var/run/postgresql:/var/run/postgresql
+    networks:
+      - youband-manager-network
 
   db-core:
     image: postgres:latest
@@ -75,6 +86,9 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data_core:/var/lib/postgresql/data
+      - /var/run/postgresql:/var/run/postgresql
+    networks:
+      - youband-manager-network
 
   pgadmin:
     container_name: pgadmin4_container
@@ -87,6 +101,8 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - youband-manager-network
 
   prometheus:
     image: 'prom/prometheus:latest'
@@ -120,5 +136,12 @@ volumes:
   module-core:
   module-email:
   module-user:
+
+networks:
+  youband-manager-network: {
+          name: youband-manager-network
+  }
+
   prometheus-storage:
   grafana-storage:
+
