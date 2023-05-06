@@ -9,9 +9,11 @@ spring:
             client-name: "MUNI Unified Login"
             provider: muni
             scope:
-              - manager
-              - band_member
-              - test
+              - openid
+              - profile
+              - email
+              - test_1
+              - test_2
         provider:
           muni:
             issuer-uri: https://oidc.muni.cz/oidc/
