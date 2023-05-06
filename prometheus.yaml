@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 1s
+  external_labels:
+    monitor: 'my-monitor'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['host.docker.internal:9090']
+  - job_name: 'module-pdf'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'pdf:8082' ]
+  - job_name: 'module-email'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'email:8081' ]
+  - job_name: 'module-core'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'core:8080' ]
+  - job_name: 'module-user'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: [ 'users:8083' ]

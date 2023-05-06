@@ -1,0 +1,34 @@
+volumes:
+  db-vol:
+
+services:
+
+  db_cleaner:
+    image: postgres:latest
+    volumes:
+      - ./scripts/clear.sql:/clear.sql
+      - /var/run/postgresql:/var/run/postgresql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=users --file=clear.sql && exit" ]
+    networks:
+      - youband-manager-network
+
+  db_seeder:
+    image: postgres:latest
+    depends_on:
+      db_cleaner:
+        condition: service_completed_successfully
+    volumes:
+      - ./scripts/seed.sql:/seed.sql
+      - /var/run/postgresql:/var/run/postgresql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=users --file=seed.sql && exit" ]
+    networks:
+      - youband-manager-network
+
+networks:
+  youband-manager-network: {
+    external: true
+  }
