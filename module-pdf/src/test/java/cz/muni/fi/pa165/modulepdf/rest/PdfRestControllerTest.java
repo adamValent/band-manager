@@ -21,10 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyObject;
-import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -49,7 +46,8 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllMembersMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllMembersMissingId running");
 
-        Mockito.when(coreService.getBandMembers(0L)).thenThrow(ResourceNotFoundException.class);
+        //TODO doplnit token
+        Mockito.when(coreService.getBandMembers(0L, any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(String.format("/pdf/band/%s/members", 0L)))
                 .andExpect(status().isNotFound());
@@ -59,7 +57,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllMembersOk() throws Exception {
         log.debug("testGeneratePdfBandAllMembersOk running");
 
-        Mockito.when(coreService.getBandMembers(1L)).thenReturn(new ArrayList<>());
+        Mockito.when(coreService.getBandMembers(1L, any())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(String.format("/pdf/band/%s/members", 1L)))
                 .andExpect(status().isOk());
@@ -69,7 +67,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllToursMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllToursMissingId running");
 
-        Mockito.when(coreService.getBandTours(0L)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(coreService.getBandTours(0L, any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(String.format("/pdf/band/%s/tours", 0L)))
                 .andExpect(status().isNotFound());
@@ -79,7 +77,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllToursOk() throws Exception {
         log.debug("testGeneratePdfBandAllToursOk running");
 
-        Mockito.when(coreService.getBandTours(1L)).thenReturn(new ArrayList<>());
+        Mockito.when(coreService.getBandTours(1L, any())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(String.format("/pdf/band/%s/tours", 1L)))
                 .andExpect(status().isOk());
@@ -90,7 +88,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllAlbumsMissingId() throws Exception {
         log.debug("testGeneratePdfBandAllAlbumsMissingId running");
 
-        Mockito.when(coreService.getBandAlbums(0L)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(coreService.getBandAlbums(0L, any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(String.format("/pdf/band/%s/albums", 0L)))
                 .andExpect(status().isNotFound());
@@ -100,7 +98,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfBandAllAlbumsOk() throws Exception {
         log.debug("testGeneratePdfBandAllAlbumsOk running");
 
-        Mockito.when(coreService.getBandAlbums(1L)).thenReturn(new ArrayList<>());
+        Mockito.when(coreService.getBandAlbums(1L, any())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(String.format("/pdf/band/%s/albums", 1L)))
                 .andExpect(status().isOk());
@@ -110,7 +108,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfAlbumAllSongMissingId() throws Exception {
         log.debug("testGeneratePdfAlbumAllSongMissingId running");
 
-        Mockito.when(coreService.getAlbumSongs(0L)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(coreService.getAlbumSongs(0L, any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 0L)))
                 .andExpect(status().isNotFound());
@@ -120,7 +118,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfAlbumAllSongOk() throws Exception {
         log.debug("testGeneratePdfAlbumAllSongOk running");
 
-        Mockito.when(coreService.getAlbumSongs(100L)).thenReturn(new ArrayList<>());
+        Mockito.when(coreService.getAlbumSongs(100L, any())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(String.format("/pdf/albums/%s/songs", 100L)))
                 .andExpect(status().isOk());
@@ -131,7 +129,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfTourAllTourDatesMissingId() throws Exception {
         log.debug("testGeneratePdfTourAllTourDatesMissingId running");
 
-        Mockito.when(coreService.getTourDatesOfTour(0L)).thenThrow(ResourceNotFoundException.class);
+        Mockito.when(coreService.getTourDatesOfTour(0L, any())).thenThrow(ResourceNotFoundException.class);
 
         mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 0L)))
                 .andExpect(status().isNotFound());
@@ -141,7 +139,7 @@ public class PdfRestControllerTest {
     void testGeneratePdfTourAllTourDatesOk() throws Exception {
         log.debug("testGeneratePdfTourAllTourDatesOk running");
 
-        Mockito.when(coreService.getTourDatesOfTour(101L)).thenReturn(new ArrayList<>());
+        Mockito.when(coreService.getTourDatesOfTour(101L, any())).thenReturn(new ArrayList<>());
 
         mockMvc.perform(get(String.format("/pdf/tours/%s/tourDates", 101L)))
                 .andExpect(status().isOk());
