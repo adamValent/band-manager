@@ -72,7 +72,7 @@ services:
       - "5433:5433"
     volumes:
       - postgres-data_users:/var/lib/postgresql/data
-      - /var/run/postgresql:/var/run/postgresql
+      - postgres-data_users_scripts:/var/run/postgresql
     networks:
       - youband-manager-network
 
@@ -92,7 +92,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data_core:/var/lib/postgresql/data
-      - /var/run/postgresql:/var/run/postgresql
+      - postgres-data_core_scripts:/var/run/postgresql
     networks:
       - youband-manager-network
 
@@ -149,6 +149,12 @@ volumes:
   module-user:
   prometheus-storage:
   grafana-storage:
+  postgres-data_core_scripts: {
+                                name: postgres-data_core_scripts
+  }
+  postgres-data_users_scripts: {
+                                 name: postgres-data_users_scripts
+  }
 
 networks:
   youband-manager-network: {
