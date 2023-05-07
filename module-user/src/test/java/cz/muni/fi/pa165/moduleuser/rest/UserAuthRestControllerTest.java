@@ -75,8 +75,9 @@ class UserAuthRestControllerTest {
                         .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
+
         assertThat(objectMapper.readValue(response, UserDto.class),
-                is(equalTo(userMapper.mapToDto(user))));
+                is(equalTo(request)));
     }
 
     @Test

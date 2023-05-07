@@ -53,7 +53,9 @@ public class UserAuthRestController {
             @Valid @RequestBody UserDto userDto,
             @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal,
             @RequestHeader("Authorization") @Schema(hidden = true) String token) {
-        return ResponseEntity.ok(userFacade.create(userDto, principal.getSubject(), token));
+        UserDto created = userFacade.create(userDto, principal.getSubject(), token);
+        userDto.setId(created.getId());
+        return ResponseEntity.ok(userDto);
     }
 
     @Operation(

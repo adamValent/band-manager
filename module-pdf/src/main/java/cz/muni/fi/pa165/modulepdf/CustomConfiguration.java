@@ -18,11 +18,9 @@ public class CustomConfiguration {
         http
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/pdf/**").authenticated()
-                        .requestMatchers(HttpMethod.GET,"/pdf/band/**/members").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.GET, "/pdf/band/**/tours").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.GET, "/pdf/band/**/albums").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.GET, "/pdf/albums/**/songs").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.GET, "/pdf/tours/**/tourDates").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET,"/pdf/band/**").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET, "/pdf/albums/**").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET, "/pdf/tours/**").hasAuthority("SCOPE_test_1")
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::opaqueToken)

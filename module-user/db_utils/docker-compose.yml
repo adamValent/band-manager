@@ -1,6 +1,6 @@
 services:
 
-  db_cleaner:
+  db_cleaner_users:
     image: postgres:latest
     volumes:
       - ./scripts/clear.sql:/clear.sql
@@ -11,10 +11,10 @@ services:
     networks:
       - youband-manager-network
 
-  db_seeder:
+  db_seeder_users:
     image: postgres:latest
     depends_on:
-      db_cleaner:
+      db_cleaner_users:
         condition: service_completed_successfully
     volumes:
       - ./scripts/seed.sql:/seed.sql

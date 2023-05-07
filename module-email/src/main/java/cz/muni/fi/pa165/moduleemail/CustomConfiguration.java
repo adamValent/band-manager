@@ -18,9 +18,8 @@ public class CustomConfiguration {
         http
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/email/**").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/email").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
+                        .requestMatchers(HttpMethod.POST, "/email/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
                         .requestMatchers(HttpMethod.POST, "/email/band/**").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.POST, "/email/**/manager").hasAuthority("SCOPE_test_2")
                         .requestMatchers(HttpMethod.POST, "/email/tour/**").hasAnyAuthority("SCOPE_test_1")
                         .anyRequest().permitAll()
                 )

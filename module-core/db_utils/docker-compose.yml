@@ -1,9 +1,9 @@
 services:
 
-  db_seeder:
+  db_seeder_core:
     image: postgres:latest
     depends_on:
-      db_cleaner:
+      db_cleaner_core:
         condition: service_completed_successfully
     volumes:
       - ./scripts/seed.sql:/seed.sql
@@ -14,7 +14,7 @@ services:
     networks:
       - youband-manager-network
 
-  db_cleaner:
+  db_cleaner_core:
     image: postgres:latest
     volumes:
       - ./scripts/clear.sql:/clear.sql
