@@ -50,12 +50,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        //TODO add token
-        Mockito.doNothing().when(emailFacade).sendEmail(request, any());
+        Mockito.doNothing().when(emailFacade).sendEmail(any(), any());
 
         mockMvc.perform(post("/email")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
@@ -70,11 +70,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmail(request, any());
+        Mockito.doNothing().when(emailFacade).sendEmail(any(), any());
 
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
@@ -89,6 +90,7 @@ public class EmailRestControllerTest {
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString())
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
@@ -103,11 +105,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToAllBandMembers(request, 0L,any());
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToAllBandMembers(any(), any() ,any());
 
         mockMvc.perform(post(String.format("/email/band/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
@@ -122,6 +125,7 @@ public class EmailRestControllerTest {
         mockMvc.perform(post(String.format("/email/band/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString())
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
@@ -135,11 +139,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToAllBandMembers(request, 1L,any());
+        Mockito.doNothing().when(emailFacade).sendEmailToAllBandMembers(any(), any() ,any());
 
         mockMvc.perform(post(String.format("/email/band/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
@@ -153,11 +158,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToBandManager(request, 0L, any());
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToBandManager(any(), any() , any());
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
@@ -172,6 +178,7 @@ public class EmailRestControllerTest {
         mockMvc.perform(post(String.format("/email/band/%s/manager", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString())
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
@@ -185,11 +192,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToBandManager(request, 1L, any());
+        Mockito.doNothing().when(emailFacade).sendEmailToBandManager(any(), any() , any());
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
@@ -204,11 +212,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToTourBand(request, 0L, any());
+        Mockito.doThrow(new ResourceNotFoundException()).when(emailFacade).sendEmailToTourBand(any(), any(), any());
 
         mockMvc.perform(post(String.format("/email/tour/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
@@ -223,6 +232,7 @@ public class EmailRestControllerTest {
         mockMvc.perform(post(String.format("/email/tour/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json.toString())
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
@@ -236,11 +246,12 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmailToTourBand(request, 1L, any());
+        Mockito.doNothing().when(emailFacade).sendEmailToTourBand(any(), any() , any());
 
         mockMvc.perform(post(String.format("/email/tour/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
+                        .header("Authorization", "token")
                         .with(opaqueToken()))
                 .andExpect(status().isOk());
     }

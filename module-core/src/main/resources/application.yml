@@ -18,6 +18,22 @@ spring:
           introspection-uri: https://oidc.muni.cz/oidc/introspect
           client-id: d57b3a8f-156e-46de-9f27-39c4daee05e1
           client-secret: fa228ebc-4d54-4cda-901e-4d6287f8b1652a9c9c44-73c9-4502-973f-bcdb4a8ec96a
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: [ "health","prometheus", "metrics" ]
+  endpoint:
+    health:
+      show-details: always
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+
+
 ---
 spring:
   config:

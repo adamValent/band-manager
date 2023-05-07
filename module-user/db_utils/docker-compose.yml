@@ -7,7 +7,7 @@ services:
       - postgres-data_users_scripts:/var/run/postgresql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=users --file=clear.sql && exit" ]
+    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=youband-users --file=clear.sql && exit" ]
     networks:
       - youband-manager-network
 
@@ -21,7 +21,7 @@ services:
       - postgres-data_users_scripts:/var/run/postgresql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
-    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=users --file=seed.sql && exit" ]
+    entrypoint: [ "bash", "-c", "sleep 10 && psql --username=root --port=5433 --dbname=youband-users --file=seed.sql && exit" ]
     networks:
       - youband-manager-network
 
