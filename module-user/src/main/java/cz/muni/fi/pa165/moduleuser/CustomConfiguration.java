@@ -4,6 +4,7 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
@@ -18,10 +19,6 @@ public class CustomConfiguration {
         http
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/users-auth/**").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/users-auth/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
-                        .requestMatchers(HttpMethod.POST, "/users-auth").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
-                        .requestMatchers(HttpMethod.PUT,"/users-auth/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
-                        .requestMatchers(HttpMethod.DELETE, "/users-auth/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
                         .anyRequest().permitAll()
                 )
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::opaqueToken)

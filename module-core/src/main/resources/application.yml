@@ -22,3 +22,5 @@ spring:
       on-profile: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/core
+server:
+  port: 8084

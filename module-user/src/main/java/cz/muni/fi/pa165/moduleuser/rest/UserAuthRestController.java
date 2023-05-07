@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.moduleuser.api.UserDto;
 import cz.muni.fi.pa165.moduleuser.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -50,8 +51,9 @@ public class UserAuthRestController {
     @PostMapping(path = "")
     public ResponseEntity<UserDto> createUser(
             @Valid @RequestBody UserDto userDto,
-            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal) {
-        return ResponseEntity.ok(userFacade.create(userDto, principal.getSubject()));
+            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal,
+            @RequestHeader("Authorization") @Schema(hidden = true) String token) {
+        return ResponseEntity.ok(userFacade.create(userDto, principal.getSubject(), token));
     }
 
     @Operation(
@@ -65,9 +67,10 @@ public class UserAuthRestController {
     public ResponseEntity<UserDto> updateUser(
             @PathVariable("id") Long id,
             @Valid @RequestBody UserDto userDto,
-            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal) {
+            @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal,
+            @RequestHeader("Authorization") @Schema(hidden = true) String token) {
         userDto.setId(id);
-        return ResponseEntity.ok(userFacade.update(userDto, principal.getSubject()));
+        return ResponseEntity.ok(userFacade.update(userDto, principal.getSubject(), token));
     }
 
     @Operation(
