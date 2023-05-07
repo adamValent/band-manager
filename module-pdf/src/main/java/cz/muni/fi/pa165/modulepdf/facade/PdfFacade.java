@@ -18,24 +18,24 @@ public class PdfFacade {
         this.pdfService = pdfService;
     }
 
-    public void generatePdfBandAllMembers(Long idBand, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfBandAllMembers(idBand, response);
+    public void generatePdfBandAllMembers(Long idBand, HttpServletResponse response, String token) throws IOException {
+        pdfService.generatePdfBandAllMembers(idBand, response, token);
     }
 
-    public void generatePdfBandAllTours(Long idBand, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfBandAllTours(idBand, response);
+    public void generatePdfBandAllTours(Long idBand, HttpServletResponse response, String token) throws IOException {
+        pdfService.generatePdfBandAllTours(idBand, response, token);
     }
 
-    public void generatePdfTourAllTourDates(Long idTour, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfToursAllTourDates(idTour, response);
+    public void generatePdfTourAllTourDates(Long idTour, HttpServletResponse response, String token) throws IOException {
+        pdfService.generatePdfToursAllTourDates(idTour, response, token);
     }
 
-    public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfBandAllAlbums(idBand, response);
+    public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response, String token) throws IOException {
+        pdfService.generatePdfBandAllAlbums(idBand, response, token);
     }
 
-    public void generatePdfAlbumAllSong(Long idAlbum, HttpServletResponse response) throws IOException {
-        pdfService.generatePdfAlbumAllSong(idAlbum, response);
+    public void generatePdfAlbumAllSong(Long idAlbum, HttpServletResponse response, String token) throws IOException {
+        pdfService.generatePdfAlbumAllSong(idAlbum, response, token);
     }
 
 

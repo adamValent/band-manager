@@ -13,14 +13,16 @@ public class Album implements Serializable {
     private String name;
     private LocalDate releaseDate;
     private Genre genre;
+    private List<Song> songs;
 
     public Album() {}
 
-    public Album(Long id, String name, LocalDate releaseDate, Genre genre) {
+    public Album(Long id, String name, LocalDate releaseDate, Genre genre, List<Song> songs) {
         this.id = id;
         this.name = name;
         this.releaseDate = releaseDate;
         this.genre = genre;
+        this.songs = songs;
     }
 
     public Long getId() {
@@ -56,26 +58,35 @@ public class Album implements Serializable {
         this.genre = genre;
     }
 
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+    }
+
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null || getClass() != obj.getClass())
-            return false;
-        Album album = (Album) obj;
-        return id.equals(album.id);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Album album = (Album) o;
+        return Objects.equals(id, album.id) && Objects.equals(name, album.name) && Objects.equals(releaseDate, album.releaseDate) && genre == album.genre && Objects.equals(songs, album.songs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, name, releaseDate, genre, songs);
     }
 
     @Override
     public String toString() {
-        return "Album{" + "id=" + id +
+        return "Album{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
-                ", genre=" + genre + '}';
+                ", genre=" + genre +
+                ", songs=" + songs +
+                '}';
     }
 }

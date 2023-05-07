@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.modulepdf.rest;
 
 import cz.muni.fi.pa165.modulepdf.facade.PdfFacade;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,8 +32,9 @@ public class PdfRestController {
             })
     @GetMapping(path = "band/{id}/members")
     public ResponseEntity<Void> generatePdfBandAllMembers(@PathVariable(value = "id") Long idBand,
-                                                          HttpServletResponse response) throws IOException {
-        pdfFacade.generatePdfBandAllMembers(idBand, response);
+                                                          HttpServletResponse response,
+                                                          @RequestHeader("Authorization") @Schema(hidden = true) String token) throws IOException {
+        pdfFacade.generatePdfBandAllMembers(idBand, response, token);
         setResponseAttributesForPDf(response, idBand);
         return ResponseEntity.ok().build();
     }
@@ -46,8 +47,9 @@ public class PdfRestController {
             })
     @GetMapping(path = "band/{id}/tours")
     public ResponseEntity<Void> generatePdfBandAllTours(@PathVariable(value = "id") Long idBand,
-                                                        HttpServletResponse response) throws IOException {
-        pdfFacade.generatePdfBandAllTours(idBand, response);
+                                                        HttpServletResponse response,
+                                                        @RequestHeader("Authorization") @Schema(hidden = true) String token) throws IOException {
+        pdfFacade.generatePdfBandAllTours(idBand, response, token);
         setResponseAttributesForPDf(response, idBand);
         return ResponseEntity.ok().build();
     }
@@ -60,8 +62,9 @@ public class PdfRestController {
             })
     @GetMapping(path = "band/{id}/albums")
     public ResponseEntity<Void> generatePdfBandAllAlbums(@PathVariable(value = "id") Long idBand,
-                                                         HttpServletResponse response) throws IOException {
-        pdfFacade.generatePdfBandAllAlbums(idBand, response);
+                                                         HttpServletResponse response,
+                                                         @RequestHeader("Authorization") @Schema(hidden = true) String token) throws IOException {
+        pdfFacade.generatePdfBandAllAlbums(idBand, response, token);
         setResponseAttributesForPDf(response, idBand);
         return ResponseEntity.ok().build();
     }
@@ -74,8 +77,9 @@ public class PdfRestController {
             })
     @GetMapping(path = "albums/{id}/songs")
     public ResponseEntity<Void> generatePdfAlbumAllSong(@PathVariable(value = "id") Long idAlbum,
-                                                        HttpServletResponse response) throws IOException {
-        pdfFacade.generatePdfAlbumAllSong(idAlbum, response);
+                                                        HttpServletResponse response,
+                                                        @RequestHeader("Authorization") @Schema(hidden = true) String token) throws IOException {
+        pdfFacade.generatePdfAlbumAllSong(idAlbum, response, token);
         setResponseAttributesForPDf(response, idAlbum);
         return ResponseEntity.ok().build();
     }
@@ -88,8 +92,9 @@ public class PdfRestController {
             })
     @GetMapping(path = "tours/{id}/tourDates")
     public ResponseEntity<Void> generatePdfTourAllTourDates(@PathVariable(value = "id") Long idTour,
-                                                            HttpServletResponse response) throws IOException {
-        pdfFacade.generatePdfTourAllTourDates(idTour, response);
+                                                            HttpServletResponse response,
+                                                            @RequestHeader("Authorization") @Schema(hidden = true) String token) throws IOException {
+        pdfFacade.generatePdfTourAllTourDates(idTour, response, token);
         setResponseAttributesForPDf(response, idTour);
         return ResponseEntity.ok().build();
     }

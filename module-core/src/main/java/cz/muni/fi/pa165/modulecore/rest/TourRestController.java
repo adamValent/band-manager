@@ -79,4 +79,14 @@ public class TourRestController {
         tourFacade.deleteTour(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @Operation(summary = "Find all tours by band ID.")
+    @ApiResponses
+            ({
+                    @ApiResponse(responseCode = "200", description = "Found tours returned.")
+            })
+    @GetMapping(path = "allByBand/{id}")
+    public ResponseEntity<List<TourDto>> findAllToursByBandId(@PathVariable("id") Long bandId) {
+        return ResponseEntity.ok(tourFacade.findAllToursByBandId(bandId));
+    }
 }
