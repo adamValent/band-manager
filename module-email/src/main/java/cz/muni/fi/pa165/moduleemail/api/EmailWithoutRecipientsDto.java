@@ -3,6 +3,9 @@ package cz.muni.fi.pa165.moduleemail.api;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 
 public class EmailWithoutRecipientsDto {
 
@@ -32,6 +35,19 @@ public class EmailWithoutRecipientsDto {
 
     public void setEmailBody(String emailBody) {
         this.emailBody = emailBody;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailWithoutRecipientsDto that = (EmailWithoutRecipientsDto) o;
+        return Objects.equals(subject, that.subject) && Objects.equals(emailBody, that.emailBody);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(subject, emailBody);
     }
 
     @Override

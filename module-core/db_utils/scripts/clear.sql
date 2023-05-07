@@ -1,0 +1,1 @@
+TRUNCATE album, band, invitation, song, tour, tour_band_list, tourdates CASCADE;

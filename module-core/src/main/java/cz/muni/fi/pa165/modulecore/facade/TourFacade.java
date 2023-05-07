@@ -38,4 +38,8 @@ public class TourFacade {
     public void deleteTour(Long id) {
         tourService.deleteTour(id);
     }
+
+    public List<TourDto> findAllToursByBandId(Long bandId) {
+        return tourMapper.mapToList(tourService.findAllToursByBandId(bandId));
+    }
 }

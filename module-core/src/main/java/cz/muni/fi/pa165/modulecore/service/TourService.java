@@ -37,4 +37,8 @@ public class TourService {
     public void deleteTour(Long id) {
         tourRepository.deleteById(id);
     }
+
+    public List<Tour> findAllToursByBandId(Long bandId) {
+        return tourRepository.findAllByBandId(bandId);
+    }
 }

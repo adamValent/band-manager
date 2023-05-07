@@ -26,29 +26,30 @@ public class PdfService {
         this.coreService = coreService;
     }
 
-    public void generatePdfBandAllMembers(Long idBand, HttpServletResponse response) throws IOException {
-        export(idBand, response, PdfType.ALL_MEMBERS_OF_BAND);
+    public void generatePdfBandAllMembers(Long idBand, HttpServletResponse response, String token) throws IOException {
+        export(idBand, response, PdfType.ALL_MEMBERS_OF_BAND, token);
     }
 
-    public void generatePdfBandAllTours(Long idBand, HttpServletResponse response) throws IOException {
-        export(idBand, response, PdfType.ALL_TOURS_OF_BAND);
+    public void generatePdfBandAllTours(Long idBand, HttpServletResponse response, String token) throws IOException {
+        export(idBand, response, PdfType.ALL_TOURS_OF_BAND, token);
     }
 
-    public void generatePdfToursAllTourDates(Long idTour, HttpServletResponse response) throws IOException {
-        export(idTour, response, PdfType.ALL_TOUR_DATES_OF_TOUR);
+    public void generatePdfToursAllTourDates(Long idTour, HttpServletResponse response, String token) throws IOException {
+        export(idTour, response, PdfType.ALL_TOUR_DATES_OF_TOUR, token);
     }
 
-    public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response) throws IOException {
-        export(idBand, response, PdfType.ALL_ALBUMS_OF_BAND);
+    public void generatePdfBandAllAlbums(Long idBand, HttpServletResponse response, String token) throws IOException {
+        export(idBand, response, PdfType.ALL_ALBUMS_OF_BAND, token);
     }
 
-    public void generatePdfAlbumAllSong(Long idAlbum, HttpServletResponse response) throws IOException {
-        export(idAlbum, response, PdfType.ALL_SONG_OF_ALBUM);
+    public void generatePdfAlbumAllSong(Long idAlbum, HttpServletResponse response, String token) throws IOException {
+        export(idAlbum, response, PdfType.ALL_SONG_OF_ALBUM, token);
     }
 
     public void export(Long id,
                        HttpServletResponse response,
-                       PdfType pdfType) throws DocumentException, IOException {
+                       PdfType pdfType,
+                       String token) throws DocumentException, IOException {
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());
 
@@ -72,7 +73,7 @@ public class PdfService {
                 table.setSpacingBefore(10);
 
                 tableHeaderAllBandMembers(table);
-                tableDataAllBandMembers(table, id);
+                tableDataAllBandMembers(table, id, token);
             }
             case ALL_TOURS_OF_BAND -> {
                 Paragraph p = new Paragraph("Tours", font);
@@ -86,7 +87,7 @@ public class PdfService {
                 table.setSpacingBefore(10);
 
                 tableHeaderAllBandTours(table);
-                tableDataAllBandTours(table, id);
+                tableDataAllBandTours(table, id, token);
             }
             case ALL_ALBUMS_OF_BAND -> {
                 Paragraph p = new Paragraph("Albums", font);
@@ -100,7 +101,7 @@ public class PdfService {
                 table.setSpacingBefore(10);
 
                 tableHeaderAllBandAlbums(table);
-                tableDataAllBandAlbums(table, id);
+                tableDataAllBandAlbums(table, id, token);
             }
             case ALL_SONG_OF_ALBUM-> {
                 Paragraph p = new Paragraph("Songs", font);
@@ -114,7 +115,7 @@ public class PdfService {
                 table.setSpacingBefore(10);
 
                 tableHeaderAllAlbumSongs(table);
-                tableDataAllAlbumSongs(table, id);
+                tableDataAllAlbumSongs(table, id, token);
             }
             case ALL_TOUR_DATES_OF_TOUR -> {
                 Paragraph p = new Paragraph("Tour dates", font);
@@ -128,7 +129,7 @@ public class PdfService {
                 table.setSpacingBefore(10);
 
                 tableHeaderAllTourDates(table);
-                tableDataAllTourDates(table, id);
+                tableDataAllTourDates(table, id, token);
             }
         }
 
@@ -168,8 +169,9 @@ public class PdfService {
     }
 
     private void tableDataAllBandMembers(PdfPTable table,
-                                         Long idBand) {
-        List<User> users = coreService.getBandMembers(idBand);
+                                         Long idBand,
+                                         String token) {
+        List<User> users = coreService.getBandMembers(idBand, token);
 
         for (User user : users) {
             table.addCell(String.valueOf(user.getId()));
@@ -195,8 +197,9 @@ public class PdfService {
     }
 
     private void tableDataAllBandAlbums(PdfPTable table,
-                                        Long idBand) {
-        List<Album> albums = coreService.getBandAlbums(idBand);
+                                        Long idBand,
+                                        String token) {
+        List<Album> albums = coreService.getBandAlbums(idBand, token);
 
         for (Album album : albums) {
             table.addCell(album.getId().toString());
@@ -219,8 +222,9 @@ public class PdfService {
     }
 
     private void tableDataAllBandTours(PdfPTable table,
-                                       Long idBand) {
-        List<Tour> tours = coreService.getBandTours(idBand);
+                                       Long idBand,
+                                       String token) {
+        List<Tour> tours = coreService.getBandTours(idBand, token);
 
         for (Tour tour : tours) {
             table.addCell(tour.getId().toString());
@@ -241,8 +245,9 @@ public class PdfService {
     }
 
     private void tableDataAllTourDates(PdfPTable table,
-                                       Long idTour) {
-        List<TourDate> tourDates = coreService.getTourDatesOfTour(idTour);
+                                       Long idTour,
+                                       String token) {
+        List<TourDate> tourDates = coreService.getTourDatesOfTour(idTour, token);
 
         for (TourDate tourDate : tourDates) {
             table.addCell(tourDate.getCity());
@@ -264,8 +269,9 @@ public class PdfService {
     }
 
     private void tableDataAllAlbumSongs(PdfPTable table,
-                                        Long idAlbum) {
-        List<Song> songs = coreService.getAlbumSongs(idAlbum);
+                                        Long idAlbum,
+                                        String token) {
+        List<Song> songs = coreService.getAlbumSongs(idAlbum, token);
 
         for (Song song : songs) {
             table.addCell(song.getId().toString());

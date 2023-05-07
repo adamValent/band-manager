@@ -4,8 +4,10 @@ import cz.muni.fi.pa165.moduleemail.CustomConfiguration;
 import cz.muni.fi.pa165.moduleemail.api.EmailDto;
 import cz.muni.fi.pa165.moduleemail.api.EmailWithoutRecipientsDto;
 import cz.muni.fi.pa165.moduleemail.facade.EmailFacade;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -33,8 +35,9 @@ public class EmailRestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @PostMapping(path = "")
-    public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto) {
-        emailFacade.sendEmail(emailDto);
+    public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto,
+                                          @RequestHeader("Authorization") @Schema(hidden = true) String token) {
+        emailFacade.sendEmail(emailDto, token);
         return ResponseEntity.ok().build();
     }
 
@@ -49,8 +52,9 @@ public class EmailRestController {
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping(path = "band/{id}")
     public ResponseEntity<Void> sendEmailToAllBandMembers(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                                          @PathVariable(value = "id") Long idBand) {
-        emailFacade.sendEmailToAllBandMembers(emailWithoutRecipientsDto, idBand);
+                                                          @PathVariable(value = "id") Long idBand,
+                                                          @RequestHeader("Authorization") @Schema(hidden = true) String token) {
+        emailFacade.sendEmailToAllBandMembers(emailWithoutRecipientsDto, idBand, token);
         return ResponseEntity.ok().build();
     }
 
@@ -65,8 +69,9 @@ public class EmailRestController {
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_2.", content = @Content())})
     @PostMapping(path = "band/{id}/manager")
     public ResponseEntity<Void> sendEmailToBandManager(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                                       @PathVariable(value = "id") Long idBand) {
-        emailFacade.sendEmailToBandManager(emailWithoutRecipientsDto, idBand);
+                                                       @PathVariable(value = "id") Long idBand,
+                                                       @RequestHeader("Authorization") @Schema(hidden = true) String token) {
+        emailFacade.sendEmailToBandManager(emailWithoutRecipientsDto, idBand, token);
         return ResponseEntity.ok().build();
     }
 
@@ -81,8 +86,9 @@ public class EmailRestController {
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping(path = "tour/{id}")
     public ResponseEntity<Void> sendEmailToTourBand(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                                    @PathVariable(value = "id") Long idTour) {
-        emailFacade.sendEmailToTourBand(emailWithoutRecipientsDto, idTour);
+                                                    @PathVariable(value = "id") Long idTour,
+                                                    @RequestHeader("Authorization") @Schema(hidden = true) String token) {
+        emailFacade.sendEmailToTourBand(emailWithoutRecipientsDto, idTour, token);
         return ResponseEntity.ok().build();
     }
 }
