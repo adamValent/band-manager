@@ -17,23 +17,26 @@ public class EmailFacade {
         this.emailService = emailService;
     }
 
-    public void sendEmail(EmailDto emailDto) {
+    public void sendEmail(EmailDto emailDto, String token) {
         emailService.sendEmail(emailDto);
     }
 
     public void sendEmailToAllBandMembers(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                          Long bandId) {
-        emailService.sendEmailToAllBandMembers(emailWithoutRecipientsDto, bandId);
+                                          Long bandId,
+                                          String token) {
+        emailService.sendEmailToAllBandMembers(emailWithoutRecipientsDto, bandId, token);
     }
 
     public void sendEmailToBandManager(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                          Long bandId) {
-        emailService.sendEmailToBandManager(emailWithoutRecipientsDto, bandId);
+                                       Long bandId,
+                                       String token) {
+        emailService.sendEmailToBandManager(emailWithoutRecipientsDto, bandId, token);
     }
 
     public void sendEmailToTourBand(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                    Long tourId) {
-        emailService.sendEmailToTourBand(emailWithoutRecipientsDto, tourId);
+                                    Long tourId,
+                                    String token) {
+        emailService.sendEmailToTourBand(emailWithoutRecipientsDto, tourId, token);
     }
 
 }

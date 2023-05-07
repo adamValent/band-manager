@@ -34,27 +34,29 @@ public class EmailService {
     }
 
     public void sendEmailToAllBandMembers(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                          Long bandId) {
+                                          Long bandId,
+                                          String token) {
         sendEmail(new EmailDto(
                 emailWithoutRecipientsDto.getSubject(),
-                bandService.getMembersEmailFromBandByiD(bandId).toArray(String[]::new),
-                emailWithoutRecipientsDto.getEmailBody()
-        ));
+                bandService.getMembersEmailFromBandByiD(bandId, token).toArray(String[]::new),
+                emailWithoutRecipientsDto.getEmailBody()));
     }
 
     public void sendEmailToBandManager(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                       Long bandId) {
+                                       Long bandId,
+                                       String token) {
         sendEmail(new EmailDto(
                 emailWithoutRecipientsDto.getSubject(),
-                new String[]{bandService.getManagerEmailFromBandByiD(bandId)},
-                emailWithoutRecipientsDto.getEmailBody()
-        ));
+                new String[]{bandService.getManagerEmailFromBandByiD(bandId, token)},
+                emailWithoutRecipientsDto.getEmailBody()));
     }
 
     public void sendEmailToTourBand(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
-                                    Long tourId) {
-        sendEmailToAllBandMembers(emailWithoutRecipientsDto,
-                tourService.getBandIdFromTourId(tourId));
+                                    Long tourId,
+                                    String token) {
+        for (Long id: tourService.getBandIdFromTourId(tourId, token)) {
+            sendEmailToAllBandMembers(emailWithoutRecipientsDto, id, token);
+        }
     }
 
 }
