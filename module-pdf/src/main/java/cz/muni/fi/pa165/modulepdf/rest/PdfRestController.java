@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulepdf.rest;
 
-import cz.muni.fi.pa165.modulepdf.ModulePdfApplication;
+import cz.muni.fi.pa165.modulepdf.CustomConfiguration;
 import cz.muni.fi.pa165.modulepdf.facade.PdfFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,12 +30,13 @@ public class PdfRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModulePdfApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Generate pdf file with all band members.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pdf returned."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "band/{id}/members")
     public ResponseEntity<Void> generatePdfBandAllMembers(@PathVariable(value = "id") Long idBand,
                                                           HttpServletResponse response) throws IOException {
@@ -45,12 +46,13 @@ public class PdfRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModulePdfApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Generate pdf file with all band tours.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pdf returned."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "band/{id}/tours")
     public ResponseEntity<Void> generatePdfBandAllTours(@PathVariable(value = "id") Long idBand,
                                                         HttpServletResponse response) throws IOException {
@@ -60,12 +62,13 @@ public class PdfRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModulePdfApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Generate pdf file with all band albums.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pdf returned."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "band/{id}/albums")
     public ResponseEntity<Void> generatePdfBandAllAlbums(@PathVariable(value = "id") Long idBand,
                                                          HttpServletResponse response) throws IOException {
@@ -75,12 +78,13 @@ public class PdfRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModulePdfApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Generate pdf file with all band songs.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pdf returned."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "albums/{id}/songs")
     public ResponseEntity<Void> generatePdfAlbumAllSong(@PathVariable(value = "id") Long idAlbum,
                                                         HttpServletResponse response) throws IOException {
@@ -90,12 +94,13 @@ public class PdfRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModulePdfApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Generate pdf file with all tour dates.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Pdf returned."),
             @ApiResponse(responseCode = "404", description = "Tour with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "tours/{id}/tourDates")
     public ResponseEntity<Void> generatePdfTourAllTourDates(@PathVariable(value = "id") Long idTour,
                                                             HttpServletResponse response) throws IOException {
