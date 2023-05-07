@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
 import cz.muni.fi.pa165.modulecore.data.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.*;
 import jakarta.validation.ConstraintViolationException;
@@ -11,10 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,8 +25,8 @@ import static org.hamcrest.Matchers.is;
 @DirtiesContext
 public class TourRepositoryTest {
 
-    private TourRepository tourRepository;
-    private TestEntityManager entityManager;
+    private final TourRepository tourRepository;
+    private final TestEntityManager entityManager;
     private Tour testingtour;
 
     @Autowired

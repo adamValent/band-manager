@@ -26,7 +26,7 @@ class UserRepositoryTest {
 
     @Test
     void findByIdOk() {
-        User user = new User(null, "mail", "pwd");
+        User user = new User(null, "mail", "usr");
         entityManager.persistAndFlush(user);
         Optional<User> found = userRepository.findById(user.getId());
         assertThat("user is not present", found.isPresent());
@@ -41,8 +41,8 @@ class UserRepositoryTest {
 
     @Test
     void getAll() {
-        User user1 = new User(null, "mail1", "pwd1");
-        User user2 = new User(null, "mail2", "pwd2");
+        User user1 = new User(null, "mail1", "usr1");
+        User user2 = new User(null, "mail2", "usr2");
         entityManager.persist(user1);
         entityManager.persist(user2);
         entityManager.flush();
@@ -52,7 +52,7 @@ class UserRepositoryTest {
 
     @Test
     void createUserOk() {
-        User user = new User(null, "mail", "pwd");
+        User user = new User(null, "mail", "sur");
         User result = userRepository.save(user);
         User created = entityManager.find(User.class, result.getId());
         assertThat("user is not present", Objects.nonNull(created));
@@ -61,7 +61,7 @@ class UserRepositoryTest {
 
     @Test
     void updateUserOk() {
-        User user = new User(null, "mail", "pwd");
+        User user = new User(null, "mail", "usr");
         entityManager.persistAndFlush(user);
         user.setEmail("newmail");
         User updated = entityManager.find(User.class, user.getId());
@@ -70,7 +70,7 @@ class UserRepositoryTest {
 
     @Test
     void deleteUserOk() {
-        User user = new User(null, "mail", "pwd");
+        User user = new User(null, "mail", "usr");
         entityManager.persistAndFlush(user);
         userRepository.deleteById(user.getId());
         assertThat("entity is present",

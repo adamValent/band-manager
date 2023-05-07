@@ -29,8 +29,8 @@ import static org.hamcrest.Matchers.is;
 @DirtiesContext
 public class TourDateRepositoryTest {
 
-    private TourDateRepository tourDateRepository;
-    private TestEntityManager entityManager;
+    private final TourDateRepository tourDateRepository;
+    private final TestEntityManager entityManager;
     private TourDate testingTourDate;
 
     @Autowired

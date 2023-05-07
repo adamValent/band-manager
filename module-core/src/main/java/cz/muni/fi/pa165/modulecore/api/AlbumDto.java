@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.api;
 
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.model.Band;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

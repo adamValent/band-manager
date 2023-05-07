@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,7 +55,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post("/email")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -73,7 +74,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -86,7 +88,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -104,7 +107,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -117,7 +121,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -134,7 +139,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -151,7 +157,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -164,7 +171,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -181,7 +189,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/band/%s/manager", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -199,7 +208,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/tour/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -212,7 +222,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/tour/%s", 0L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -229,7 +240,8 @@ public class EmailRestControllerTest {
 
         mockMvc.perform(post(String.format("/email/tour/%s", 1L))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(objectMapper.writeValueAsString(request))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 

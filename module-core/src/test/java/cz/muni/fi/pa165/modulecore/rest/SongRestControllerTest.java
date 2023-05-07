@@ -22,6 +22,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,7 +43,8 @@ class SongRestControllerTest {
         Song song = new Song(1L, "title", Duration.ofSeconds(15));
         Mockito.when(songRepository.findById(1L)).thenReturn(Optional.of(song));
 
-        String response = mockMvc.perform(get("/songs/1"))
+        String response = mockMvc.perform(get("/songs/1")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -54,7 +56,8 @@ class SongRestControllerTest {
     void findByIdNotFound() throws Exception {
         Mockito.when(songRepository.findById(0L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/songs/0"))
+        mockMvc.perform(get("/songs/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -66,7 +69,8 @@ class SongRestControllerTest {
 
         String response = mockMvc.perform(post("/songs")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -82,7 +86,8 @@ class SongRestControllerTest {
 
         mockMvc.perform(post("/songs")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -95,7 +100,8 @@ class SongRestControllerTest {
 
         String response = mockMvc.perform(put("/songs/2")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -110,7 +116,8 @@ class SongRestControllerTest {
 
         mockMvc.perform(put("/songs/100")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(content.toString()))
+                        .content(content.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -118,7 +125,8 @@ class SongRestControllerTest {
     void deleteInvitationOk() throws Exception {
         Mockito.doNothing().when(songRepository).deleteById(1L);
 
-        mockMvc.perform(delete("/songs/1"))
+        mockMvc.perform(delete("/songs/1")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -126,7 +134,8 @@ class SongRestControllerTest {
     void deleteNotFound() throws Exception {
         Mockito.doThrow(new ResourceNotFoundException()).when(songRepository).deleteById(0L);
 
-        mockMvc.perform(delete("/songs/0"))
+        mockMvc.perform(delete("/songs/0")
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 }

@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
 import cz.muni.fi.pa165.modulecore.api.AlbumDto;
-import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.mapper.AlbumMapper;
 import cz.muni.fi.pa165.modulecore.service.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;

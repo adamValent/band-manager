@@ -36,10 +36,8 @@ public class PdfRestControllerTest {
 
 
     @Autowired
-    public PdfRestControllerTest(ObjectMapper objectMapper,
-                                   MockMvc mockMvc) {
+    public PdfRestControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
-        this.objectMapper = objectMapper;
     }
 
     @Test

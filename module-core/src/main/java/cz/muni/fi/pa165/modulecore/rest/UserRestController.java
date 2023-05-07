@@ -1,11 +1,13 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
+import cz.muni.fi.pa165.modulecore.CustomConfiguration;
 import cz.muni.fi.pa165.modulecore.api.UserDto;
-import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,79 +26,93 @@ public class UserRestController {
         this.userFacade = userFacade;
     }
 
-    @Operation(summary = "Find user by ID.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was found."),
-                    @ApiResponse(responseCode = "404", description = "User with given ID does not exist.")
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Find user by ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was found."),
+            @ApiResponse(responseCode = "404", description = "User with given ID does not exist."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @GetMapping(path = "{id}")
     public ResponseEntity<UserDto> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userFacade.findById(id));
     }
 
-    @Operation(summary = "Get all users")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "All users returned."),
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Get all users")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "All users returned."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping
     public ResponseEntity<List<UserDto>> getAll() {
         return ResponseEntity.ok(userFacade.getAll());
     }
 
-    @Operation(summary = "Create user.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was created."),
-                    @ApiResponse(responseCode = "400", description = "User given to be created cannot be validated."),
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Create user.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was created."),
+            @ApiResponse(responseCode = "400", description = "User given to be created cannot be validated."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @PostMapping
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userFacade.createUser(userDto));
     }
 
-    @Operation(summary = "Update user by ID.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was updated."),
-                    @ApiResponse(responseCode = "400", description = "User given to be updated cannot be validated."),
-                    @ApiResponse(responseCode = "404", description = "User with given ID does not exist.")
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Update user by ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was updated."),
+            @ApiResponse(responseCode = "400", description = "User given to be updated cannot be validated."),
+            @ApiResponse(responseCode = "404", description = "User with given ID does not exist."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @PutMapping(path = "{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id,
                                               @Valid @RequestBody UserDto userDto) {
         return ResponseEntity.ok(userFacade.updateUser(id, userDto));
     }
 
-    @Operation(summary = "Delete user by ID.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was deleted."),
-                    @ApiResponse(responseCode = "404", description = "User with given ID does not exist.")
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Delete user by ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was deleted."),
+            @ApiResponse(responseCode = "404", description = "User with given ID does not exist."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userFacade.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @Operation(summary = "Find all users without band.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was found."),
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Find all users without band.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was found."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "withoutBand")
     public ResponseEntity<List<UserDto>> getAllUsersWithoutBand() {
         return ResponseEntity.ok(userFacade.getAllUsersWithoutBand());
     }
 
-    @Operation(summary = "Find users by song ID.")
-    @ApiResponses
-            ({
-                    @ApiResponse(responseCode = "200", description = "User was found."),
-                    @ApiResponse(responseCode = "404", description = "User with given ID does not exist.")
-            })
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Find users by song ID.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was found."),
+            @ApiResponse(responseCode = "404", description = "User with given ID does not exist."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @GetMapping(path = "bySong/{id}")
     public ResponseEntity<List<UserDto>> getUsersFromBandBySongId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userFacade.getUsersFromBandBySongId(id));

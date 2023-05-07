@@ -19,7 +19,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -30,6 +29,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +53,8 @@ class AlbumRestControllerTest {
         Mockito.when(albumRepository.findById(1L)).thenReturn(Optional.of(album));
         AlbumDto expectedResponse = albumMapper.mapToDto(album);
 
-        String response = mockMvc.perform(get(String.format("/albums/%s", expectedResponse.getId())))
+        String response = mockMvc.perform(get(String.format("/albums/%s", expectedResponse.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -68,7 +69,8 @@ class AlbumRestControllerTest {
         log.debug("testAlbumsFindByIdOKNotFound running");
         Mockito.when(albumRepository.findById(0L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/albums/10000")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/albums/10000")
+                .with(opaqueToken())).andExpect(status().isNotFound());
     }
 
     @Test
@@ -78,7 +80,8 @@ class AlbumRestControllerTest {
         Album album2 = new Album(2L, "name2", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
         Mockito.when(albumRepository.findAll()).thenReturn(List.of(album1, album2));
 
-        String response = mockMvc.perform(get("/albums"))
+        String response = mockMvc.perform(get("/albums")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -96,7 +99,8 @@ class AlbumRestControllerTest {
 
         mockMvc.perform(post("/albums")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -106,7 +110,8 @@ class AlbumRestControllerTest {
 
         mockMvc.perform(post("/albums")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"releaseDate\":\"1993-09-21\",\"bandId\":0,\"songs\":[{\"title\":\"INVALID\"}],\"name\":\"In Utero\",\"genre\":\"ROCK\",\"id\":100}"))
+                        .content("{\"releaseDate\":\"1993-09-21\",\"bandId\":0,\"songs\":[{\"title\":\"INVALID\"}],\"name\":\"In Utero\",\"genre\":\"ROCK\",\"id\":100}")
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -118,7 +123,8 @@ class AlbumRestControllerTest {
 
         mockMvc.perform(post("/albums")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(invalidSongs))
+                        .content(invalidSongs)
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -131,7 +137,8 @@ class AlbumRestControllerTest {
 
         String response = mockMvc.perform(post("/albums")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -150,7 +157,8 @@ class AlbumRestControllerTest {
 
         String response = mockMvc.perform(put(String.format("/albums/%s", expectedResponse.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -166,7 +174,8 @@ class AlbumRestControllerTest {
 
         mockMvc.perform(put("/albums/100")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(invalidSongs))
+                        .content(invalidSongs)
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -175,7 +184,8 @@ class AlbumRestControllerTest {
         log.debug("testAlbumDeleteOK running");
         Mockito.doNothing().when(albumRepository).deleteById(1L);
 
-        mockMvc.perform(delete(String.format("/albums/%s", 1L)))
+        mockMvc.perform(delete(String.format("/albums/%s", 1L))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk());
     }
 
@@ -184,7 +194,8 @@ class AlbumRestControllerTest {
         log.debug("testAlbumDeleteNotFound running");
         Mockito.doThrow(new ResourceNotFoundException()).when(albumRepository).deleteById(0L);
 
-        mockMvc.perform(delete(String.format("/albums/%s", 0L)))
+        mockMvc.perform(delete(String.format("/albums/%s", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
@@ -194,7 +205,8 @@ class AlbumRestControllerTest {
         Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
         Mockito.when(albumRepository.findAllByBandId(1L)).thenReturn(List.of(album1, album2));
 
-        String response = mockMvc.perform(get("/albums/allByBand/1"))
+        String response = mockMvc.perform(get("/albums/allByBand/1")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

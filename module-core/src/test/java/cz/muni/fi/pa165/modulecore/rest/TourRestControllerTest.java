@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.TourDateDto;
 import cz.muni.fi.pa165.modulecore.api.TourDto;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
@@ -9,9 +8,7 @@ import cz.muni.fi.pa165.modulecore.data.model.TourDate;
 import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.TourMapper;
-import org.aspectj.lang.annotation.Before;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;
@@ -31,6 +28,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +44,7 @@ class TourRestControllerTest {
     @MockBean
     private TourRepository tourRepository;
 
-    private Tour testingTour;
+    private final Tour testingTour;
 
     @Autowired
     public TourRestControllerTest(ObjectMapper objectMapper,
@@ -57,8 +55,8 @@ class TourRestControllerTest {
         this.tourMapper = tourMapper;
 
         this.testingTour = new Tour(100L, "PopTour",
-                new ArrayList<Band>(List.of(new Band())),
-                new ArrayList<TourDate>(List.of(
+                new ArrayList<>(List.of(new Band())),
+                new ArrayList<>(List.of(
                         new TourDate(0L, "New York", LocalDate.of(2023, 5, 5), "Venue1"),
                         new TourDate(1L, "Sydney", LocalDate.of(2023, 6, 3), "Venue2")
                 )));
@@ -72,7 +70,8 @@ class TourRestControllerTest {
         Mockito.when(tourRepository.findById(testingTour.getId())).thenReturn(Optional.of(testingTour));
         TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
-        String response = mockMvc.perform(get(String.format("/tours/%s", expectedResponse.getId())))
+        String response = mockMvc.perform(get(String.format("/tours/%s", expectedResponse.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
@@ -86,7 +85,8 @@ class TourRestControllerTest {
 
         Mockito.when(tourRepository.findById(0L)).thenReturn(Optional.empty());
 
-        mockMvc.perform(get("/tours/0")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/tours/0")
+                .with(opaqueToken())).andExpect(status().isNotFound());
     }
 
 
@@ -96,12 +96,13 @@ class TourRestControllerTest {
 
         Mockito.when(tourRepository.findAll()).thenReturn(List.of(testingTour));
 
-        String response = mockMvc.perform(get("/tours"))
+        String response = mockMvc.perform(get("/tours")
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
         List<TourDto> responseTours = objectMapper.readerForListOf(TourDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(((List<Tour>)tourRepository.findAll()).stream().map(tourMapper::mapToDto).toList())));
+        assertThat("response", responseTours, is(equalTo(((List<Tour>) tourRepository.findAll()).stream().map(tourMapper::mapToDto).toList())));
     }
 
     @Test
@@ -113,7 +114,8 @@ class TourRestControllerTest {
 
         mockMvc.perform(post("/tours")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -126,7 +128,8 @@ class TourRestControllerTest {
 
         String response = mockMvc.perform(post("/tours")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
@@ -139,7 +142,6 @@ class TourRestControllerTest {
     void testActivityUpdate() throws Exception {
         log.debug("testActivityUpdate running");
 
-
         Mockito.when(tourRepository.save(testingTour)).thenReturn(testingTour);
         Mockito.when(tourRepository.existsById(testingTour.getId())).thenReturn(true);
 
@@ -147,7 +149,8 @@ class TourRestControllerTest {
 
         String response = mockMvc.perform(put(String.format("/tours/%s", expectedResponse.getId()))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(expectedResponse)))
+                        .content(objectMapper.writeValueAsString(expectedResponse))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         log.debug("response: {}", response);
@@ -164,7 +167,8 @@ class TourRestControllerTest {
 
         mockMvc.perform(put("/tours/0")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json.toString()))
+                        .content(json.toString())
+                        .with(opaqueToken()))
                 .andExpect(status().isBadRequest());
     }
 
@@ -176,7 +180,8 @@ class TourRestControllerTest {
         Mockito.doNothing().when(tourRepository).deleteById(testingTour.getId());
         TourDto expectedResponse = tourMapper.mapToDto(testingTour);
 
-        mockMvc.perform(delete(String.format("/tours/%s", expectedResponse.getId())))
+        mockMvc.perform(delete(String.format("/tours/%s", expectedResponse.getId()))
+                        .with(opaqueToken()))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
     }
@@ -187,7 +192,8 @@ class TourRestControllerTest {
 
         Mockito.doThrow(new ResourceNotFoundException()).when(tourRepository).deleteById(0L);
 
-        mockMvc.perform(delete(String.format("/tours/%s", 0L)))
+        mockMvc.perform(delete(String.format("/tours/%s", 0L))
+                        .with(opaqueToken()))
                 .andExpect(status().isNotFound());
     }
 
