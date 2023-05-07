@@ -26,7 +26,7 @@ public class CustomConfiguration {
                         // user endpoints
                         .requestMatchers(HttpMethod.GET, "/users/withoutBand").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.GET, "/users/bySong/**").hasAnyAuthority("SCOPE_test_2", "SCOPE_test_1")
-                        .requestMatchers(HttpMethod.POST, "/users").hasAnyAuthority("SCOPE_test_2", "SCOPE_test_1")
+                        .requestMatchers(HttpMethod.POST, "/users").hasAnyAuthority( "SCOPE_test_1")
                         .requestMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority("SCOPE_test_2", "SCOPE_test_1")
                         .requestMatchers(HttpMethod.PUT, "/users/**").hasAnyAuthority("SCOPE_test_2", "SCOPE_test_1")
                         .requestMatchers(HttpMethod.DELETE, "/users/**").hasAnyAuthority("SCOPE_test_2", "SCOPE_test_1")
@@ -36,6 +36,7 @@ public class CustomConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/tours/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.POST, "/tours").hasAuthority("SCOPE_test_1")
                         // song endpoints
+                        .requestMatchers(HttpMethod.GET, "/songs/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
                         .requestMatchers(HttpMethod.PUT, "/songs/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.DELETE, "/songs/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.POST, "/songs").hasAuthority("SCOPE_test_1")
@@ -45,10 +46,14 @@ public class CustomConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/invitations/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.POST, "/invitations").hasAuthority("SCOPE_test_1")
                         // band endpoints
-                        .requestMatchers(HttpMethod.PUT, "/band/**").hasAuthority("SCOPE_test_1")
-                        .requestMatchers(HttpMethod.DELETE, "/band/**").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET, "/bands/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
+                        .requestMatchers(HttpMethod.PUT, "/bands/**").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.DELETE, "/bands/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.POST, "/bands").hasAuthority("SCOPE_test_1")
                         // album endpoints
+                        .requestMatchers(HttpMethod.GET, "/albums").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET, "/albums/allByBand/**").hasAuthority("SCOPE_test_1")
+                        .requestMatchers(HttpMethod.GET, "/albums/**").hasAnyAuthority("SCOPE_test_1", "SCOPE_test_2")
                         .requestMatchers(HttpMethod.PUT, "/albums/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.DELETE, "/albums/**").hasAuthority("SCOPE_test_1")
                         .requestMatchers(HttpMethod.POST, "/albums/**").hasAuthority("SCOPE_test_1")
