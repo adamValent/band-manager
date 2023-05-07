@@ -33,7 +33,8 @@ public class EmailRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Email was sent."),
             @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @PostMapping(path = "")
     public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto) {
         emailFacade.sendEmail(emailDto);
@@ -47,7 +48,8 @@ public class EmailRestController {
             @ApiResponse(responseCode = "200", description = "Email was sent."),
             @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping(path = "band/{id}")
     public ResponseEntity<Void> sendEmailToAllBandMembers(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                                           @PathVariable(value = "id") Long idBand) {
@@ -62,7 +64,8 @@ public class EmailRestController {
             @ApiResponse(responseCode = "200", description = "Email was sent."),
             @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_2.", content = @Content())})
     @PostMapping(path = "band/{id}/manager")
     public ResponseEntity<Void> sendEmailToBandManager(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                                        @PathVariable(value = "id") Long idBand) {
@@ -77,7 +80,8 @@ public class EmailRestController {
             @ApiResponse(responseCode = "200", description = "Email was sent."),
             @ApiResponse(responseCode = "400", description = "Email parameters cannot be validated."),
             @ApiResponse(responseCode = "404", description = "Tour with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping(path = "tour/{id}")
     public ResponseEntity<Void> sendEmailToTourBand(@Valid @RequestBody EmailWithoutRecipientsDto emailWithoutRecipientsDto,
                                                     @PathVariable(value = "id") Long idTour) {
