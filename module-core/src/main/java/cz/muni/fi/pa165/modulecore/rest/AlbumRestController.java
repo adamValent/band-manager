@@ -32,7 +32,8 @@ public class AlbumRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was found."),
             @ApiResponse(responseCode = "404", description = "Album with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @GetMapping(path = "{id}")
     public ResponseEntity<AlbumDto> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(albumFacade.findById(id));
@@ -43,7 +44,8 @@ public class AlbumRestController {
             summary = "Get all albums")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All albums returned."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping
     public ResponseEntity<List<AlbumDto>> getAll() {
         return ResponseEntity.ok(albumFacade.getAll());
@@ -55,7 +57,8 @@ public class AlbumRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was created."),
             @ApiResponse(responseCode = "400", description = "Album given to be created cannot be validated."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping
     public ResponseEntity<AlbumDto> createAlbum(@Valid @RequestBody AlbumDto albumDto) {
         return ResponseEntity.ok(albumFacade.createAlbum(albumDto));
@@ -68,7 +71,8 @@ public class AlbumRestController {
             @ApiResponse(responseCode = "200", description = "Album was updated."),
             @ApiResponse(responseCode = "400", description = "Album given to be updated cannot be validated."),
             @ApiResponse(responseCode = "404", description = "Album with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PutMapping(path = "{id}")
     public ResponseEntity<AlbumDto> updateAlbum(@PathVariable("id") Long id, @Valid @RequestBody AlbumDto albumDto) {
         return ResponseEntity.ok(albumFacade.updateAlbum(id, albumDto));
@@ -80,7 +84,8 @@ public class AlbumRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Album was deleted."),
             @ApiResponse(responseCode = "404", description = "Album with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @DeleteMapping(path = "{id}")
     public ResponseEntity<AlbumDto> deleteAlbum(@PathVariable("id") Long id) {
         albumFacade.deleteAlbum(id);
@@ -92,7 +97,8 @@ public class AlbumRestController {
             summary = "Find all albums by band ID.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Found albums returned."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping(path = "allByBand/{id}")
     public ResponseEntity<List<AlbumDto>> findAllByAlbumId(@PathVariable("id") Long bandId) {
         return ResponseEntity.ok(albumFacade.findAllByBandId(bandId));
