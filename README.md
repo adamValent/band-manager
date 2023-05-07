@@ -41,6 +41,24 @@ The system has two authorization roles - **Manager** and **Band Member**.
 -   Manager manages bands, their members, albums, songs, and band activities.
 -   Band Member accepts invitations to bands and views band information after accepting. 
 
+
+## Oauth2
+
+You will recieve oauth2 token folowing these steps
+
+-   Run app test-client in root directory
+-   Go to localhost:8083
+-   You are redirected to MUNI
+-   After successful login hit again localhost:8083 and you can copy your oauth2 token
+
+
+## Runnable scenario
+
+-   You can run scenario by filling ./locust/locustfile.py following instruction in file and by running command ```docker-compose up``` in locust directory
+-   Then open localhost:8089 and fill pop up window by at least one user, request will run only once
+
+
+
 ## Entities
 
 -   **User** - entity representing a user in the system. Is able to represent *Manager* as well as *Band Member*.

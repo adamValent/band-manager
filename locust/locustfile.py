@@ -33,7 +33,7 @@ class test(HttpUser):
         counter = counter + 1
 
     def create_user(self, token, email, first_name, second_name):
-        response = self.client.post("http://localhost:8084/users-auth",
+        response = self.client.post("http://users:8084/users-auth",
                                     json={"email": email, "userType": "MANAGER",
                                           "firstName": first_name, "lastName": second_name},
                                     headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
@@ -43,7 +43,7 @@ class test(HttpUser):
         return response.json()
 
     def create_band(self, token, user):
-        response = self.client.post("http://localhost:8080/bands",
+        response = self.client.post("http://core:8080/bands",
                                     json={"name": "My band", "genre": "ROCK",
                                           "image": ["67","7","89"], "manager": user},
                                     headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
@@ -53,7 +53,7 @@ class test(HttpUser):
         return response.json()
 
     def create_album(self, token, band):
-        response = self.client.post("http://localhost:8080/albums",
+        response = self.client.post("http://core:8080/albums",
                                     json={"name": "My album", "releaseDate": "2017-01-13",
                                           "genre": "ROCK", "band": band},
                                     headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
@@ -63,7 +63,7 @@ class test(HttpUser):
         return response.json()
 
     def send_email(self, token, email):
-        response = self.client.post("http://localhost:8081/email",
+        response = self.client.post("http://email:8081/email",
                                     json={"subject": "Test email", "emailBody": "hello", "recipients": [email]},
                                     headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
         print("send_email_to_band_manager " + str(response.status_code))
