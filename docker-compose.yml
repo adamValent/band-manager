@@ -7,6 +7,9 @@ services:
       dockerfile: Dockerfile
       context: module-core
     tty: true
+    depends_on:
+      db-core:
+        condition: service_started
     ports:
       - "8080:8080"
     volumes:
@@ -19,6 +22,9 @@ services:
       dockerfile: Dockerfile
       context: module-user
     tty: true
+    depends_on:
+      db-users:
+        condition: service_started
     ports:
       - "8083:8083"
     volumes:
@@ -56,7 +62,7 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: 12345
-      POSTGRES_DB: users
+      POSTGRES_DB: youband-users
       ENCODING: "UTF8"
       TABLESPACE: "pg_default"
       CONNECTION LIMIT: "-1"
@@ -111,8 +117,11 @@ services:
       - '9090:9090'
     volumes:
       - './prometheus.yaml:/etc/prometheus/prometheus.yml'
+      - prometheus-storage:/opt/prometheus/data
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - youband-manager-network
 
   grafana:
     image: grafana/grafana
@@ -127,6 +136,8 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_SERVER_DOMAIN=localhost
+    networks:
+      - youband-manager-network
 
 volumes:
   pgadmin_data:
@@ -136,12 +147,11 @@ volumes:
   module-core:
   module-email:
   module-user:
+  prometheus-storage:
+  grafana-storage:
 
 networks:
   youband-manager-network: {
           name: youband-manager-network
   }
-
-  prometheus-storage:
-  grafana-storage:
 
