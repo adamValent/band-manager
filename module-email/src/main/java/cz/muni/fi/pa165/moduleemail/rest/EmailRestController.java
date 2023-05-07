@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.moduleemail.rest;
 
-
-import cz.muni.fi.pa165.moduleemail.ModuleEmailApplication;
+import cz.muni.fi.pa165.moduleemail.CustomConfiguration;
 import cz.muni.fi.pa165.moduleemail.api.EmailDto;
 import cz.muni.fi.pa165.moduleemail.api.EmailWithoutRecipientsDto;
 import cz.muni.fi.pa165.moduleemail.facade.EmailFacade;
@@ -15,11 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping(path = "email")
 public class EmailRestController {
-
     private final EmailFacade emailFacade;
 
     @Autowired
@@ -28,7 +25,7 @@ public class EmailRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Email was sent."),
@@ -42,7 +39,7 @@ public class EmailRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to all band members.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Email was sent."),
@@ -58,7 +55,7 @@ public class EmailRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to band manager.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Email was sent."),
@@ -74,7 +71,7 @@ public class EmailRestController {
     }
 
     @Operation(
-            security = @SecurityRequirement(name = ModuleEmailApplication.SECURITY_SCHEME_NAME),
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Send email with given parameters to tour band.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Email was sent."),
