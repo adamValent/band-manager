@@ -32,7 +32,8 @@ public class BandRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was found."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @GetMapping(path = "{id}")
     public ResponseEntity<BandDto> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(bandFacade.findById(id));
@@ -43,7 +44,8 @@ public class BandRestController {
             summary = "Get all bands")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All bands returned."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @GetMapping
     public ResponseEntity<List<BandDto>> findAll() {
         return ResponseEntity.ok(bandFacade.findAll());
@@ -55,7 +57,8 @@ public class BandRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was created."),
             @ApiResponse(responseCode = "400", description = "Band given to be created cannot be validated."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PostMapping
     public ResponseEntity<BandDto> createBand(@Valid @RequestBody BandDto bandDto) {
         return ResponseEntity.ok(bandFacade.createBand(bandDto));
@@ -68,7 +71,8 @@ public class BandRestController {
             @ApiResponse(responseCode = "200", description = "Band was updated."),
             @ApiResponse(responseCode = "400", description = "Band given to be updated cannot be validated."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @PutMapping(path = "{id}")
     public ResponseEntity<BandDto> updateBand(@PathVariable("id") Long id, @Valid @RequestBody BandDto bandDto) {
         return ResponseEntity.ok(bandFacade.updateBand(id, bandDto));
@@ -80,7 +84,8 @@ public class BandRestController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Band was deleted."),
             @ApiResponse(responseCode = "404", description = "Band with given ID does not exist."),
-            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content())})
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @DeleteMapping(path = "{id}")
     public ResponseEntity<BandDto> deleteBand(@PathVariable("id") Long id) {
         bandFacade.deleteBand(id);
