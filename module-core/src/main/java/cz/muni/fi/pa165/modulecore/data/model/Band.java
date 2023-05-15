@@ -151,10 +151,6 @@ public class Band implements Serializable {
                 ", name='" + name + '\'' +
                 ", genre=" + genre +
                 ", image=" + Arrays.toString(image) +
-                ", manager=" + manager +
-                ", members=" + members +
-                ", albums=" + albums +
-                ", invitations=" + invitations +
                 '}';
     }
 }

@@ -81,9 +81,9 @@ public class Tour {
 
     @Override
     public String toString() {
-        return "Tour{" + "id=" + id +
-                ", tourName='" + name + '\'' +
-                ", tourDates='" + tourDates.toString() + '\'' +
-                ", bandList='" + bandList.toString() + "'}";
+        return "Tour{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }

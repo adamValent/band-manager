@@ -81,7 +81,6 @@ public class Song implements Serializable {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", duration=" + duration +
-                ", album=" + album +
                 '}';
     }
 }

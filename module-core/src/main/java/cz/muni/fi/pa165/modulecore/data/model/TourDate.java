@@ -92,4 +92,14 @@ public class TourDate {
     public int hashCode() {
         return Objects.hash(city, date, venue);
     }
+
+    @Override
+    public String toString() {
+        return "TourDate{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", date=" + date +
+                ", venue='" + venue + '\'' +
+                '}';
+    }
 }

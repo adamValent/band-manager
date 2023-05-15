@@ -150,8 +150,12 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", userType=" + userType + ", firstName='" + firstName + '\''
-               + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", managerOfBand="
-               + managerOfBand + ", memberOfBand=" + memberOfBand + '}';
+        return "User{" +
+                "id=" + id +
+                ", userType=" + userType +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

@@ -105,11 +105,11 @@ public class Album implements Serializable {
 
     @Override
     public String toString() {
-        return "Album{" + "id=" + id +
+        return "Album{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", genre=" + genre +
-                ", songs=" + songs +
-                ", band=" + band + '}';
+                '}';
     }
 }

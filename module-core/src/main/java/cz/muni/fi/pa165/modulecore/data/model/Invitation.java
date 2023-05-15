@@ -111,7 +111,11 @@ public class Invitation implements Serializable {
 
     @Override
     public String toString() {
-        return "Invitation{" + "id=" + id + ", message='" + message + '\'' + ", status=" + status
-               + ", dateReceived=" + dateReceived + '}';
+        return "Invitation{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", status=" + status +
+                ", dateReceived=" + dateReceived +
+                '}';
     }
 }
