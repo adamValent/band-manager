@@ -18,9 +18,9 @@ VALUES (1, 'Image', 'Fleetwood Mac');
 SELECT * FROM band;
 -- Additional user seeding
 UPDATE app_user SET band_id = (SELECT id from band limit 1) WHERE id = (SELECT id from app_user limit 1);
-UPDATE app_user SET band_id = (SELECT id from band limit 1) WHERE id = (SELECT id from app_user limit 1);
+UPDATE app_user SET member_of_band_id = (SELECT id from band limit 1) WHERE id = (SELECT id from app_user limit 1);
 UPDATE app_user SET band_id = (SELECT id from band limit 1 offset 1) WHERE id = (SELECT id from app_user limit 1);
-UPDATE app_user SET band_id = (SELECT id from band limit 1 offset 1) WHERE id = (SELECT id from app_user limit 1);
+UPDATE app_user SET member_of_band_id = (SELECT id from band limit 1 offset 1) WHERE id = (SELECT id from app_user limit 1);
 
 SELECT * FROM app_user;
 -- Album seeding --
