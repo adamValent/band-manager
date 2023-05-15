@@ -48,7 +48,7 @@ public class UserAuthRestController {
             @ApiResponse(responseCode = "400", description = "User to be created cannot be validated."),
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
-    @PostMapping(path = "")
+    @PostMapping
     public ResponseEntity<UserDto> createUser(
             @Valid @RequestBody UserDto userDto,
             @AuthenticationPrincipal OAuth2IntrospectionAuthenticatedPrincipal principal,
