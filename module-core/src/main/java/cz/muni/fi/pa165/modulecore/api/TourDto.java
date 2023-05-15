@@ -12,7 +12,7 @@ public class TourDto {
     @NotNull
     private String name;
     @NotNull
-    private List<Band> bandList;
+    private List<BandDto> bandList;
     @Valid
     @NotNull
     private List<TourDateDto> tourDates;
@@ -22,7 +22,7 @@ public class TourDto {
 
     public TourDto(Long id,
                    String name,
-                   List<Band> bandList,
+                   List<BandDto> bandList,
                    List<TourDateDto> tourDates) {
         this.id = id;
         this.name = name;
@@ -46,11 +46,11 @@ public class TourDto {
         this.name = name;
     }
 
-    public List<Band> getBandList() {
+    public List<BandDto> getBandList() {
         return bandList;
     }
 
-    public void setBandList(List<Band> bandList) {
+    public void setBandList(List<BandDto> bandList) {
         this.bandList = bandList;
     }
 
