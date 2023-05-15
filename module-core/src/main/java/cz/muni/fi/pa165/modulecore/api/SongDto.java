@@ -1,11 +1,19 @@
 package cz.muni.fi.pa165.modulecore.api;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Bag;
 
 import java.time.Duration;
 import java.util.Objects;
 
+@JsonIdentityInfo(
+        scope = SongDto.class,
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "title")
 public class SongDto {
     private Long id;
     @NotNull
@@ -13,7 +21,6 @@ public class SongDto {
     @NotNull
     private Duration duration;
     @NotNull
-    @JsonBackReference
     private AlbumDto album;
 
     public SongDto() {

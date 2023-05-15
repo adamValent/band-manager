@@ -203,7 +203,7 @@ class AlbumRestControllerTest {
     @Test
     void findAllByBandIdMix() throws Exception {
         Album album1 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
-        Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
+        Album album2 = new Album(null, "name2", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
         Mockito.when(albumRepository.findAllByBandId(1L)).thenReturn(List.of(album1, album2));
 
         String response = mockMvc.perform(get("/albums/allByBand/1")
