@@ -87,7 +87,7 @@ public class BandRestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<BandDto> deleteBand(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteBand(@PathVariable("id") Long id) {
         bandFacade.deleteBand(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -84,7 +84,7 @@ public class UserAuthRestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
         userFacade.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

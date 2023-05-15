@@ -87,7 +87,7 @@ public class AlbumRestController {
             @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
             @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1.", content = @Content())})
     @DeleteMapping(path = "{id}")
-    public ResponseEntity<AlbumDto> deleteAlbum(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteAlbum(@PathVariable("id") Long id) {
         albumFacade.deleteAlbum(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
