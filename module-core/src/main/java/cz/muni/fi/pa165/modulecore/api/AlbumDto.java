@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.modulecore.api;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ public class AlbumDto {
     @NotNull
     private Genre genre;
     @Valid
+    @JsonManagedReference
     private List<SongDto> songs;
     @NotNull
     private BandDto band;

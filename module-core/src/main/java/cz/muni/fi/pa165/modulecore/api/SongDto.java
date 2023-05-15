@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.modulecore.api;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.Duration;
@@ -11,14 +12,18 @@ public class SongDto {
     private String title;
     @NotNull
     private Duration duration;
+    @NotNull
+    @JsonBackReference
+    private AlbumDto album;
 
     public SongDto() {
     }
 
-    public SongDto(Long id, String title, Duration duration) {
+    public SongDto(Long id, String title, Duration duration, AlbumDto album) {
         this.id = id;
         this.title = title;
         this.duration = duration;
+        this.album = album;
     }
 
     public Long getId() {
@@ -45,23 +50,37 @@ public class SongDto {
         this.duration = duration;
     }
 
+    public AlbumDto getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(AlbumDto album) {
+        this.album = album;
+    }
+
     @Override
     public String toString() {
-        return "SongDto{" + "id=" + id + ", title='" + title + '\'' + ", duration=" + duration + '}';
+        return "SongDto{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", duration=" + duration +
+                ", album=" + album +
+                '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (o == null || getClass() != o.getClass())
-            return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         SongDto songDto = (SongDto) o;
-        return Objects.equals(id, songDto.id) && title.equals(songDto.title) && duration.equals(songDto.duration);
+        return Objects.equals(id, songDto.id)
+                && Objects.equals(title, songDto.title)
+                && Objects.equals(duration, songDto.duration)
+                && Objects.equals(album, songDto.album);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, duration);
+        return Objects.hash(id, title, duration, album);
     }
 }

@@ -122,7 +122,7 @@ public class UserRepositoryTest {
         user2.setMemberOfBand(band);
         Album album = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
         band.setAlbums(List.of(album));
-        Song song = new Song(null, "titlez", Duration.ofSeconds(11));
+        Song song = new Song(null, "titlez", Duration.ofSeconds(11), album);
         song.setAlbum(album);
         album.setSongs(List.of(song));
 

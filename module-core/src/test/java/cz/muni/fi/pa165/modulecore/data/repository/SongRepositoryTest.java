@@ -48,7 +48,7 @@ class SongRepositoryTest {
 
     @Test
     void findByIdOk() {
-        Song song = new Song(null, "title", Duration.ofSeconds(11));
+        Song song = new Song(null, "title", Duration.ofSeconds(11), album);
         song.setAlbum(album);
         entityManager.persistAndFlush(song);
 
@@ -67,8 +67,8 @@ class SongRepositoryTest {
 
     @Test
     void getAll() {
-        Song song1 = new Song(null, "title", Duration.ofSeconds(11));
-        Song song2 = new Song(null, "titlez", Duration.ofSeconds(11));
+        Song song1 = new Song(null, "title", Duration.ofSeconds(11), album);
+        Song song2 = new Song(null, "titlez", Duration.ofSeconds(11), album);
         song1.setAlbum(album);
         song2.setAlbum(album);
         entityManager.persist(song1);
@@ -82,7 +82,7 @@ class SongRepositoryTest {
 
     @Test
     void createSongOk() {
-        Song song = new Song(null, "title", Duration.ofSeconds(11));
+        Song song = new Song(null, "title", Duration.ofSeconds(11), album);
         song.setAlbum(album);
 
         Song result = songRepository.save(song);
@@ -94,7 +94,7 @@ class SongRepositoryTest {
 
     @Test
     void updateSongOk() {
-        Song song = new Song(null, "title", Duration.ofSeconds(11));
+        Song song = new Song(null, "title", Duration.ofSeconds(11), album);
         song.setAlbum(album);
         entityManager.persistAndFlush(song);
 
@@ -106,7 +106,7 @@ class SongRepositoryTest {
 
     @Test
     void deleteSongOk() {
-        Song song = new Song(null, "title", Duration.ofSeconds(11));
+        Song song = new Song(null, "title", Duration.ofSeconds(11), album);
         song.setAlbum(album);
         entityManager.persistAndFlush(song);
 

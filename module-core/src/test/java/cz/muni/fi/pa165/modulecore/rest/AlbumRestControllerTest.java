@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.AlbumMapper;
+import cz.muni.fi.pa165.modulecore.mapper.CycleAvoidingMappingContext;
 import org.assertj.core.util.Lists;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class AlbumRestControllerTest {
         log.debug("testActivityFindByIdOK running");
         Album album = new Album(1L, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
         Mockito.when(albumRepository.findById(1L)).thenReturn(Optional.of(album));
-        AlbumDto expectedResponse = albumMapper.mapToDto(album);
+        AlbumDto expectedResponse = albumMapper.mapToDto(album, new CycleAvoidingMappingContext());
 
         String response = mockMvc.perform(get(String.format("/albums/%s", expectedResponse.getId()))
                         .with(opaqueToken()))
@@ -87,7 +88,7 @@ class AlbumRestControllerTest {
 
         log.debug("response: {}", response);
         List<AlbumDto> responseTours = objectMapper.readerForListOf(AlbumDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(Lists.newArrayList(albumRepository.findAll()).stream().map(albumMapper::mapToDto).toList())));
+        assertThat("response", responseTours, is(equalTo(Lists.newArrayList(albumRepository.findAll()).stream().map(a -> albumMapper.mapToDto(a, new CycleAvoidingMappingContext())).toList())));
     }
 
     @Test
@@ -132,7 +133,7 @@ class AlbumRestControllerTest {
     void testAlbumCreateOK() throws Exception {
         log.debug("testActivityCreateOK running");
         Album album = new Album(null, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
-        AlbumDto expectedResponse = albumMapper.mapToDto(album);
+        AlbumDto expectedResponse = albumMapper.mapToDto(album, new CycleAvoidingMappingContext());
         Mockito.when(albumRepository.save(album)).thenReturn(album);
 
         String response = mockMvc.perform(post("/albums")
@@ -151,7 +152,7 @@ class AlbumRestControllerTest {
     void testAlbumUpdate() throws Exception {
         log.debug("testAlbumUpdate running");
         Album album = new Album(1L, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
-        AlbumDto expectedResponse = albumMapper.mapToDto(album);
+        AlbumDto expectedResponse = albumMapper.mapToDto(album, new CycleAvoidingMappingContext());
         Mockito.when(albumRepository.save(album)).thenReturn(album);
         Mockito.when(albumRepository.existsById(album.getId())).thenReturn(true);
 
