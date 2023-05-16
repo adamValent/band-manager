@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AlbumMapper {
-    AlbumDto mapToDto(Album album, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    AlbumDto mapToDto(Album album);
 
-    Album mapFromDto(AlbumDto albumDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    Album mapFromDto(AlbumDto albumDto);
 
-    List<AlbumDto> mapToList(List<Album> albums, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    List<AlbumDto> mapToList(List<Album> albums);
 }

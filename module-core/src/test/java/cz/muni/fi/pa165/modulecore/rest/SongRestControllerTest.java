@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.AlbumDto;
-import cz.muni.fi.pa165.modulecore.api.BandDto;
 import cz.muni.fi.pa165.modulecore.api.SongDto;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
@@ -10,7 +8,6 @@ import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.repository.SongRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
-import cz.muni.fi.pa165.modulecore.mapper.CycleAvoidingMappingContext;
 import cz.muni.fi.pa165.modulecore.mapper.SongMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -58,7 +55,7 @@ class SongRestControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         assertThat(objectMapper.readValue(response, SongDto.class),
-                is(equalTo(songMapper.mapToDto(songRepository.findById(1L).get(), new CycleAvoidingMappingContext()))));
+                is(equalTo(songMapper.mapToDto(songRepository.findById(1L).get()))));
     }
 
     @Test
@@ -73,7 +70,7 @@ class SongRestControllerTest {
     @Test
     void createOk() throws Exception {
         Song song = new Song(null, "title", Duration.ofSeconds(15), ALBUM);
-        SongDto expectedResponse = songMapper.mapToDto(song, new CycleAvoidingMappingContext());
+        SongDto expectedResponse = songMapper.mapToDto(song);
         Mockito.when(songRepository.save(song)).thenReturn(song);
 
         String response = mockMvc.perform(post("/songs")
@@ -103,7 +100,7 @@ class SongRestControllerTest {
     @Test
     void updateOk() throws Exception {
         Song song = new Song(2L, "title", Duration.ofSeconds(15), ALBUM);
-        SongDto expectedResponse = songMapper.mapToDto(song, new CycleAvoidingMappingContext());
+        SongDto expectedResponse = songMapper.mapToDto(song);
         Mockito.when(songRepository.save(song)).thenReturn(song);
         Mockito.when(songRepository.existsById(song.getId())).thenReturn(true);
 

@@ -1,9 +1,5 @@
 package cz.muni.fi.pa165.modulecore.api;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import cz.muni.fi.pa165.modulecore.data.enums.Genre;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -12,13 +8,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-@JsonIdentityInfo(
-        scope = AlbumDto.class,
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "name")
 public class AlbumDto {
     private Long id;
-    @NotNull(message="{message.error.null}")
+    @NotNull(message = "{message.error.null}")
     private String name;
     @NotNull
     private LocalDate releaseDate;

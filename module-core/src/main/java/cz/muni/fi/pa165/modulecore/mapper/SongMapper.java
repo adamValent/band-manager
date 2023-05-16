@@ -11,9 +11,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SongMapper {
-    SongDto mapToDto(Song song, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    @Mapping(target = "albumId", source = "song.album.id")
+    SongDto mapToDto(Song song);
 
-    Song mapFromDto(SongDto songDto, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    @Mapping(target = "album", expression = "java(new Album(songDto.getAlbumId()))")
+    Song mapFromDto(SongDto songDto);
 
-    List<SongDto> mapToList(List<Song> songs, @Context CycleAvoidingMappingContext cycleAvoidingMappingContext);
+    List<SongDto> mapToList(List<Song> songs);
 }

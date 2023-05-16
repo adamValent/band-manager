@@ -1,8 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
 import cz.muni.fi.pa165.modulecore.api.SongDto;
-import cz.muni.fi.pa165.modulecore.data.model.Song;
-import cz.muni.fi.pa165.modulecore.mapper.CycleAvoidingMappingContext;
 import cz.muni.fi.pa165.modulecore.mapper.SongMapper;
 import cz.muni.fi.pa165.modulecore.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +20,19 @@ public class SongFacade {
     }
 
     public SongDto findById(Long id) {
-        return songMapper.mapToDto(songService.findById(id), new CycleAvoidingMappingContext());
+        return songMapper.mapToDto(songService.findById(id));
     }
 
     public List<SongDto> getAll() {
-        return songMapper.mapToList(songService.getAll(), new CycleAvoidingMappingContext());
+        return songMapper.mapToList(songService.getAll());
     }
 
     public SongDto create(SongDto songDto) {
-        Song song = songService.create(songMapper.mapFromDto(songDto, new CycleAvoidingMappingContext()));
-        return songMapper.mapToDto(song, new CycleAvoidingMappingContext());
+        return songMapper.mapToDto(songService.create(songMapper.mapFromDto(songDto)));
     }
 
     public SongDto update(Long id, SongDto songDto) {
-        Song update = songService.update(id, songMapper.mapFromDto(songDto, new CycleAvoidingMappingContext()));
-        return songMapper.mapToDto(update, new CycleAvoidingMappingContext());
+        return songMapper.mapToDto(songService.update(id, songMapper.mapFromDto(songDto)));
     }
 
     public void delete(Long id) {
