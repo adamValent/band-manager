@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
 
   core:
@@ -65,7 +63,7 @@ services:
       POSTGRES_DB: youband-users
       ENCODING: "UTF8"
       TABLESPACE: "pg_default"
-      CONNECTION LIMIT: "-1"
+      CONNECTION_LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5433
     ports:
@@ -85,7 +83,7 @@ services:
       POSTGRES_DB: core
       ENCODING: "UTF8"
       TABLESPACE: "pg_default"
-      CONNECTION LIMIT: "-1"
+      CONNECTION_LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5432
     ports:
