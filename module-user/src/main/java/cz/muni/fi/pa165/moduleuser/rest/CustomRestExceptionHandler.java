@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleuser.rest;
 
-import cz.muni.fi.pa165.moduleuser.api.ApiError;
+import cz.muni.fi.pa165.librarymodel.api.ApiError;
 import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
@@ -24,14 +24,14 @@ public class CustomRestExceptionHandler {
     public ResponseEntity<ApiError> handleResourceNotFound(final ResourceNotFoundException ex,
                                                            final HttpServletRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.NOT_FOUND,
-                                               ex.getLocalizedMessage(),
-                                               URL_PATH_HELPER.getRequestUri(request));
+                ex.getLocalizedMessage(),
+                URL_PATH_HELPER.getRequestUri(request));
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class,
-                       HttpMessageNotReadableException.class,
-                       IllegalStateException.class})
+            HttpMessageNotReadableException.class,
+            IllegalStateException.class})
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
@@ -46,8 +46,8 @@ public class CustomRestExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ApiError> handleAll(final Exception ex, HttpServletRequest request) {
         final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
-                                               getInitialException(ex).getLocalizedMessage(),
-                                               URL_PATH_HELPER.getRequestUri(request));
+                getInitialException(ex).getLocalizedMessage(),
+                URL_PATH_HELPER.getRequestUri(request));
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 

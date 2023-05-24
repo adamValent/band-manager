@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.modulepdf.data.model;
 
-import cz.muni.fi.pa165.modulepdf.api.BandDto;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

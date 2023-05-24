@@ -1,9 +1,8 @@
 package cz.muni.fi.pa165.moduleemail.service;
 
-import cz.muni.fi.pa165.moduleemail.api.BandDto;
-import cz.muni.fi.pa165.moduleemail.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.moduleemail.exceptions.ResourceNotFoundException;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -13,7 +12,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BandService {
@@ -72,7 +72,6 @@ public class BandService {
         }
         throw new ResourceNotFoundException();
     }
-
 
 
 }

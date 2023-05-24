@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
-import cz.muni.fi.pa165.modulecore.api.ApiError;
+import cz.muni.fi.pa165.librarymodel.api.ApiError;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;

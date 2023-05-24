@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.moduleuser.facade;
 
-import cz.muni.fi.pa165.moduleuser.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.mapper.UserMapper;
 import cz.muni.fi.pa165.moduleuser.service.CoreService;
@@ -44,12 +44,12 @@ public class UserFacade {
     }
 
     @Transactional
-    public UserDto updateEmail(Long id, String email){
+    public UserDto updateEmail(Long id, String email) {
         return userMapper.mapToDto(userService.updateEmail(id, email));
     }
 
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         userService.delete(id);
     }
 }

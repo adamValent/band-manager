@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulecore.api.InvitationDto;
+import cz.muni.fi.pa165.librarymodel.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.data.model.Invitation;
 import org.mapstruct.Mapper;
 

@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
 import cz.muni.fi.pa165.modulecore.data.model.TourDate;

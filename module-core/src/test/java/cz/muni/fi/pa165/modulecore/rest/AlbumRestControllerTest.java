@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.AlbumDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.api.AlbumDto;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.repository.AlbumRepository;

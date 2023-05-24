@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.modulecore.api.InvitationDto;
+import cz.muni.fi.pa165.librarymodel.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.mapper.InvitationMapper;
 import cz.muni.fi.pa165.modulecore.service.InvitationService;
 import org.springframework.beans.factory.annotation.Autowired;

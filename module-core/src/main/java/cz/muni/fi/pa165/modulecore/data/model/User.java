@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.data.model;
 
-import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 

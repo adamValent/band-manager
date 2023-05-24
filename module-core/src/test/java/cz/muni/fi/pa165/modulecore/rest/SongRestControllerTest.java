@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.SongDto;
+import cz.muni.fi.pa165.librarymodel.api.SongDto;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.repository.SongRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;

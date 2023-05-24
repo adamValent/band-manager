@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.modulecore.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.modulecore.mapper.UserMapper;
 import cz.muni.fi.pa165.modulecore.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

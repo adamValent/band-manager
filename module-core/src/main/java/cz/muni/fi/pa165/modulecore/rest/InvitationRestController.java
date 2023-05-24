@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
+import cz.muni.fi.pa165.librarymodel.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.CustomConfiguration;
-import cz.muni.fi.pa165.modulecore.api.InvitationDto;
 import cz.muni.fi.pa165.modulecore.facade.InvitationFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

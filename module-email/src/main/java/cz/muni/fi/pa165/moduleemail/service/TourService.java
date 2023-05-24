@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.moduleemail.service;
 
-import cz.muni.fi.pa165.moduleemail.api.BandDto;
-import cz.muni.fi.pa165.moduleemail.api.TourDto;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.TourDto;
 import cz.muni.fi.pa165.moduleemail.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -44,7 +44,7 @@ public class TourService {
             if (Objects.requireNonNull(response.getBody()).getBandList().isEmpty()) {
                 throw new ResourceNotFoundException();
             }
-            return Objects.requireNonNull(response.getBody()).getBandList().stream().map(band -> band.getId()).toList();
+            return Objects.requireNonNull(response.getBody()).getBandList().stream().map(BandDto::getId).toList();
         }
         throw new ResourceNotFoundException();
     }

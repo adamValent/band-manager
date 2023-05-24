@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.modulecore.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
 import cz.muni.fi.pa165.modulecore.mapper.BandMapper;
 import cz.muni.fi.pa165.modulecore.service.BandService;
 import org.springframework.beans.factory.annotation.Autowired;

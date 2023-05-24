@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulepdf.data.model;
 
 
-import cz.muni.fi.pa165.modulepdf.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 
 import java.io.Serializable;
 import java.util.Objects;

@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulecore.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import org.mapstruct.Mapper;
 

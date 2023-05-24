@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulecore.api.TourDto;
+import cz.muni.fi.pa165.librarymodel.api.TourDto;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
 import org.mapstruct.Mapper;
 
