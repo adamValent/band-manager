@@ -50,7 +50,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmail(any(), any());
+        Mockito.doNothing().when(emailFacade).sendEmail(any());
 
         mockMvc.perform(post("/email")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -70,7 +70,7 @@ public class EmailRestControllerTest {
                 "test"
         );
 
-        Mockito.doNothing().when(emailFacade).sendEmail(any(), any());
+        Mockito.doNothing().when(emailFacade).sendEmail(any());
 
         mockMvc.perform(post("/email")
                         .contentType(MediaType.APPLICATION_JSON)

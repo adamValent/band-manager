@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.moduleemail.service;
 
 import cz.muni.fi.pa165.moduleemail.api.EmailDto;
 import cz.muni.fi.pa165.moduleemail.api.EmailWithoutRecipientsDto;
+import cz.muni.fi.pa165.moduleemail.data.model.Email;
+import cz.muni.fi.pa165.moduleemail.data.model.EmailWithoutRecipients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,38 +26,38 @@ public class EmailService {
         this.tourService = tourService;
     }
 
-    public void sendEmail(EmailDto emailDto) {
+    public void sendEmail(Email email) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("youband.manager@gmail.com");
-        message.setTo(emailDto.getRecipients());
-        message.setSubject(emailDto.getSubject());
-        message.setText(emailDto.getEmailBody());
+        message.setTo(email.getRecipients());
+        message.setSubject(email.getSubject());
+        message.setText(email.getEmailBody());
         emailSender.send(message);
     }
 
-    public void sendEmailToAllBandMembers(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
+    public void sendEmailToAllBandMembers(EmailWithoutRecipients emailWithoutRecipients,
                                           Long bandId,
                                           String token) {
-        sendEmail(new EmailDto(
-                emailWithoutRecipientsDto.getSubject(),
+        sendEmail(new Email(
+                emailWithoutRecipients.getSubject(),
                 bandService.getMembersEmailFromBandByiD(bandId, token).toArray(String[]::new),
-                emailWithoutRecipientsDto.getEmailBody()));
+                emailWithoutRecipients.getEmailBody()));
     }
 
-    public void sendEmailToBandManager(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
+    public void sendEmailToBandManager(EmailWithoutRecipients emailWithoutRecipients,
                                        Long bandId,
                                        String token) {
-        sendEmail(new EmailDto(
-                emailWithoutRecipientsDto.getSubject(),
+        sendEmail(new Email(
+                emailWithoutRecipients.getSubject(),
                 new String[]{bandService.getManagerEmailFromBandByiD(bandId, token)},
-                emailWithoutRecipientsDto.getEmailBody()));
+                emailWithoutRecipients.getEmailBody()));
     }
 
-    public void sendEmailToTourBand(EmailWithoutRecipientsDto emailWithoutRecipientsDto,
+    public void sendEmailToTourBand(EmailWithoutRecipients emailWithoutRecipients,
                                     Long tourId,
                                     String token) {
         for (Long id: tourService.getBandIdFromTourId(tourId, token)) {
-            sendEmailToAllBandMembers(emailWithoutRecipientsDto, id, token);
+            sendEmailToAllBandMembers(emailWithoutRecipients, id, token);
         }
     }
 
