@@ -65,7 +65,7 @@ public class BandService {
         }
 
         if (response.hasBody()) {
-            if (Objects.requireNonNull(response.getBody()).getMembers().isEmpty()) {
+            if (Objects.requireNonNull(response.getBody()).getManager() == null) {
                 throw new ResourceNotFoundException();
             }
             return Objects.requireNonNull(response.getBody()).getManager().getEmail();
