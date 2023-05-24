@@ -2,8 +2,7 @@ services:
 
   core:
     build:
-      dockerfile: Dockerfile
-      context: module-core
+      dockerfile:  module-core/Dockerfile
     tty: true
     depends_on:
       db-core:
@@ -17,8 +16,7 @@ services:
 
   users:
     build:
-      dockerfile: Dockerfile
-      context: module-user
+      dockerfile: module-user/Dockerfile
     tty: true
     depends_on:
       db-users:
@@ -32,8 +30,7 @@ services:
 
   pdf:
     build:
-      dockerfile: Dockerfile
-      context: module-pdf
+      dockerfile: module-pdf/Dockerfile
     tty: true
     ports:
       - "8082:8082"
@@ -44,8 +41,7 @@ services:
 
   email:
     build:
-      dockerfile: Dockerfile
-      context: module-email
+      dockerfile: module-email/Dockerfile
     tty: true
     ports:
       - "8081:8081"
