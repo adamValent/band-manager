@@ -25,6 +25,7 @@
         <module>module-pdf</module>
         <module>module-core</module>
         <module>module-user</module>
+        <module>library-model</module>
     </modules>
 
     <dependencies>
