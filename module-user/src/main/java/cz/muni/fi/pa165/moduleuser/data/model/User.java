@@ -13,7 +13,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @Column(name = "email")
+    @Column(name = "email", length = 60)
     private String email;
     @NotNull
     @Column(name = "oauth_id", unique = true)
