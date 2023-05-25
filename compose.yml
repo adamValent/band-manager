@@ -1,11 +1,8 @@
-version: "3.8"
-
 services:
 
   core:
     build:
-      dockerfile: Dockerfile
-      context: module-core
+      dockerfile:  module-core/Dockerfile
     tty: true
     depends_on:
       db-core:
@@ -19,8 +16,7 @@ services:
 
   users:
     build:
-      dockerfile: Dockerfile
-      context: module-user
+      dockerfile: module-user/Dockerfile
     tty: true
     depends_on:
       db-users:
@@ -34,8 +30,7 @@ services:
 
   pdf:
     build:
-      dockerfile: Dockerfile
-      context: module-pdf
+      dockerfile: module-pdf/Dockerfile
     tty: true
     ports:
       - "8082:8082"
@@ -46,8 +41,7 @@ services:
 
   email:
     build:
-      dockerfile: Dockerfile
-      context: module-email
+      dockerfile: module-email/Dockerfile
     tty: true
     ports:
       - "8081:8081"
@@ -65,7 +59,7 @@ services:
       POSTGRES_DB: youband-users
       ENCODING: "UTF8"
       TABLESPACE: "pg_default"
-      CONNECTION LIMIT: "-1"
+      CONNECTION_LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5433
     ports:
@@ -85,7 +79,7 @@ services:
       POSTGRES_DB: core
       ENCODING: "UTF8"
       TABLESPACE: "pg_default"
-      CONNECTION LIMIT: "-1"
+      CONNECTION_LIMIT: "-1"
       TEMPLATE: "template0"
     command: -p 5432
     ports:

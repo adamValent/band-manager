@@ -37,7 +37,7 @@ public class EmailRestController {
     @PostMapping(path = "")
     public ResponseEntity<Void> sendEmail(@Valid @RequestBody EmailDto emailDto,
                                           @RequestHeader("Authorization") @Schema(hidden = true) String token) {
-        emailFacade.sendEmail(emailDto, token);
+        emailFacade.sendEmail(emailDto);
         return ResponseEntity.ok().build();
     }
 

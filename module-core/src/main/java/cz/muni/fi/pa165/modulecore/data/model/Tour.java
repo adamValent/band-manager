@@ -14,6 +14,7 @@ public class Tour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(length = 70)
     private String name;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @NotEmpty

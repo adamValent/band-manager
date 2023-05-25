@@ -14,6 +14,7 @@ public class Song implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(length = 35)
     private String title;
     @NotNull
     private Duration duration;
@@ -39,19 +40,19 @@ public class Song implements Serializable {
         this.id = id;
     }
 
-    public @NotNull String getTitle() {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(@NotNull String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public @NotNull Duration getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(@NotNull Duration duration) {
+    public void setDuration(Duration duration) {
         this.duration = duration;
     }
 
