@@ -69,3 +69,16 @@ class test(HttpUser):
         print("send_email_to_band_manager " + str(response.status_code))
         #print("create album " + str(response.headers))
         #print("create album " + str(response.json()))
+
+    @task
+    def manager_create_album(self, token, band):
+        response = self.client.post("http://core:8080/albums",
+                                    json={
+                                           "name": "Album of the Year",
+                                           "releaseDate": "2023-05-25",
+                                           "genre": "ROCK",
+                                           "songs": [],
+                                           "band": band
+                                    },
+                                    headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
+        print("manager_create_tour " + str(response.status_code))
