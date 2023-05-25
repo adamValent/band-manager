@@ -8,73 +8,72 @@ class test(HttpUser):
         # First you need to get oauth2 token
         # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
         # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
-        token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUwNDM2OTksImlhdCI6MTY4NTA0MDA5OSwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiOGVjMDc1Y2MtNzE0Mi00OTBjLWE5NTYtMGEzMzI4YzQzZGEyIn0.evzgWioncmgBsQhVVxeb-9VHyaWwYz7MvK8gH2f6Hdpkpo6uBJQP3qXTBfHyTHYt1vAwHUWUDrfz2IGQ2W_H9dv7HJJuBNmeWicLuE_FMuuZLKRUpaEb5O_XTzhjCLXN4gAewrtfuvAuwjOg6ElH540gbwy8lpcnTlQstbvtm_cevRNSovV6BVMAhZDdCbgcUwvVufn3gB2lO9g04ndbDXl1cCT9w9Ba91rsGj15JbFkj6yiDi9_ld8Jq0DLJcPk_vXXE2CV_0Xpp4yJew56kIb6XGJtxdUSMyFce7z-iIBedFwReOD0ayeWDQ5M_C_xSWUdtic2XhG_29pgJ5BLHw"
+        token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUwNDY0MDgsImlhdCI6MTY4NTA0MjgwOCwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiZTc0OWQ5MWYtNzcwOC00OGVmLTgwZTEtNmExNGY4ZTA4ODFiIn0.OUhn8Rr75rWaYVV0xu8KY13lC136CRmBycChu6oDHL4_xmsH-_F5jNtLpQOobImPM81KsoMsfjofwX9fPdTWuZdjbDfT3jKH4A6wbh69zZMhuv7jipcLq3_yvaWbv7ZKjwRgFwm4fg5fZyFa4Y_7fQ0ksl1cCCdNhjnyu2U844nvitnknOUI4tg-FBmrzFhlGhqFAWwfNDy6iTBvg1HwFNYwZK21SP0DLbZBNEXmPAAYz6VZ1_Ny1w3ctISljO1Vz_bYfR-CNITy9-lamjbKkmsOJusiTCbwUXUzf7L_5xIUeQ64aKZ44v68y5g93f_F_0VeWYk6NBzdE1t88ItIsA"
         email = "EMAIL"
         first_name = "NAME"
         second_name = "NAME"
 
         try:
-            manager = self.create_user()
-            print(user)
-            band = self.create_band(manager)
+            manager = self.create_user(token, email, first_name, second_name)
+            print(manager)
+            band = self.create_band(manager, token)
             print(band)
-            tour = self.create_tour(band)
+            tour = self.create_tour(band, token)
             print(tour)
-            tour_date1 = create_tour_date("Prague", "2023-07-09", "O2 arena", tour)
+            tour_date1 = create_tour_date("Prague", "2023-07-09", "O2 arena", tour, token)
             print(tour_date1)
-            tour_date2 = create_tour_date("Budapest", "2023-07-12", "Budapest park", tour)
+            tour_date2 = create_tour_date("Budapest", "2023-07-12", "Budapest park", tour, token)
             print(tour_date2)
-            change_tour_dates(tour, [tour_date1, tour_date2])
+            change_tour_dates(tour, [tour_date1, tour_date2], token)
 
 
         except:
             exit()
 
-    @task
-    def create_user(self):
-        response = self.client.post("http://users:8084/users-auth",
-                                    json={"email": self.email, "userType": "MANAGER",
-                                          "firstName": self.first_name, "lastName": self.second_name},
-                                    headers={"Authorization": ("Bearer " + self.token), "Content-Type": "application/json"})
-#         print("create user " + str(response.status_code))
-#         print("create user " + str(response.headers))
-#         print("create user " + str(response.json()))
+
+    def create_user(self, token, email, first_name, second_name):
+        response = self.client.post("http://users:8080/users-auth",
+                                    json={"email": email, "userType": "MANAGER",
+                                          "firstName": first_name, "lastName": second_name},
+                                    headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
+        print("create user " + str(response.status_code))
+        print("create user " + str(response.headers))
+        print("create user " + str(response.json()))
         return response.json()
 
-    @task
-    def create_band(self, user):
+    def create_band(self, user, token):
         response = self.client.post("http://core:8080/bands",
                                     json={"name": "My band", "genre": "ROCK",
                                           "image": ["67","7","89"], "manager": user},
-                                    headers={"Authorization": ("Bearer " + self.token), "Content-Type": "application/json"})
-#         print("create band " + str(response.status_code))
-#         print("create band " + str(response.headers))
-#         print("create band " + str(response.json()))
+                                    headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
+        print("create band " + str(response.status_code))
+        print("create band " + str(response.headers))
+        print("create band " + str(response.json()))
         return response.json()
 
-    @task
-    def create_tour(self, band):
+    def create_tour(self, band, token):
         response = self.client.post("http://core:8080/tours",
                                     json={"name": "World Tour", bands: [band], "tourDates": []},
-                                    headers={"Authorization": ("Bearer " + self.token), "Content-Type": "application/json"})
+                                    headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
         print("create tour " + str(response.status_code))
         print("create tour " + str(response.headers))
-        print("create tour " + str(response.json())
+        print("create tour " + str(response.json()))
         return response.json()
 
-    def create_tour_date(self, city, date, venue, tour):
+    def create_tour_date(self, city, date, venue, tour, token):
         response = self.client.post("http://core:8080/tourDates",
                                     json={"city": city, "date": date, "venue": venue, "tour": tour},
-                                    headers={"Authorization": ("Bearer " + self.token), "Content-Type": "application/json"})
+                                    headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
         print("create tour date " + str(response.status_code))
         print("create tour date " + str(response.headers))
-        print("create tour date " + str(response.json())
+        print("create tour date " + str(response.json()))
         return response
 
-    def change_tour_dates(self, tour, tour_dates):
+    def change_tour_dates(self, tour, tour_dates, token):
         tour["tourDates"] = tour_dates
         response = self.client.put("http://core:8080/tours/" + tour["id"],
-                                   json=tour)
-#         print("update tour " + str(response.status_code))
-#         print("update tour " + str(response.headers))
-#         print("update tour " + str(response.json())
+                                   json=tour,
+                                   headers={"Authorization": ("Bearer " + token), "Content-Type": "application/json"})
+        print("update tour " + str(response.status_code))
+        print("update tour " + str(response.headers))
+        print("update tour " + str(response.json()))
