@@ -18,4 +18,4 @@ spring:
           muni:
             issuer-uri: https://oidc.muni.cz/oidc/
 server:
-  port: 8083
+  port: 8084
