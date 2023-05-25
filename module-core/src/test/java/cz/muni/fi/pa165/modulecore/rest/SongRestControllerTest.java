@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.SongDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.api.SongDto;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class SongRestControllerTest {
+    private final static Album ALBUM = new Album(1L, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -42,7 +43,6 @@ class SongRestControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private SongRepository songRepository;
-    private final static Album ALBUM = new Album(1L, "name", LocalDate.now(), Genre.BLUES, Collections.emptyList(), new Band());
 
     @Test
     void findByIdOk() throws Exception {

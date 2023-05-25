@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.BandDto;
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;

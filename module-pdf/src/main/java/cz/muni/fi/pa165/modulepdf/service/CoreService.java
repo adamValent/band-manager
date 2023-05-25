@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.modulepdf.service;
 
-import cz.muni.fi.pa165.modulepdf.api.AlbumDto;
-import cz.muni.fi.pa165.modulepdf.api.BandDto;
-import cz.muni.fi.pa165.modulepdf.api.TourDto;
+import cz.muni.fi.pa165.librarymodel.api.AlbumDto;
+import cz.muni.fi.pa165.librarymodel.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.TourDto;
 import cz.muni.fi.pa165.modulepdf.data.model.*;
 import cz.muni.fi.pa165.modulepdf.exceptions.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulepdf.mapper.AlbumMapper;
@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;

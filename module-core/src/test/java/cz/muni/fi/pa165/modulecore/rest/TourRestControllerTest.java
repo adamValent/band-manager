@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.modulecore.api.TourDto;
+import cz.muni.fi.pa165.librarymodel.api.TourDto;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
 import cz.muni.fi.pa165.modulecore.data.model.TourDate;

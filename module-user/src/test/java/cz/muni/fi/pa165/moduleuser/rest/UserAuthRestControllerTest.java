@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.moduleuser.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import cz.muni.fi.pa165.moduleuser.api.UserDto;
-import cz.muni.fi.pa165.moduleuser.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import cz.muni.fi.pa165.moduleuser.data.model.User;
 import cz.muni.fi.pa165.moduleuser.data.repository.UserRepository;
 import cz.muni.fi.pa165.moduleuser.exception.ResourceNotFoundException;

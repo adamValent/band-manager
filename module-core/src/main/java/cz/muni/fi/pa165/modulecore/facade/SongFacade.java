@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.facade;
 
-import cz.muni.fi.pa165.modulecore.api.SongDto;
+import cz.muni.fi.pa165.librarymodel.api.SongDto;
 import cz.muni.fi.pa165.modulecore.mapper.SongMapper;
 import cz.muni.fi.pa165.modulecore.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;

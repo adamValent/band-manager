@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Album;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.User;
@@ -65,11 +65,11 @@ class AlbumRepositoryTest {
         Album album1 =
                 new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);
         Album album2 = new Album(null,
-                                 "name2",
-                                 LocalDate.now(),
-                                 Genre.ROCK,
-                                 Collections.emptyList(),
-                                 band);
+                "name2",
+                LocalDate.now(),
+                Genre.ROCK,
+                Collections.emptyList(),
+                band);
         entityManager.persist(album1);
         entityManager.persist(album2);
         entityManager.flush();
@@ -104,7 +104,7 @@ class AlbumRepositoryTest {
         entityManager.persistAndFlush(album);
         albumRepository.deleteById(album.getId());
         assertThat("album is still present",
-                   Objects.isNull(entityManager.find(Album.class, album.getId())));
+                Objects.isNull(entityManager.find(Album.class, album.getId())));
     }
 
     @Test

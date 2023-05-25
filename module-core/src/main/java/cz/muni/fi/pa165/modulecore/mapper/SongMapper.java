@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulecore.api.SongDto;
+import cz.muni.fi.pa165.librarymodel.api.SongDto;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

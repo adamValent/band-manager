@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.modulecore.rest;
 
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.modulecore.CustomConfiguration;
-import cz.muni.fi.pa165.modulecore.api.UserDto;
 import cz.muni.fi.pa165.modulecore.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulepdf.mapper;
 
-import cz.muni.fi.pa165.modulepdf.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.modulepdf.data.model.User;
 import org.mapstruct.Mapper;
 

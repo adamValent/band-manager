@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.modulecore.data.repository;
 
-import cz.muni.fi.pa165.modulecore.data.enums.Genre;
-import cz.muni.fi.pa165.modulecore.data.enums.InvitationStatus;
-import cz.muni.fi.pa165.modulecore.data.enums.UserType;
+import cz.muni.fi.pa165.librarymodel.enums.Genre;
+import cz.muni.fi.pa165.librarymodel.enums.InvitationStatus;
+import cz.muni.fi.pa165.librarymodel.enums.UserType;
 import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Invitation;
 import cz.muni.fi.pa165.modulecore.data.model.User;

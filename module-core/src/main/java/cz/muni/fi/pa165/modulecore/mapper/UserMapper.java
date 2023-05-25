@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.modulecore.mapper;
 
-import cz.muni.fi.pa165.modulecore.api.UserDto;
+import cz.muni.fi.pa165.librarymodel.api.UserDto;
 import cz.muni.fi.pa165.modulecore.data.model.User;
 import org.mapstruct.Mapper;
 
