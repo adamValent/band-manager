@@ -87,7 +87,7 @@ class AlbumRestControllerTest {
 
         log.debug("response: {}", response);
         List<AlbumDto> responseTours = objectMapper.readerForListOf(AlbumDto.class).readValue(response);
-        assertThat("response", responseTours, is(equalTo(Lists.newArrayList(albumRepository.findAll()).stream().map(albumMapper::mapToDto).toList())));
+        assertThat("response", responseTours, is(equalTo(Lists.newArrayList(albumRepository.findAll()).stream().map(a -> albumMapper.mapToDto(a)).toList())));
     }
 
     @Test
@@ -202,7 +202,7 @@ class AlbumRestControllerTest {
     @Test
     void findAllByBandIdMix() throws Exception {
         Album album1 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
-        Album album2 = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
+        Album album2 = new Album(null, "name2", LocalDate.now(), Genre.ROCK, Collections.emptyList(), new Band());
         Mockito.when(albumRepository.findAllByBandId(1L)).thenReturn(List.of(album1, album2));
 
         String response = mockMvc.perform(get("/albums/allByBand/1")

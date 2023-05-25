@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,6 +38,10 @@ public class Album implements Serializable {
         this.genre = genre;
         this.songs = songs;
         this.band = band;
+    }
+
+    public Album(Long id) {
+        this(id, "", LocalDate.MIN, Genre.ROCK, new ArrayList<>(), new Band());
     }
 
     public Album() {

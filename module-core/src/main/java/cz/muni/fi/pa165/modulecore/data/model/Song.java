@@ -22,10 +22,11 @@ public class Song implements Serializable {
     @NotNull
     private Album album;
 
-    public Song(Long id, String title, Duration duration) {
+    public Song(Long id, @NotNull String title, @NotNull Duration duration, Album album) {
         this.id = id;
         this.title = title;
         this.duration = duration;
+        this.album = album;
     }
 
     public Song() {
