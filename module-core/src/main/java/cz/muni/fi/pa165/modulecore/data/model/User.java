@@ -18,13 +18,13 @@ public class User implements Serializable {
     @Column(name = "user_type")
     @NotNull
     private UserType userType;
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 35)
     @NotNull
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name", length = 35)
     @NotNull
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email", length = 60)
     @NotNull
     private String email;
     @OneToOne()

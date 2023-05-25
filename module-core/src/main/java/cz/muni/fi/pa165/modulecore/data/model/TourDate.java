@@ -13,10 +13,12 @@ public class TourDate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Column(length = 35)
     private String city;
     @NotNull
     private LocalDate date;
     @NotNull
+    @Column(length = 90)
     private String venue;
     @ManyToOne
     @NotNull

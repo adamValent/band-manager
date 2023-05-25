@@ -14,9 +14,9 @@ import java.util.Objects;
 public class Band implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @NotNull
+    @Column(length = 70)
     private String name;
     @NotNull
     private Genre genre;

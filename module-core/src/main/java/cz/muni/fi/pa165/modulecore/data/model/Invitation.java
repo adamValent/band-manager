@@ -14,6 +14,7 @@ public class Invitation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(length = 150)
     private String message;
     @NotNull
     private InvitationStatus status;
