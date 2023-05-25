@@ -12,9 +12,6 @@ management:
     prometheus:
       enabled: true
 
-server:
-  port: 8082
-
 spring:
   security:
     oauth2:
@@ -25,3 +22,12 @@ spring:
           client-secret: fa228ebc-4d54-4cda-901e-4d6287f8b1652a9c9c44-73c9-4502-973f-bcdb4a8ec96a
   application:
     name: module-pdf
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+server:
+  port: 8082
+

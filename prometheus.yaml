@@ -10,11 +10,11 @@ scrape_configs:
   - job_name: 'module-pdf'
     metrics_path: /actuator/prometheus
     static_configs:
-      - targets: [ 'pdf:8082' ]
+      - targets: [ 'pdf:8080' ]
   - job_name: 'module-email'
     metrics_path: /actuator/prometheus
     static_configs:
-      - targets: [ 'email:8081' ]
+      - targets: [ 'email:8080' ]
   - job_name: 'module-core'
     metrics_path: /actuator/prometheus
     static_configs:
@@ -22,4 +22,4 @@ scrape_configs:
   - job_name: 'module-user'
     metrics_path: /actuator/prometheus
     static_configs:
-      - targets: [ 'users:8084' ]
+      - targets: [ 'users:8080' ]

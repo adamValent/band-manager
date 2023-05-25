@@ -1,6 +1,3 @@
-server:
-  port: 8084
-
 spring:
   datasource:
     url: jdbc:postgresql://db-users:5433/youband-users
@@ -41,23 +38,10 @@ spring:
     activate:
       on-profile: dev
   datasource:
-    url: jdbc:postgresql://localhost:5433/users
+    url: jdbc:postgresql://localhost:5433/youband-users
 ybm:
   core:
-    url: http://localhost:8084
-  application:
-    name: module-pdf
+    url: http://localhost:8080
 
-management:
-  endpoints:
-    web:
-      base-path: /actuator
-      exposure:
-        include: [ "health","prometheus", "metrics" ]
-  endpoint:
-    health:
-      show-details: always
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
+server:
+  port: 8083

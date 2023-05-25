@@ -1,6 +1,3 @@
-server:
-  port: 8080
-
 spring:
   datasource:
     url: jdbc:postgresql://db-core:5432/core
@@ -42,20 +39,4 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/core
 server:
-  port: 8084
-  application:
-    name: module-pdf
-
-management:
-  endpoints:
-    web:
-      base-path: /actuator
-      exposure:
-        include: [ "health","prometheus", "metrics" ]
-  endpoint:
-    health:
-      show-details: always
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
+  port: 8080
