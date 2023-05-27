@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import cz.muni.fi.pa165.modulecore.mapper.BandMapper;
+import cz.muni.fi.pa165.modulecore.service.BandService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -42,6 +43,8 @@ class BandRestControllerTest {
 
     @MockBean
     private BandRepository bandRepository;
+    @MockBean
+    private BandService bandService;
 
     private final Band testingBand;
 
@@ -124,7 +127,7 @@ class BandRestControllerTest {
     void testBandCreateOK() throws Exception {
         log.debug("testBandCreateOK running");
 
-        Mockito.when(bandRepository.save(testingBand)).thenReturn(testingBand);
+        Mockito.when(bandService.createBand(testingBand)).thenReturn(testingBand);
 
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
         String response = mockMvc.perform(post("/bands")
