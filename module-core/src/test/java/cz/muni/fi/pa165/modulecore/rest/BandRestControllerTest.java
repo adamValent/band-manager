@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,8 +42,6 @@ class BandRestControllerTest {
     private final ObjectMapper objectMapper;
     private final BandMapper bandMapper;
 
-    @MockBean
-    private BandRepository bandRepository;
     @MockBean
     private BandService bandService;
 
@@ -65,7 +64,7 @@ class BandRestControllerTest {
     void testBandFindByIdOK() throws Exception {
         log.debug("testBandFindByIdOK running");
 
-        Mockito.when(bandRepository.findById(testingBand.getId())).thenReturn(Optional.of(testingBand));
+        Mockito.when(bandService.findById(testingBand.getId())).thenReturn(testingBand);
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
 
         String response =
@@ -84,6 +83,7 @@ class BandRestControllerTest {
     @Test
     void testBandFindByIdNotFound() throws Exception {
         log.debug("testBandFindByIdNotFound running");
+        Mockito.doThrow(new ResourceNotFoundException()).when(bandService).findById(any());
         mockMvc.perform(get("/bands/-1")
                 .with(opaqueToken())).andExpect(status().isNotFound());
     }
@@ -92,7 +92,7 @@ class BandRestControllerTest {
     void testBandFindAll() throws Exception {
         log.debug("testBandFindAll running");
 
-        Mockito.when(bandRepository.findAll()).thenReturn(List.of(testingBand));
+        Mockito.when(bandService.findAll()).thenReturn(List.of(testingBand));
 
         String response = mockMvc.perform(get("/bands")
                         .with(opaqueToken()))
@@ -149,8 +149,7 @@ class BandRestControllerTest {
     void testBandUpdate() throws Exception {
         log.debug("testBandUpdate running");
 
-        Mockito.when(bandRepository.save(testingBand)).thenReturn(testingBand);
-        Mockito.when(bandRepository.existsById(testingBand.getId())).thenReturn(true);
+        Mockito.when(bandService.updateBand(any(), any())).thenReturn(testingBand);
 
         BandDto expectedResponse = bandMapper.mapToDto(testingBand);
 
@@ -186,7 +185,7 @@ class BandRestControllerTest {
     void testBandDeleteOK() throws Exception {
         log.debug("testBandDeleteOK running");
 
-        Mockito.doNothing().when(bandRepository).deleteById(testingBand.getId());
+        Mockito.doNothing().when(bandService).deleteBand(testingBand.getId());
 
         mockMvc.perform(delete(String.format("/bands/%s", testingBand.getId()))
                         .with(opaqueToken()))
@@ -200,7 +199,7 @@ class BandRestControllerTest {
     void testBandDeleteNotFound() throws Exception {
         log.debug("testBandDeleteNotFound running");
 
-        Mockito.doThrow(new ResourceNotFoundException()).when(bandRepository).deleteById(0L);
+        Mockito.doThrow(new ResourceNotFoundException()).when(bandService).deleteBand(0L);
 
         mockMvc.perform(delete(String.format("/bands/%s", 0L))
                         .with(opaqueToken()))
