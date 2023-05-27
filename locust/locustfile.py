@@ -2,95 +2,77 @@ from locust import HttpUser, task, between
 
 counter = 0
 class scenario(HttpUser):
-    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUxOTE0MzQsImlhdCI6MTY4NTE4NzgzNCwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiMzZkM2M2NjQtMzQ4Zi00MmQxLWFlOWQtOGIwZDU4YTc1ZDhjIn0.REnwmPdE1z0j888hFqeo8mIipKcXhraUBLo9FvGuJ5eh5PenwqRquWeCPTTieAGIudjrKlADIEG8HF0Jaw8d2pjD2w3F5GNuDr0_hCWNQP9UwHuAURo35SXge6izTXfZsDw9SfWRF7GVbnexbgJFwBTE3htwhY4W-kWi1KNUYmvlpx74vpYwYBc4S8LWMMIKvEEO4nsIIKEikYlJC7HEpO-FNevKBAUIdRotX3vAglJmQqvGr0FCp2u3KyDv_oQYEp1PkvBd8kYKaLvcpdAuPG3oBCct8xSsim54IHDRtIWPrh6oGw-_dUf_-qeWWriHlMkZvKtQlq-CJA1va-orGg"
-    email = "485515@muni.cz"
-    first_name = "Adam"
+    ######################################################################
+    ######################################################################
+    ######################################################################
+    # First you need to get oauth2 token
+    # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
+    # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
+    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUyMDY1NjIsImlhdCI6MTY4NTIwMjk2MiwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiODk4Y2YyY2QtN2JmYy00NzQzLWE4ZGQtYmZmOTMxZDhkYWJmIn0.jpHiS4I4MUPRr7CKTc_EpARLTuEolzvyAj97kmC0TCNMVpYewErFenPm54-ZjH0kqe3DA_fu0NbM2fMluQ3t0J4H82_Y767hd9m1avsK_ZZWRWPO-XKCjyjy8LBVPHw2sFF5QpiFwbzM3LGaGU5OXJPj75n2xhhA1I5xsBPpKzk7wHDJqvGTFBrOw6WekiYHfEAirXnPUrElm8a2NPPij2be40MiyzFbCHzmWA3PHThtAOv6FBlpIEK22gG9oPpude6-1mBeK2umt7JZ3jz5a1sma6CeJ8MXrhN7GXzCICjAHPX97qM-UBSGmVWsecbotkbYxlS-9JRzz0BoJS6BIQ"
+    email = "493182@mail.muni.cz"
+    first_name = "Patrik"
     second_name = "TEST"
+    ######################################################################
+    ######################################################################
+    ######################################################################
 
-    # @task
-    # def addUsers(self):
-    #     wait_time = between(1, 2)
-    #     try:
-    #         user = self.create_user("BAND_MEMBER", "basic@basic.com")
-    #         manager = self.create_user("MANAGER", self.email)
-    #         print(user)
-    #         print(manager)
-    #         users = self.list_users()
-    #         print(users)
-    #     except:
-    #         print("error occured")
-    #         exit()
 
     @task
-    def manageTour(self):
+    def scenarioManager(self):
         wait_time = between(1, 2)
-        # First you need to get oauth2 token
-        # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
-        # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
-
         global counter
         if counter == 1:
             exit()
 
         try:
-            manager = self.create_user("MANAGER", self.email)
+            print("\n\nScenario 01 - create user\n\n")
+            manager = self.create_user("MANAGER")
             print(manager)
+            print("\n\nScenario 01 - successful\n\n")
+
+            print("\n\nScenario 02 - create band\n\n")
             band = self.create_band(manager)
             print(band)
+            print("\n\nScenario 02 - successful\n\n")
+
+            print("\n\nScenario 03 - create tour\n\n")
             tour = self.create_tour(band)
             print(tour)
+            print("\n\nScenario 03 - successful\n\n")
+
+            print("\n\nScenario 04 - update tour\n\n")
             tour_date1 = {"city": "Prague", "date": "2023-07-09", "venue": "O2 arena"}
             tour_date2 = {"city": "Budapest", "date": "2023-07-12", "venue": "Budapest park"}
             self.change_tour_dates(tour, [tour_date1, tour_date2])
-        except:
-            print("error occured")
-            exit()
+            print("\n\nScenario 04 - successful\n\n")
 
-        counter = counter + 1
-
-
-    def manageAlbum(self):
-        wait_time = between(1, 2)
-        # First you need to get oauth2 token
-        # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
-        # and sign in to muni page and select scopes, then copy token, email, fist name and last name and past then here
-        scope_test_1 = True  # for this scenario you need scope_test_1
-
-        global counter
-        if counter == 1:
-            exit()
-
-        try:
-            user = self.create_user("MANAGER")
-            print(user)
-            band = self.create_band(user)
-            print(band)
+            print("\n\nScenario 05 - create album\n\n")
             album = self.create_album(band)
             print(album)
-            self.send_email_to_band_manager(band["id"])  # for testing purposes to your band
-        except:
+            print("\n\nScenario 05 - successful\n\n")
+
+            print("\n\nScenario 06 - send email to manager\n\n")
+            self.send_email_to_manager(band["id"])
+            print("\n\nScenario 06 - successful\n\n")
+
+        except Exception as e:
+            print("\nERROR\n")
+            print(e)
             exit()
 
         counter = counter + 1
 
-    def list_users(self):
-        response = self.client.get("http://core:8080/users",
-                                   headers={"Authorization": ("Bearer " + self.token),
-                                            "Content-Type": "application/json"})
-        print("get all users " + str(response.status_code))
-        print("get all users " + str(response.headers))
-        print("get all users " + str(response.json()))
-        return response.json()
-
-    def create_user(self, type, email):
+    def create_user(self, type):
         response = self.client.post("http://users:8080/users-auth",
-                                    json={"email": email, "userType": type,
+                                    json={"email": self.email, "userType": type,
                                           "firstName": self.first_name, "lastName": self.second_name},
                                     headers={"Authorization": ("Bearer " + self.token),
                                              "Content-Type": "application/json"})
         print("create user " + str(response.status_code))
         print("create user " + str(response.headers))
         print("create user " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create user " + str(response.status_code))
         return response.json()
 
     def create_band(self, user):
@@ -102,6 +84,8 @@ class scenario(HttpUser):
         print("create band " + str(response.status_code))
         print("create band " + str(response.headers))
         print("create band " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create band " + str(response.status_code))
         return response.json()
 
     def create_tour(self, band):
@@ -112,6 +96,8 @@ class scenario(HttpUser):
         print("create tour " + str(response.status_code))
         print("create tour " + str(response.headers))
         print("create tour " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create tour " + str(response.status_code))
         return response.json()
 
     def change_tour_dates(self, tour, tour_dates):
@@ -123,6 +109,8 @@ class scenario(HttpUser):
         print("update tour " + str(response.status_code))
         print("update tour " + str(response.headers))
         print("update tour " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("update tour " + str(response.status_code))
 
     def create_album(self, band):
         response = self.client.post("http://core:8080/albums",
@@ -133,13 +121,16 @@ class scenario(HttpUser):
         print("create album " + str(response.status_code))
         print("create album " + str(response.headers))
         print("create album " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create album " + str(response.status_code))
         return response.json()
 
-    def send_email(self, email):
-        response = self.client.post("http://email:8080/email",
-                                    json={"subject": "Test email", "emailBody": "hello", "recipients": [email]},
+    def send_email_to_manager(self, bandId):
+        response = self.client.post("http://email:8080/email/band/" + str(bandId) + "/manager",
+                                    json={"subject": "Test email", "emailBody": "hello"},
                                     headers={"Authorization": ("Bearer " + self.token),
                                              "Content-Type": "application/json"})
         print("send_email_to_band_manager " + str(response.status_code))
         print("send_email_to_band_manager " + str(response.headers))
-        print("send_email_to_band_manager " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("send email to manager " + str(response.status_code))

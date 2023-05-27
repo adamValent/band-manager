@@ -114,7 +114,7 @@ public class PdfRestController {
                                              Long id) {
         response.setContentType("application/pdf");
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=all_songs_of_" + id + ".pdf";
+        String headerValue = "attachment; filename=generated_pdf_youband_manager" + id + ".pdf";
         response.setHeader(headerKey, headerValue);
     }
 
