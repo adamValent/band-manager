@@ -10,7 +10,7 @@
 # About project
 
 -   **Name**: Music Band Manager
--   **Technologies**: Java 17, Apache Maven, Spring Boot, Apache Tomcat, Hibernate ORM
+-   **Technologies**: Java 17, Apache Maven, Spring Boot, Apache Tomcat, Hibernate ORM, Postgres, pgAdmin, Grafana, Prometheus, Locust and Docker
 -   **Developers**:
     -   Oskar Adam Válent @xvalent _Team Leader_
     -   Jakub Šušlík @xsuslik
@@ -28,10 +28,10 @@ Project is composed of 4 runnable modules.
 
 Runnable modules are in `module-core`, `module-user`, `module-email` and `module-pdf` folders.
 
-* **module-core** (port 5432): responsible for main functionality regarding band management.
-* **module-user** (port 5433): responsible for logging and registration of users.
-* **module-email** (port 8081): responsible for sending emails between users.
-* **module-pdf** (port 8082): responsible for generation of pdfs concerning band info and tours.
+* **module-core** (port 8080 in docker, exposed 8080): responsible for main functionality regarding band management.
+* **module-user** (port 8080 in docker, exposed 8083): responsible for logging and registration of users.
+* **module-email** (port 8080 in docker, exposed 8082): responsible for sending emails between users.
+* **module-pdf** (port 8080 in docker, exposed 8081): responsible for generation of pdfs concerning band info and tours.
 
 
 ## Roles
@@ -39,25 +39,36 @@ Runnable modules are in `module-core`, `module-user`, `module-email` and `module
 The system has two authorization roles - **Manager** and **Band Member**.
 
 -   Manager manages bands, their members, albums, songs, and band activities.
--   Band Member accepts invitations to bands and views band information after accepting. 
+-   Band Member accepts invitations to bands and views band information. 
 
 
 ## Oauth2
 
-You will recieve oauth2 token folowing these steps
+You will receive oauth2 token following these steps
 
 -   Run app test-client in root directory
--   Go to localhost:8083
+-   Go to localhost:8084
 -   You are redirected to MUNI
--   After successful login hit again localhost:8083 and you can copy your oauth2 token
+-   After successful login hit again localhost:8084 and you can copy your oauth2 token
 
 
 ## Runnable scenario
 
 -   You can run scenario by filling ./locust/locustfile.py following instruction in file and by running command ```docker-compose up``` in locust directory
 -   Then open localhost:8089 and fill pop up window by at least one user, request will run only once
+-   Result is printed to console of locust-worker 
 
+## Prometheus
 
+-   Can be found on localhost:9090
+-   After hitting status/targets, you can see all running modules  
+
+## Grafana
+
+-   Can be found on localhost:3000
+-   Username is admin and password is admin 
+-   You can see dashboard in menu/dashboards/Youband-manager dashboard
+-   You can switch between module in left corner
 
 ## Entities
 
