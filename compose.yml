@@ -22,7 +22,7 @@ services:
       db-users:
         condition: service_started
     ports:
-      - "8084:8080"
+      - "8083:8080"
     volumes:
       - module-user:/tmp
     networks:
