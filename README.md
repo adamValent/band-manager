@@ -3,7 +3,6 @@
 *PA165 course - Spring 2023*
 
 # How to run project
-- Run command ```mvn clean install``` in root directory.
 - Run command ```docker-compose up``` in root directory containing file *docker-compose.yml*.
 
 

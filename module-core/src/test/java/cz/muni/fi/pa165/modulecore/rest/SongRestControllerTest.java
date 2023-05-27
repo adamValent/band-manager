@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.modulecore.data.model.Band;
 import cz.muni.fi.pa165.modulecore.data.model.Song;
 import cz.muni.fi.pa165.modulecore.data.repository.SongRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
+import cz.muni.fi.pa165.modulecore.facade.SongFacade;
 import cz.muni.fi.pa165.modulecore.mapper.SongMapper;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import java.util.Optional;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.opaqueToken;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,12 +44,12 @@ class SongRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private SongRepository songRepository;
+    private SongFacade songFacade;
 
     @Test
     void findByIdOk() throws Exception {
         Song song = new Song(1L, "title", Duration.ofSeconds(15), ALBUM);
-        Mockito.when(songRepository.findById(1L)).thenReturn(Optional.of(song));
+        Mockito.when(songFacade.findById(1L)).thenReturn(songMapper.mapToDto(song));
 
         String response = mockMvc.perform(get("/songs/1")
                         .with(opaqueToken()))
@@ -55,12 +57,12 @@ class SongRestControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         assertThat(objectMapper.readValue(response, SongDto.class),
-                is(equalTo(songMapper.mapToDto(songRepository.findById(1L).get()))));
+                is(equalTo(songMapper.mapToDto(song))));
     }
 
     @Test
     void findByIdNotFound() throws Exception {
-        Mockito.when(songRepository.findById(0L)).thenReturn(Optional.empty());
+        Mockito.doThrow(new ResourceNotFoundException()).when(songFacade).findById(any());
 
         mockMvc.perform(get("/songs/0")
                         .with(opaqueToken()))
@@ -71,7 +73,7 @@ class SongRestControllerTest {
     void createOk() throws Exception {
         Song song = new Song(null, "title", Duration.ofSeconds(15), ALBUM);
         SongDto expectedResponse = songMapper.mapToDto(song);
-        Mockito.when(songRepository.save(song)).thenReturn(song);
+        Mockito.when(songFacade.create(any())).thenReturn(expectedResponse);
 
         String response = mockMvc.perform(post("/songs")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -101,8 +103,7 @@ class SongRestControllerTest {
     void updateOk() throws Exception {
         Song song = new Song(2L, "title", Duration.ofSeconds(15), ALBUM);
         SongDto expectedResponse = songMapper.mapToDto(song);
-        Mockito.when(songRepository.save(song)).thenReturn(song);
-        Mockito.when(songRepository.existsById(song.getId())).thenReturn(true);
+        Mockito.when(songFacade.update(any(), any())).thenReturn(expectedResponse);
 
         String response = mockMvc.perform(put("/songs/2")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -129,7 +130,7 @@ class SongRestControllerTest {
 
     @Test
     void deleteInvitationOk() throws Exception {
-        Mockito.doNothing().when(songRepository).deleteById(1L);
+        Mockito.doNothing().when(songFacade).delete(any());
 
         mockMvc.perform(delete("/songs/1")
                         .with(opaqueToken()))
@@ -138,7 +139,7 @@ class SongRestControllerTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        Mockito.doThrow(new ResourceNotFoundException()).when(songRepository).deleteById(0L);
+        Mockito.doThrow(new ResourceNotFoundException()).when(songFacade).delete(any());
 
         mockMvc.perform(delete("/songs/0")
                         .with(opaqueToken()))

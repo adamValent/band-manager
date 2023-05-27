@@ -28,7 +28,7 @@ public class SongFacade {
     }
 
     public SongDto create(SongDto songDto) {
-        return songMapper.mapToDto(songService.create(songMapper.mapFromDto(songDto)));
+        return songMapper.mapToDto(songService.create(songMapper.mapFromDto(songDto), songDto.getAlbumId()));
     }
 
     public SongDto update(Long id, SongDto songDto) {

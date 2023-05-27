@@ -8,8 +8,8 @@ class scenario(HttpUser):
     # First you need to get oauth2 token
     # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
     # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
-    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUyMDY1NjIsImlhdCI6MTY4NTIwMjk2MiwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiODk4Y2YyY2QtN2JmYy00NzQzLWE4ZGQtYmZmOTMxZDhkYWJmIn0.jpHiS4I4MUPRr7CKTc_EpARLTuEolzvyAj97kmC0TCNMVpYewErFenPm54-ZjH0kqe3DA_fu0NbM2fMluQ3t0J4H82_Y767hd9m1avsK_ZZWRWPO-XKCjyjy8LBVPHw2sFF5QpiFwbzM3LGaGU5OXJPj75n2xhhA1I5xsBPpKzk7wHDJqvGTFBrOw6WekiYHfEAirXnPUrElm8a2NPPij2be40MiyzFbCHzmWA3PHThtAOv6FBlpIEK22gG9oPpude6-1mBeK2umt7JZ3jz5a1sma6CeJ8MXrhN7GXzCICjAHPX97qM-UBSGmVWsecbotkbYxlS-9JRzz0BoJS6BIQ"
-    email = "493182@mail.muni.cz"
+    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUyMjg1OTAsImlhdCI6MTY4NTIyNDk5MCwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiYTdkZDUwOTYtNjU1OS00ZThlLWEwYTctNjgyNjQyNjZjNWNiIn0.dX73r7oyUjmmmLNvH8cxF3q5dKQM08Pc_eTjvZ4KzVk06lR0ZQmQIr928QlwN_Big5T-MceUsm-h8S9mzUP515q-eyCoakMdBLE9Fc8i4-n5DF-2ivKxJtRnpmishGKjnoJQutMXvia-voydTJlfa-RenU3G7b9EzS3XU77qg4fK_ekv7mAIyVC_HnKeh7BLIUSzMJhnu5cT_J-kQM7QTOV2X63cX-RfJU4PmFJCZJr0UZLK3M4BmV0IFAmfMahsKqR-n0u02J3XNnFu5ABAZXu5bdModdhk5nyiLw18EpGnbVI0em97vvanL13GS_UuPwtDoVWBs5xC1JSVsBJldw"
+    email = "493182@mail.muni.cz" # UCO@mail.muni.cz
     first_name = "Patrik"
     second_name = "TEST"
     ######################################################################
@@ -51,9 +51,16 @@ class scenario(HttpUser):
             print(album)
             print("\n\nScenario 05 - successful\n\n")
 
-            print("\n\nScenario 06 - send email to manager\n\n")
-            self.send_email_to_manager(band["id"])
+            print("\n\nScenario 06 - create songs\n\n")
+            song1 = self.create_songs("My song1", album["id"])
+            print(song1)
+            song2 = self.create_songs("My song2", album["id"])
+            print(song2)
             print("\n\nScenario 06 - successful\n\n")
+
+            print("\n\nScenario 07 - send email to manager\n\n")
+            self.send_email_to_manager(band["id"])
+            print("\n\nScenario 07 - successful\n\n")
 
         except Exception as e:
             print("\nERROR\n")
@@ -123,6 +130,19 @@ class scenario(HttpUser):
         print("create album " + str(response.json()))
         if response.status_code != 200:
             raise Exception("create album " + str(response.status_code))
+        return response.json()
+
+    def create_songs(self, title, album_id):
+        response = self.client.post("http://core:8080/songs",
+                                    json={"title": title, "releaseDate": "2017-01-13",
+                                          "genre": "ROCK", "albumId": album_id, "duration": "PT3M"},
+                                    headers={"Authorization": ("Bearer " + self.token),
+                                             "Content-Type": "application/json"})
+        print("create album " + str(response.status_code))
+        print("create album " + str(response.headers))
+        print("create album " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create song " + str(response.status_code))
         return response.json()
 
     def send_email_to_manager(self, bandId):
