@@ -1,10 +1,8 @@
 from locust import HttpUser, task, between
 
 counter = 0
-
-
 class scenario(HttpUser):
-    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0ODU1MTVAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTExODA3NSwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUxODI5MTYsImlhdCI6MTY4NTE3OTMxNiwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiODRhNjc1ODQtYWYyYS00MWNlLWI3MTQtNmRjNmViYWI3MjYxIn0.tLTsVIbadEDzKQm2GtQqxXdUCQbB3syPeed9CI9f7dkO5JllvMuQCbKSFWGgEzIIhglfgn3DoSwVBbhepHYgzW2vf79WNxuyr0rfqytExzq_4KMflg2YeUZT9Sg6QLdyGm2q5nyPj0kvg4Ze5xei1qCeg8A3TBDvH_4MWqlbCobt6Fyiipy1U1yhqQumcRNi5azSSxtsEDH3kaFbmkK-bXGoLJM6OR0UH3BXNb4rqxy9NjWLM12p_Wi10uB4ltRBLQ1n_PF86hIPdkCDidMMi-_MO0dZwoj5ULjb0c7-5WRSfnALlo0JUEqF79Xd-w6eawlFTZKIRqfLVyMQ5xp_mw"
+    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUxOTE0MzQsImlhdCI6MTY4NTE4NzgzNCwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiMzZkM2M2NjQtMzQ4Zi00MmQxLWFlOWQtOGIwZDU4YTc1ZDhjIn0.REnwmPdE1z0j888hFqeo8mIipKcXhraUBLo9FvGuJ5eh5PenwqRquWeCPTTieAGIudjrKlADIEG8HF0Jaw8d2pjD2w3F5GNuDr0_hCWNQP9UwHuAURo35SXge6izTXfZsDw9SfWRF7GVbnexbgJFwBTE3htwhY4W-kWi1KNUYmvlpx74vpYwYBc4S8LWMMIKvEEO4nsIIKEikYlJC7HEpO-FNevKBAUIdRotX3vAglJmQqvGr0FCp2u3KyDv_oQYEp1PkvBd8kYKaLvcpdAuPG3oBCct8xSsim54IHDRtIWPrh6oGw-_dUf_-qeWWriHlMkZvKtQlq-CJA1va-orGg"
     email = "485515@muni.cz"
     first_name = "Adam"
     second_name = "TEST"
@@ -30,8 +28,12 @@ class scenario(HttpUser):
         # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
         # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
 
+        global counter
+        if counter == 1:
+            exit()
+
         try:
-            manager = self.create_user("MANAGER")
+            manager = self.create_user("MANAGER", self.email)
             print(manager)
             band = self.create_band(manager)
             print(band)
@@ -44,7 +46,9 @@ class scenario(HttpUser):
             print("error occured")
             exit()
 
-    @task
+        counter = counter + 1
+
+
     def manageAlbum(self):
         wait_time = between(1, 2)
         # First you need to get oauth2 token

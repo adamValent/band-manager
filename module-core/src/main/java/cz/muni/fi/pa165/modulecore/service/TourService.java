@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.service;
 
 import cz.muni.fi.pa165.modulecore.data.model.Tour;
+import cz.muni.fi.pa165.modulecore.data.model.TourDate;
 import cz.muni.fi.pa165.modulecore.data.repository.TourRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class TourService {
 
     public Tour updateTour(Long id, Tour tour) {
         tour.setId(id);
+        for (TourDate tourDate: tour.getTourDates()) {
+            tourDate.setTour(tour);
+        }
         return tourRepository.save(tour);
     }
 
