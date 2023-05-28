@@ -1,0 +1,21 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          muni:
+            client-id: 7e02a0a9-446a-412d-ad2b-90add47b0fdd
+            client-secret: 48a2b2e3-4b2b-471e-b7b7-b81a85b6eeef22f347f2-3fc9-4e16-8698-3e2492701a89
+            client-name: "MUNI Unified Login"
+            provider: muni
+            scope:
+              - openid
+              - profile
+              - email
+              - test_1
+              - test_2
+        provider:
+          muni:
+            issuer-uri: https://oidc.muni.cz/oidc/
+server:
+  port: 8084

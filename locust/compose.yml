@@ -1,0 +1,24 @@
+services:
+
+  locust-master:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --master -H http://master:8089
+    networks:
+      - youband-manager-network
+
+  locust-worker:
+    image: locustio/locust
+    volumes:
+      - ./:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --worker --master-host locust-master
+    networks:
+      - youband-manager-network
+
+networks:
+  youband-manager-network: {
+      external: true
+  }

@@ -1,0 +1,157 @@
+services:
+
+  core:
+    build:
+      dockerfile:  module-core/Dockerfile
+    tty: true
+    depends_on:
+      db-core:
+        condition: service_started
+    ports:
+      - "8080:8080"
+    volumes:
+      - module-core:/tmp
+    networks:
+      - youband-manager-network
+
+  users:
+    build:
+      dockerfile: module-user/Dockerfile
+    tty: true
+    depends_on:
+      db-users:
+        condition: service_started
+    ports:
+      - "8083:8080"
+    volumes:
+      - module-user:/tmp
+    networks:
+      - youband-manager-network
+
+  pdf:
+    build:
+      dockerfile: module-pdf/Dockerfile
+    tty: true
+    ports:
+      - "8082:8080"
+    volumes:
+      - module-pdf:/tmp
+    networks:
+      - youband-manager-network
+
+  email:
+    build:
+      dockerfile: module-email/Dockerfile
+    tty: true
+    ports:
+      - "8081:8080"
+    volumes:
+      - module-email:/tmp
+    networks:
+      - youband-manager-network
+
+  db-users:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: youband-users
+      ENCODING: "UTF8"
+      TABLESPACE: "pg_default"
+      CONNECTION_LIMIT: "-1"
+      TEMPLATE: "template0"
+    command: -p 5433
+    ports:
+      - "5433:5433"
+    volumes:
+      - postgres-data_users:/var/lib/postgresql/data
+      - postgres-data_users_scripts:/var/run/postgresql
+    networks:
+      - youband-manager-network
+
+  db-core:
+    image: postgres:latest
+    restart: on-failure
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_DB: core
+      ENCODING: "UTF8"
+      TABLESPACE: "pg_default"
+      CONNECTION_LIMIT: "-1"
+      TEMPLATE: "template0"
+    command: -p 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data_core:/var/lib/postgresql/data
+      - postgres-data_core_scripts:/var/run/postgresql
+    networks:
+      - youband-manager-network
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "youband_manager@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: 12345
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - youband-manager-network
+
+  prometheus:
+    image: 'prom/prometheus:latest'
+    container_name: prometheus
+    ports:
+      - '9090:9090'
+    volumes:
+      - './prometheus.yaml:/etc/prometheus/prometheus.yml'
+      - prometheus-storage:/opt/prometheus/data
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - youband-manager-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: gradle_docker-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/opt/grafana/data
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SERVER_DOMAIN=localhost
+    networks:
+      - youband-manager-network
+
+volumes:
+  pgadmin_data:
+  postgres-data_core:
+  postgres-data_users:
+  module-pdf:
+  module-core:
+  module-email:
+  module-user:
+  prometheus-storage:
+  grafana-storage:
+  postgres-data_core_scripts: {
+                                name: postgres-data_core_scripts
+  }
+  postgres-data_users_scripts: {
+                                 name: postgres-data_users_scripts
+  }
+
+networks:
+  youband-manager-network: {
+          name: youband-manager-network
+  }
+
