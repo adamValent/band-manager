@@ -41,6 +41,19 @@ public class UserRestController {
 
     @Operation(
             security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
+            summary = "Find user by Email.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User was found."),
+            @ApiResponse(responseCode = "404", description = "User with given Email does not exist."),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - access token not provided or valid", content = @Content()),
+            @ApiResponse(responseCode = "403", description = "Forbidden - access token does not have scope test_1 or test_2.", content = @Content())})
+    @GetMapping(path = "email/{email}")
+    public ResponseEntity<UserDto> findByEmail(@PathVariable("email") String email) {
+        return ResponseEntity.ok(userFacade.findByEmail(email));
+    }
+
+    @Operation(
+            security = @SecurityRequirement(name = CustomConfiguration.SECURITY_SCHEME_NAME),
             summary = "Get all users")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "All users returned."),

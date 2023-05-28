@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.modulecore.service;
 
 import cz.muni.fi.pa165.modulecore.data.model.Band;
+import cz.muni.fi.pa165.modulecore.data.model.User;
 import cz.muni.fi.pa165.modulecore.data.repository.BandRepository;
 import cz.muni.fi.pa165.modulecore.data.repository.UserRepository;
 import cz.muni.fi.pa165.modulecore.exception.ResourceNotFoundException;
@@ -31,15 +32,25 @@ public class BandService {
 
     @Transactional
     public Band createBand(Band band) {
+        if (band.getId() != null) {
+            band.getManager().setManagerOfBand(band);
+        }
         Band createdBand = bandRepository.save(band);
-        createdBand.getManager().setManagerOfBand(createdBand);
-        userRepository.save(createdBand.getManager());
+        band.getManager().setManagerOfBand(createdBand);
+        userRepository.save(band.getManager());
+        if (band.getMembers() != null) {
+            for (User bandMember: band.getMembers()) {
+                bandMember.setMemberOfBand(createdBand);
+                userRepository.save(bandMember);
+            }
+        }
         return createdBand;
     }
 
+    @Transactional
     public Band updateBand(Long id, Band band) {
         band.setId(id);
-        return bandRepository.save(band);
+        return createBand(band);
     }
 
     public void deleteBand(Long id) {

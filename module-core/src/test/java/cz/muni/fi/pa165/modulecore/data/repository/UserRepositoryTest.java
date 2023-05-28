@@ -93,15 +93,15 @@ public class UserRepositoryTest {
         entityManager.persist(user2);
         entityManager.flush();
         List<User> found = Lists.newArrayList(userRepository.getAllUsersWithoutBand());
-        assertThat("wrong number of records", found.size() == 2);
+        assertThat("wrong number of records", found.size() == 1);
     }
 
     @Test
     void getAllUsersWithoutBandSomeHaveBand() {
-        User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
+        User user1 = new User(null, UserType.BAND_MEMBER, "first", "last", "mail");
         Band band = new Band(null, "name", Genre.BLUES, new Byte[0], user1);
         user1.setManagerOfBand(band);
-        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail");
+        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail1");
         band.setMembers(List.of(user2));
         user2.setMemberOfBand(band);
         entityManager.persist(user1);
@@ -117,7 +117,7 @@ public class UserRepositoryTest {
         User user1 = new User(null, UserType.MANAGER, "first", "last", "mail");
         Band band = new Band(null, "name", Genre.BLUES, new Byte[0], user1);
         user1.setManagerOfBand(band);
-        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail");
+        User user2 = new User(null, UserType.BAND_MEMBER, "2", "last", "mail1");
         band.setMembers(List.of(user2));
         user2.setMemberOfBand(band);
         Album album = new Album(null, "name", LocalDate.now(), Genre.ROCK, Collections.emptyList(), band);

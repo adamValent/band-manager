@@ -24,7 +24,7 @@ public class User implements Serializable {
     @Column(name = "last_name", length = 35)
     @NotNull
     private String lastName;
-    @Column(name = "email", length = 60)
+    @Column(name = "email", length = 60, unique = true)
     @NotNull
     private String email;
     @OneToOne()

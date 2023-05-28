@@ -13,4 +13,6 @@ public interface AlbumMapper {
     Album mapFromDto(AlbumDto albumDto);
 
     List<AlbumDto> mapToList(List<Album> albums);
+
+    List<Album> mapFromList(List<AlbumDto> albums);
 }

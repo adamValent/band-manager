@@ -21,6 +21,9 @@ public class AlbumDto {
     @NotNull
     private BandDto band;
 
+    public AlbumDto() {
+    }
+
     public AlbumDto(Long id,
                     String name,
                     LocalDate releaseDate,

@@ -8,7 +8,7 @@ class scenario(HttpUser):
     # First you need to get oauth2 token
     # You get this token by running spring boot app test-client(in root directory), then go to localhost:8089
     # and sign in to muni page and select scopes, then copy token, email, first name and last name and past then here
-    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUyMjg1OTAsImlhdCI6MTY4NTIyNDk5MCwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiYTdkZDUwOTYtNjU1OS00ZThlLWEwYTctNjgyNjQyNjZjNWNiIn0.dX73r7oyUjmmmLNvH8cxF3q5dKQM08Pc_eTjvZ4KzVk06lR0ZQmQIr928QlwN_Big5T-MceUsm-h8S9mzUP515q-eyCoakMdBLE9Fc8i4-n5DF-2ivKxJtRnpmishGKjnoJQutMXvia-voydTJlfa-RenU3G7b9EzS3XU77qg4fK_ekv7mAIyVC_HnKeh7BLIUSzMJhnu5cT_J-kQM7QTOV2X63cX-RfJU4PmFJCZJr0UZLK3M4BmV0IFAmfMahsKqR-n0u02J3XNnFu5ABAZXu5bdModdhk5nyiLw18EpGnbVI0em97vvanL13GS_UuPwtDoVWBs5xC1JSVsBJldw"
+    token = "eyJraWQiOiJyc2ExIiwidHlwIjoiYXQrand0IiwiYWxnIjoiUlMyNTYifQ.eyJhdWQiOiI3ZTAyYTBhOS00NDZhLTQxMmQtYWQyYi05MGFkZDQ3YjBmZGQiLCJzdWIiOiI0OTMxODJAbXVuaS5jeiIsImFjciI6Imh0dHBzOi8vcmVmZWRzLm9yZy9wcm9maWxlL3NmYSIsInNjb3BlIjoidGVzdF8yIHRlc3RfMSBvcGVuaWQgZW1haWwgcHJvZmlsZSIsImF1dGhfdGltZSI6MTY4NTA0MDA5NiwiaXNzIjoiaHR0cHM6Ly9vaWRjLm11bmkuY3ovb2lkYy8iLCJleHAiOjE2ODUyNDAwNTEsImlhdCI6MTY4NTIzNjQ1MSwiY2xpZW50X2lkIjoiN2UwMmEwYTktNDQ2YS00MTJkLWFkMmItOTBhZGQ0N2IwZmRkIiwianRpIjoiY2I5MDNiZTEtNmQ3OC00Yzg4LTllNDAtNjM1NGI3NTA3YzhlIn0.LbQCP2AJ3IMGPBZ6FHGIYxfqJJw8he9Bu1oDBEYEavkNBTtKreud0Qo8g46SUmqLYAVmlddR6jTQTK2bkBzWFvCXdmswCmmIV0XjNKK3-3ioAT0k3yvPvMAfVwrsVSpSyh1cUQ_BQ5_pdovtTO81zEPxLl96dYv-w7rIes33CDMyZOzvoLB1iZuyFNmLJqdU94QznXSS2ADinlMpa0wI_B-7V2MYPO_9zttP9v3XzZNuexwx6Gp6bWL8mHFI1Uk8z_1fN2w8SbNHLfothEu7sF1CAIrPa6Hu3ozXt9NkbnmDPyQBx4MYoYQ2uv3O9jJOSH9uwTzyhXKS_DjdziTm8A"
     email = "493182@mail.muni.cz" # UCO@mail.muni.cz
     first_name = "Patrik"
     second_name = "TEST"
@@ -26,14 +26,41 @@ class scenario(HttpUser):
 
         try:
             print("\n\nScenario 01 - create user\n\n")
-            manager = self.create_user("MANAGER")
-            print(manager)
+            manager_module_user = self.create_user("MANAGER")
+            print(manager_module_user)
             print("\n\nScenario 01 - successful\n\n")
+
+            print("\n\nScenario 01.1 - get user\n\n")
+            manager = self.get_user(manager_module_user["email"])
+            print(manager)
+            print("\n\nScenario 01.1 - successful\n\n")
 
             print("\n\nScenario 02 - create band\n\n")
             band = self.create_band(manager)
             print(band)
             print("\n\nScenario 02 - successful\n\n")
+
+            print("\n\nScenario 02.1 - list all user without band\n\n")
+            all_users = self.list_all_users_without_band()
+            print(all_users)
+            print("\n\nScenario 02.1 - successful\n\n")
+
+            print("\n\nScenario 02.2 - create invitation\n\n")
+            invitation = self.create_invitation(all_users[0], band)
+            print(invitation)
+            print("\n\nScenario 02.2 - successful\n\n")
+
+            print("\n\nScenario 02.3 - update invitation\n\n")
+            invitation["status"] = 1
+            invitation_updated = self.update_invitation(invitation["id"], invitation)
+            print(invitation_updated)
+            print("\n\nScenario 02.3 - successful\n\n")
+
+            print("\n\nScenario 02.4 - update band member\n\n")
+            band["members"] = [invitation_updated["user"]]
+            band = self.update_band(band)
+            print(band)
+            print("\n\nScenario 02.4 - successful\n\n")
 
             print("\n\nScenario 03 - create tour\n\n")
             tour = self.create_tour(band)
@@ -82,6 +109,17 @@ class scenario(HttpUser):
             raise Exception("create user " + str(response.status_code))
         return response.json()
 
+    def get_user(self, email):
+        response = self.client.get("http://core:8080/users/email/" + email,
+                                    headers={"Authorization": ("Bearer " + self.token),
+                                             "Content-Type": "application/json"})
+        print("get user " + str(response.status_code))
+        print("get user " + str(response.headers))
+        print("get user " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("get user " + str(response.status_code))
+        return response.json()
+
     def create_band(self, user):
         response = self.client.post("http://core:8080/bands",
                                     json={"name": "My band", "genre": "ROCK",
@@ -93,6 +131,54 @@ class scenario(HttpUser):
         print("create band " + str(response.json()))
         if response.status_code != 200:
             raise Exception("create band " + str(response.status_code))
+        return response.json()
+
+    def list_all_users_without_band(self):
+        response = self.client.get("http://core:8080/users/withoutBand",
+                                    headers={"Authorization": ("Bearer " + self.token),
+                                             "Content-Type": "application/json"})
+        print("list all users " + str(response.status_code))
+        print("list all users " + str(response.headers))
+        print("list all users " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("list all users " + str(response.status_code))
+        return response.json()
+
+    def create_invitation(self, user, band):
+        response = self.client.post("http://core:8080/invitations",
+                                    json={"message": "Join us!", "status": 2, "dateReceived": "2023-05-20",
+                                          "band": band, "user": user},
+                                    headers={"Authorization": ("Bearer " + self.token),
+                                             "Content-Type": "application/json"})
+        print("create invitation " + str(response.status_code))
+        print("create invitation " + str(response.headers))
+        print("create invitation " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("create invitation " + str(response.status_code))
+        return response.json()
+
+    def update_invitation(self, id, invitation):
+        response = self.client.put("http://core:8080/invitations/" + str(id),
+                                    json=invitation,
+                                    headers={"Authorization": ("Bearer " + self.token),
+                                             "Content-Type": "application/json"})
+        print("update_invitation " + str(response.status_code))
+        print("update_invitation " + str(response.headers))
+        print("update_invitation " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("update_invitation " + str(response.status_code))
+        return response.json()
+
+    def update_band(self, band):
+        response = self.client.put("http://core:8080/bands/" + str(band["id"]),
+                                   json=band,
+                                   headers={"Authorization": ("Bearer " + self.token),
+                                            "Content-Type": "application/json"})
+        print("update band " + str(response.status_code))
+        print("update band " + str(response.headers))
+        print("update band " + str(response.json()))
+        if response.status_code != 200:
+            raise Exception("update band " + str(response.status_code))
         return response.json()
 
     def create_tour(self, band):

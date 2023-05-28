@@ -47,4 +47,8 @@ public class UserService {
     public List<User> getUsersFromBandBySongId(Long idSong) {
         return userRepository.getUsersFromBandBySongId(idSong);
     }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.modulepdf.service;
 
 import cz.muni.fi.pa165.librarymodel.api.AlbumDto;
 import cz.muni.fi.pa165.librarymodel.api.BandDto;
+import cz.muni.fi.pa165.librarymodel.api.SongDto;
 import cz.muni.fi.pa165.librarymodel.api.TourDto;
 import cz.muni.fi.pa165.modulepdf.data.model.*;
 import cz.muni.fi.pa165.modulepdf.exceptions.ResourceNotFoundException;
@@ -17,9 +18,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class CoreService {
@@ -68,23 +67,23 @@ public class CoreService {
     public List<Album> getBandAlbums(Long idBand, String token) {
         String url
                 = String.format("http://core:8080/albums/allByBand/%s", idBand);
-        ResponseEntity<List<AlbumDto>> response;
+        ResponseEntity<AlbumDto[]> response;
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", token);
 
         try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), (Class<List<AlbumDto>>) Collections.<AlbumDto>emptyList().getClass());
+            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), AlbumDto[].class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException();
         }
 
         if (response.hasBody()) {
-            if (Objects.requireNonNull(response.getBody()).isEmpty()) {
+            if (Objects.requireNonNull(response.getBody()).length == 0) {
                 throw new ResourceNotFoundException();
             }
-            return Objects.requireNonNull(response.getBody()).stream().map(albumMapper::mapFromDto).toList();
+            return Arrays.stream(Objects.requireNonNull(response.getBody())).map(albumMapper::mapFromDto).toList();
         }
         throw new ResourceNotFoundException();
     }
@@ -92,37 +91,37 @@ public class CoreService {
     public List<Tour> getBandTours(Long idBand, String token) {
         String url
                 = String.format("http://core:8080/tours/allByBand/%s", idBand);
-        ResponseEntity<List<TourDto>> response;
+        ResponseEntity<TourDto[]> response;
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", token);
 
         try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), (Class<List<TourDto>>) Collections.<TourDto>emptyList().getClass());
+            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), TourDto[].class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException();
         }
 
         if (response.hasBody()) {
-            if (Objects.requireNonNull(response.getBody()).isEmpty()) {
+            if (Objects.requireNonNull(response.getBody()).length == 0) {
                 throw new ResourceNotFoundException();
             }
-            return Objects.requireNonNull(response.getBody()).stream().map(tourMapper::mapFromDto).toList();
+            return Arrays.stream(Objects.requireNonNull(response.getBody())).map(tourMapper::mapFromDto).toList();
         }
         throw new ResourceNotFoundException();
     }
 
     public List<Song> getAlbumSongs(Long idAlbum, String token) {
         String url
-                = String.format("http://core:8080/albums/allByBand/%s", idAlbum);
-        ResponseEntity<AlbumDto> response;
+                = String.format("http://localhost:8080/albums/allByBand/%s", idAlbum);
+        ResponseEntity<AlbumDto[]> response;
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
         headers.add("Authorization", token);
 
         try {
-            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), AlbumDto.class);
+            response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), AlbumDto[].class);
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException();
@@ -132,7 +131,12 @@ public class CoreService {
             if (response.getBody() == null) {
                 throw new ResourceNotFoundException();
             }
-            return albumMapper.mapFromDto(Objects.requireNonNull(response.getBody())).getSongs();
+            List<Song> result = new ArrayList<>();
+            for (AlbumDto albumDto: response.getBody()) {
+                Album album = albumMapper.mapFromDto(albumDto);
+                result.addAll(album.getSongs());
+            }
+            return result;
         }
         throw new ResourceNotFoundException();
     }

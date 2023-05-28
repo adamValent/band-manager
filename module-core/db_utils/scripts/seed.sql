@@ -23,7 +23,6 @@ UPDATE app_user SET band_id = (SELECT id from band limit 1 offset 1) WHERE id = 
 
 -- Adding members to band
 UPDATE app_user SET member_of_band_id = (SELECT id from band ORDER BY id ASC limit 1) WHERE id = (SELECT id from app_user WHERE user_type = 1 ORDER BY id ASC limit 1);
-UPDATE app_user SET member_of_band_id = (SELECT id from band ORDER BY id ASC limit 1 offset 1) WHERE id = (SELECT id from app_user WHERE user_type = 1 ORDER BY id ASC limit 1 offset 1);
 
 SELECT * FROM app_user;
 -- Album seeding --
@@ -74,7 +73,7 @@ SELECT * FROM tourdates;
 SELECT * FROM tour_band_list;
 -- Invite seeding --
 INSERT INTO invitation (date_received, message, status, user_id, band_id)
-VALUES ('2020-01-01', 'Join my band!', 2, (SELECT id from app_user limit 1 offset 2), (SELECT id from band limit 1));
+VALUES ('2020-01-01', 'Join my band!', 2, (SELECT id from app_user where member_of_band_id is null limit 1), (SELECT id from band limit 1));
 
 INSERT INTO app_user_invitations (user_id, invitations_id)
 VALUES ((SELECT id from app_user limit 1 offset 2), (SELECT id from invitation limit 1));
