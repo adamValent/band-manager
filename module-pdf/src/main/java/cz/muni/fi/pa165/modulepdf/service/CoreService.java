@@ -114,7 +114,7 @@ public class CoreService {
 
     public List<Song> getAlbumSongs(Long idAlbum, String token) {
         String url
-                = String.format("http://localhost:8080/albums/allByBand/%s", idAlbum);
+                = String.format("http://core:8080/albums/allByBand/%s", idAlbum);
         ResponseEntity<AlbumDto[]> response;
 
         MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
